@@ -116,7 +116,7 @@ class ItemHandler(UserHandler):
         item = self.get_item(model_name, id)
         if not item:
             return
-        json_response(self.response, item.to_dict())
+        json_response(self.response, item.get_dict())
         
     def get_item(self, model_name, id):
         if model_name not in handle_models:

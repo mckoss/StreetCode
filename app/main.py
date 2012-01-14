@@ -3,6 +3,8 @@ import simplejson as json
 import logging
 import os
 
+import settings
+
 from google.appengine.ext import db
 from google.appengine.ext import webapp
 from google.appengine.api import users
@@ -36,6 +38,14 @@ class MainHandler(UserHandler):
              "sign_out": users.create_logout_url('/'),
              "username": username,
              }))
+
+
+class ProfileHandler(UserHandler):
+    def get(self, id):
+        self.response.out.write(template.render("templates/mobile_profile.html",
+                                                {'id': id,
+                                                 'SITE_NAME': settings.SITE_NAME}
+                                                ))
 
 
 class ListHandler(UserHandler):
@@ -110,6 +120,7 @@ handle_models = {'todo': Todo}
 def main():
     application = webapp.WSGIApplication([
         ('/', MainHandler),
+        ('/go/(\w+)', ProfileHandler),
 
         # REST API requires two handlers - one with an ID and one without.
         ('/data/(\w+)', ListHandler),

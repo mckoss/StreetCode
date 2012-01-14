@@ -1,5 +1,5 @@
-application: todoapp-mckoss
-version: 1
+application: streetcode-sw
+version: mike
 runtime: python
 api_version: 1
 

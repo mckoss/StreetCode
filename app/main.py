@@ -19,7 +19,7 @@ class Sponsor(JSONModel):
     url= db.LinkProperty()
     address= db.PostalAddressProperty()
     phone= db.PhoneNumberProperty()
-    
+
 class Client(JSONModel):
     displayName = db.StringProperty()
     fullName = db.StringProperty()
@@ -32,7 +32,7 @@ class Donor(JSONModel):
     name= db.StringProperty()
     address= db.PostalAddressProperty()
     phone= db.PhoneNumberProperty()
-    
+
 class User(JSONModel):
     isAdmin = db.BooleanProperty()
     sponsor = db.ReferenceProperty(Sponsor)
@@ -45,12 +45,12 @@ class Transaction(JSONModel):
     type = db.StringProperty()
     note = db.TextProperty()
     confirm = db.BooleanProperty()
-    
+
 class Scan(JSONModel):
     client = db.ReferenceProperty(Sponsor)
     donor = db.ReferenceProperty(Donor)
     ledger = db.ReferenceProperty(Transaction)
-    
+
 #Handlers
 
 class UserHandler(webapp.RequestHandler):
@@ -113,6 +113,7 @@ class ListHandler(UserHandler):
 # a specific ID.
 class ItemHandler(UserHandler):
     def get_item(self, model_name, id):
+        logging.info("IH: %s" % id)
         if model_name not in handle_models:
             self.error(404)
             return None

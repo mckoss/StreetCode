@@ -9,7 +9,7 @@ namespace.module('streetcode.client', function (exports, requires) {
     }
 
     var Client = Backbone.Model.extend({
-        url: '/data/client'
+        url: function() {return '/data/client/' + this.id}
     });
 
     var ClientMobileView = Backbone.View.extend({

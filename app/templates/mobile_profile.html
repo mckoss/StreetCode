@@ -1,18 +1,18 @@
 {% extends "mobile_base.html" %}
 {% block head_extra %}
   <title>{{SITE_NAME}} - Profile</title>
+  <script>
+  $(document).ready(function () {
+      namespace.streetcode.client.initProfile();
+  });
+  </script>
 {% endblock %}
 
 {% block body %}
-  <h1>Mobile Profile here </h1>
-
-  <div id="profile"></div>
-
-    <!-- Templates -->
-
-    <script type="text/template" id="client-profile-template">
-      <div>Name</div>
-      <div>Story</div>
-      <div>Buttons</div>
-    </script>
+  <div id='client-view'></div>
+  <script type="text/template" id="client-view-template">
+    <div>Name</div>
+    <div>Story</div>
+    <div>Buttons</div>
+  </script>
 {% endblock %}

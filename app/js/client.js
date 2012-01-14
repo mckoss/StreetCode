@@ -1,6 +1,8 @@
-namespace.module('streetcode.clients', function (exports, requires) {
+namespace.module('streetcode.client', function (exports, requires) {
+    exports.init = init;
+
     function init() {
-        Client.template =  _.template($('#client-template').html());
+        Client.template =  _.template($('#client-profile-template').html());
         exports.app = new ClientView();
     }
 

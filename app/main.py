@@ -2,7 +2,7 @@
 import simplejson as json
 import logging
 import os
-
+import unittest
 import settings
 
 from google.appengine.ext import db
@@ -13,13 +13,45 @@ from google.appengine.ext.webapp import util
 
 from jsonmodel import JSONModel, json_response
 
+#Data Models
+class Sponsor(JSONModel):
+    name= db.StringProperty()
+    url= db.LinkProperty()
+    address= db.PostalAddressProperty()
+    phone= db.PhoneNumberProperty()
+    
+class Client(JSONModel):
+    displayName = db.StringProperty()
+    fullName = db.StringProperty()
+    story  = db.TextProperty()
+    sponsor  = db.ReferenceProperty(Sponsor)
+    imageURL = db.LinkProperty()
+    shortCode = db.StringProperty()
 
-class Todo(JSONModel):
-    user_id = db.StringProperty()
-    text = db.StringProperty()
-    done = db.BooleanProperty()
-    order = db.IntegerProperty()
+class Donor(JSONModel):
+    name= db.StringProperty()
+    address= db.PostalAddressProperty()
+    phone= db.PhoneNumberProperty()
+    
+class User(JSONModel):
+    isAdmin = db.BooleanProperty()
+    sponsor = db.ReferenceProperty(Sponsor)
+    user = db.StringProperty()#(app engine credentials)
 
+class Transaction(JSONModel):
+    fromAccount = db.LinkProperty()#(e.g., 'stripe')
+    toAccount =db.LinkProperty() #(e.g. 'sponsor_id/client_id' like 'sponsor_64/client_12')
+    amount = db.FloatProperty()
+    type = db.StringProperty()
+    note = db.TextProperty()
+    confirm = db.BooleanProperty()
+    
+class Scan(JSONModel):
+    client = db.ReferenceProperty(Sponsor)
+    donor = db.ReferenceProperty(Donor)
+    ledger = db.ReferenceProperty(Transaction)
+    
+#Handlers
 
 class UserHandler(webapp.RequestHandler):
     """ This subclass of RequestHandler sets user and user_id
@@ -114,7 +146,7 @@ class ItemHandler(UserHandler):
             item.delete()
 
 
-handle_models = {'todo': Todo}
+handle_models = {'client': Client,'donor':Donor,'sponsor':Sponsor,'scan':Scan,'transaction':Transaction}
 
 
 def main():
@@ -125,6 +157,8 @@ def main():
         # REST API requires two handlers - one with an ID and one without.
         ('/data/(\w+)', ListHandler),
         ('/data/(\w+)/(\d+)', ItemHandler),
+        #unit test hamdler
+        ('/test',unittest.TestHandler),
     ], debug=True)
     util.run_wsgi_app(application)
 

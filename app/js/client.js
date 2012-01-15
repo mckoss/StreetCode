@@ -23,7 +23,8 @@ namespace.module('streetcode.client', function (exports, requires) {
         // The ClientView listens for changes to its model, re-rendering.
         initialize: function() {
             // STUB
-            this.model = new Client({id: 8});
+            var id = location.pathname.split('/').pop();
+            this.model = new Client({id: id});
             this.model.bind('change', this.render, this);
             this.model.fetch();
         },

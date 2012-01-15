@@ -93,8 +93,17 @@ class ListHandler(UserHandler):
         model = self.get_model(model_name)
         if model is None:
             return
-        query = model.all().filter('user_id =', self.user_id)
-        items = [item.get_dict() for item in query.fetch(1000)]
+        query = model.all()
+        
+        for argument in self.request.arguments():
+            the_filter="%s ="%argument
+            the_value = self.request.get(argument)
+            logging.debug("Filtering by %s%s"%(the_filter,the_value))
+            query.filter(the_filter,the_value)
+            
+        results = query.fetch(1000)
+        logging.debug("Found [%i] %s's"%(len(results),model_name))
+        items = [item.get_dict() for item in results]
         json_response(self.response, items)
 
     # create an item
@@ -119,6 +128,7 @@ class ItemHandler(UserHandler):
         json_response(self.response, item.get_dict())
         
     def get_item(self, model_name, id):
+        logging.info('args: %s'%self.request.arguments())
         if model_name not in handle_models:
             self.error(404)
             return None

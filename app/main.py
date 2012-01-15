@@ -2,10 +2,8 @@
 import simplejson as json
 import logging
 import os
-import unittest
+import test_streetcode
 import settings
-
-logging.info("unittest: %s" % unittest.__file__)
 
 from google.appengine.ext import db
 from google.appengine.ext import webapp
@@ -247,9 +245,9 @@ def main():
         ('/data/(\w+)', ListHandler),
         ('/data/(\w+)/(\d+)', ItemHandler),
         #load sample data
-        ('/testdata',unittest.TestDataHandler),
+        ('/testdata',test_streetcode.TestDataHandler),
         #unit test hamdler
-        ('/test',unittest.TestHandler),
+        ('/test',test_streetcode.TestHandler),
     ], debug=True)
     util.run_wsgi_app(application)
 

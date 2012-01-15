@@ -9,31 +9,29 @@
 {% endblock %}
 
 {% block body %}
-  <div id="client-page" data-role="page">
-    <div data-theme='d' data-role="header"><h1>STREET<b>CODE</b></h1></div>
-    <div id="client-view" data-role="content"></div>
+  <div id="page-container">
+    <div data-role="page" id="loading">Loading...</div>
   </div>
 
   <script type="text/template" id="client-view-template">
-      <div class="top-info">
-        <img class="portrait" src="http://pandatask.pageforest.com/images/panda-header.png"/>
-        <div class="info-block">
-          <div class="nickname"><%= displayName %></div>
-          <div class="city">Seattle, WA</div>
-          <div class="bottom-block">
-            <div class="sponsor">Sponsor Organization:</div>
-            <div class="nickname"><%= sponsor.name %></div>
-            <img class="help" onclick="alert('ok');" src="/images/help-button.png"/>
+
+    <div id="scan-landing" data-role="page">
+      <div data-theme='d' data-role="header"><h1>STREET<b>CODE</b></h1></div>
+      <div id="client-view" data-role="content">
+        <div class="top-info">
+          <img class="portrait" src="<%= imageURL %>"/>
+          <div class="info-block">
+            <div class="nickname"><%= displayName %></div>
+            <div class="city">Seattle, WA</div>
+            <div class="bottom-block">
+              <div class="sponsor">Sponsor Organization:</div>
+              <div class="nickname"><%= sponsor.name %></div>
+              <img class="help" onclick="alert('ok');" src="/images/help-button.png"/>
+            </div>
           </div>
-          </div>
+        </div>
       </div>
-      <div data-role="collapsible">
-        <h3>Story</h3>
-        <p><%= story %></p>
-      </div>
-      <div data-role="collapsible">
-        <h3>Needs</h3>
-        <p>Socks, coat, shoes.</p>
-      </div>
+    </div>
+
   </script>
 {% endblock %}

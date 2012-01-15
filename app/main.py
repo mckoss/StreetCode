@@ -105,7 +105,7 @@ class MainHandler(UserHandler):
 
 
 class ClientHandler(UserHandler):
-    templates = {'card':'client_card.html','story':'client_story.html','sign':'sign.html'}
+    templates = {'card':'client_card.html','story':'client_story.html','sign':'client_sign.html'}
     def get(self,template_type,id):
         client_template = ClientHandler.templates[template_type]
         self.response.out.write(template.render("templates/%s"%client_template,

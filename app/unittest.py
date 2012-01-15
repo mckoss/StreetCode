@@ -5,16 +5,20 @@ import os
 import random
 import string
 
+
 from google.appengine.ext import db
 from google.appengine.ext import webapp
 from google.appengine.api import users
+
+def randomDigits(digits=10):
+    return ''.join(random.choice(string.ascii_uppercase + string.digits) for x in range(digits))
 
 class TestDataHandler(webapp.RequestHandler):
       def get(self):
           
           sponsor = main.Sponsor()
-          sponsor.name='Test Sponsor'
-          sponsor.url= 'http://www.redcross.com'
+          sponsor.name='Test Sponsor '+randomDigits()
+          sponsor.url= 'http://www.redcross.com/'+randomDigits()
           sponsor.address= '123 Streeet Ave. S, Blah WA,USA'
           sponsor.phone= '(555)555-555'
           sponsor.put()
@@ -26,7 +30,7 @@ class TestDataHandler(webapp.RequestHandler):
             test_client.story  = "story"*25
             test_client.sponsor  = db.get(sponsor.key())
             test_client.imageURL = "http://www.test.org/img%i.png"%i
-            test_client.shortCode = ''.join(random.choice(string.ascii_uppercase + string.digits) for x in range(10))
+            test_client.shortCode = randomDigits()
             test_client.put()
             self.response.out.write("<p>Created Client:[%s]</p>"%(test_client.key().id_or_name()))   
       

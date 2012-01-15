@@ -26,11 +26,13 @@
             <div class="bottom-block">
               <div class="sponsor">Sponsor Organization:</div>
               <div class="nickname"><%= sponsor.name %></div>
-              <img class="help" onclick="alert('ok');" src="/images/help-button.png"/>
+              <a class="help" href="#needs">Gift</a>
             </div>
           </div>
         </div>
-        <a href="#story" data-transition="pop">Story</a>
+        <a href="#story">Story</a>
+        <a href="#needs">Needs</a>
+        <a href="#about">About</a>
       </div>
     </div>
 
@@ -49,11 +51,15 @@
             </div>
           </div>
         </div>
-        <div class="story"><%= story %></div>
-
       </div>
     </div>
 
+    <div id="needs" data-role="page">
+      <div data-theme='d' data-role="header"><h1>STREET<b>CODE</b></h1></div>
+      <div data-role="content">
+        Needs.
+      </div>
+    </div>
 
   </script>
 {% endblock %}

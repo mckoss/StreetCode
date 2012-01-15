@@ -6,6 +6,9 @@ namespace.module('streetcode.client', function (exports, requires) {
     function initProfile() {
         ClientMobileView.template =  _.template($('#client-view-template').html());
         exports.app = new ClientMobileView();
+        
+        ClientCardView.template =  _.template($('#client-view-template').html());
+        exports.app = new ClientCardView();
     }
 
     var Client = Backbone.Model.extend({

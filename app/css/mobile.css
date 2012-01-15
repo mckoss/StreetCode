@@ -4,15 +4,16 @@ div.top-info {
   position: relative;
   background-color: #ccc;
   margin: 0 auto 10px;
-  width: 90%;
+  padding: 0;
+  width: 280px;
   height: 206px;
-
 }
 
 #page-container a {
   display: block;
   text-align: center;
-  font-size: 16px;
+  font-size: 18px;
+  font-weight: normal;
   color: white;
   text-decoration: none;
   padding: 10px 20px;
@@ -42,7 +43,6 @@ div.top-info {
   top: 20px;
   left: 20px;
   bottom: 186px;
-  float: left;
   width: 110px;
   height: 166px;
   background-color: #888;
@@ -51,9 +51,11 @@ div.top-info {
 .top-info .info-block {
   position: absolute;
   top: 20px;
-  right: 20px;
-  width: 150px;
+  right: 10px;
+  width: 130px;
   height: 166px;
+  margin: 0;
+  padding: 0;
 }
 
 .info-block .bottom-block {

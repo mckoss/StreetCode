@@ -1,0 +1,111 @@
+ol, ul {
+  list-style: none;
+}
+
+a img {
+  border: none;
+}
+
+html {
+  background: #1b1a18;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    font-size: 12px;
+    background: #1b1a18;
+    color: black;
+    background-image: url("../images/background.png");
+}
+
+.container{
+   background: white;
+}
+#mystreet{
+  font-weight:bold;
+}
+#logo{
+  margin-left:40px;
+  
+}
+
+#menu{ 
+  margin-top:81px;
+  font-size: 14px;
+  float:left;
+}
+
+#menu ul{
+margin-left:-40px;
+list-style-type:none;
+
+}
+
+#menu li {
+text-decoration:none;
+display:inline;
+padding: 10.5px 11px;
+color: black;
+}
+
+#mystreet{
+  border:1px solid #FF9016;
+  padding:10px 10px 10px 10px;
+  
+}
+
+#buttonz{
+  margin-top:20px;
+  margin-left:-32px;
+}
+
+#buttonz ul{
+  list-style-type:none;
+}
+
+#buttonz li {
+  text-decoration:none;
+  padding-top: 10px;
+}
+
+#description{
+  width:426px;
+  margin-top:60px;
+  margin-left:20px;
+  line-height:24px;
+  font-size: 12px;
+}
+
+#description h4{
+  line-height:24px;
+  font-size: 18px;
+}
+
+#footer{
+margin-left:50px;
+margin-bottom:15px;
+margin-top:20px;
+}
+
+#footer img{
+margin-left:10px;
+}
+
+#tagline{
+  margin-bottom:15px;
+}
+
+#moneytagline{
+  margin-top:59px;  
+}
+
+#motto{
+  font-size:18px;
+  font-weight:normal;
+}
+#copyright{
+  margin-left: 200px;
+  margin-top:20px;
+  margin-bottom:40px;
+}
+

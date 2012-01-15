@@ -9,6 +9,17 @@ div.top-info {
 
 }
 
+#page-container a {
+  display: block;
+  text-align: center;
+  font-size: 16px;
+  color: white;
+  text-decoration: none;
+  padding: 10px 20px;
+  margin-bottom: 5px;
+  background-color: #ff9016;
+}
+
 .top-info .nickname {
   font-weight: bold;
   font-size: 16px;

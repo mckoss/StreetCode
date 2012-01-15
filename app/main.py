@@ -55,7 +55,7 @@ class Client(JSONModel):
     fullName = db.StringProperty()
     story  = db.TextProperty()
     sponsor  = db.ReferenceProperty(Sponsor)
-    imageURL = db.LinkProperty()
+    imageURL = db.StringProperty()
     shortCode = db.StringProperty()
 
     def set_defaults(self):

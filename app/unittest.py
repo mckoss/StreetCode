@@ -2,16 +2,38 @@ import main
 import simplejson as json
 import logging
 import os
+import random
+import string
 
 from google.appengine.ext import db
 from google.appengine.ext import webapp
 from google.appengine.api import users
 
-
+class TestDataHandler(webapp.RequestHandler):
+      def get(self):
+          
+          sponsor = main.Sponsor()
+          sponsor.name='Test Sponsor'
+          sponsor.url= 'http://www.redcross.com'
+          sponsor.address= '123 Streeet Ave. S, Blah WA,USA'
+          sponsor.phone= '(555)555-555'
+          sponsor.put()
+          self.response.out.write("<p>Created  Sponsor:[%s] </p>"%(sponsor.key().id_or_name()))   
+          for i in range(0,5):
+            test_client = main.Client()
+            test_client.displayName = "Bob %i"%i
+            test_client.fullName = "Bob the builder"
+            test_client.story  = "story"*25
+            test_client.sponsor  = db.get(sponsor.key())
+            test_client.imageURL = "http://www.test.org/img%i.png"%i
+            test_client.shortCode = ''.join(random.choice(string.ascii_uppercase + string.digits) for x in range(10))
+            test_client.put()
+            self.response.out.write("<p>Created Client:[%s]</p>"%(test_client.key().id_or_name()))   
+      
 class TestHandler(webapp.RequestHandler):
       def get(self):
-          logging.debug('Running unit tests')
-          self.testEntityCD()
+          logging.debug('Loading test data')
+
       def testEntityCD(self):      
             logging.debug('Testing entity create & delete...')
             sponsor = main.Sponsor()

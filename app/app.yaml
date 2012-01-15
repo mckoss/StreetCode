@@ -1,5 +1,5 @@
 application: streetcode-sw
-version: andre
+version: mike
 runtime: python
 api_version: 1
 
@@ -15,3 +15,15 @@ handlers:
 
 - url: .*
   script: main.py
+
+skip_files:
+- ^app\.yaml$
+- ^index\.yaml$
+- ^.*\#$
+- ^.*~$
+- ^.*\.py[co]$
+- ^(.*/)?\.
+- ^.*\.bak$
+- ^.*\.orig$
+- ^.*/TAGS$
+- ^js/libs/jquery-mobile/demos

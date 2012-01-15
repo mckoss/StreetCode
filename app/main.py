@@ -5,6 +5,8 @@ import os
 import unittest
 import settings
 
+logging.info("unittest: %s" % unittest.__file__)
+
 from google.appengine.ext import db
 from google.appengine.ext import webapp
 from google.appengine.api import users

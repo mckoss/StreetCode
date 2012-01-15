@@ -28,6 +28,14 @@ namespace.module('streetcode.client', function (exports, requires) {
     }  
     
     
+=======
+
+    var ClientList = Backbone.Collection.extend({
+        model: Client,
+        url: '/data/client'
+    });
+
+>>>>>>> ffdbbeee166a46f2933a92aaf9311e4665c89b04
     var Client = Backbone.Model.extend({
         url: function() {return '/data/client/' + this.id}
     });
@@ -42,16 +50,20 @@ namespace.module('streetcode.client', function (exports, requires) {
 
         // The ClientView listens for changes to its model, re-rendering.
         initialize: function() {
-            // STUB
-            var id = location.pathname.split('/').pop().slice(1)
-            this.model = new Client({id: id});
-            this.model.bind('change', this.render, this);
-            this.model.fetch();
+            var shortCode = location.pathname.split('/').pop().slice(1);
+            var self = this;
+            $.ajax({
+                url: '/data/client?shortCode=' + shortCode,
+                dataType: 'json',
+                success: function (data) {
+                    self.client = data[0];
+                    self.render();
+                }});
         },
 
         // Re-render the contents of the todo item.
         render: function() {
-            $(this.el).html(ClientMobileView.template(this.model.toJSON()));
+            $(this.el).html(ClientMobileView.template(this.client));
             // Force page to be "re-enhanced" by jQuery mobile
             $('#client-page').trigger('create');
             return this;

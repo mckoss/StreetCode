@@ -62,7 +62,7 @@ namespace.module('streetcode.client', function (exports, requires) {
         render: function() {
             $(this.el).append(ClientMobileView.template(this.client));
             // Force page to be "re-enhanced" by jQuery mobile
-            //$('#scan-landing').trigger('create');
+            $('#scan-landing').trigger('create');
             $.mobile.changePage("#scan-landing");
             return this;
         },

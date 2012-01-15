@@ -113,7 +113,6 @@ class ListHandler(UserHandler):
 # a specific ID.
 class ItemHandler(UserHandler):
     def get(self,model_name,id):
-        logging.info("IN GET: %s"%str(self.request.get_all()))
         item = self.get_item(model_name, id)
         if not item:
             return

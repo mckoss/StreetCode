@@ -113,13 +113,13 @@ class ListHandler(UserHandler):
 # a specific ID.
 class ItemHandler(UserHandler):
     def get(self,model_name,id):
+        logging.info("IN GET: %s"%str(self.request.get_all()))
         item = self.get_item(model_name, id)
         if not item:
             return
         json_response(self.response, item.get_dict())
         
     def get_item(self, model_name, id):
-        logging.info("IH: %s" % id)
         if model_name not in handle_models:
             self.error(404)
             return None
@@ -164,6 +164,8 @@ def main():
         # REST API requires two handlers - one with an ID and one without.
         ('/data/(\w+)', ListHandler),
         ('/data/(\w+)/(\d+)', ItemHandler),
+        #load sample data
+        ('/testdata',unittest.TestDataHandler),
         #unit test hamdler
         ('/test',unittest.TestHandler),
     ], debug=True)

@@ -1,0 +1,46 @@
+div.top-info {
+  font-family: Helvetica;
+  font-size: 12px;
+  position: relative;
+  background-color: #ccc;
+  margin: auto;
+  width: 80%;
+  height: 206px;
+
+}
+
+.top-info .nickname {
+  font-weight: bold;
+  font-size: 16px;
+}
+
+.top-info .city {
+  font-size: 12px;
+}
+
+.top-info .portrait {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  bottom: 186px;
+  float: left;
+  width: 110px;
+  height: 166px;
+  background-color: #888;
+}
+
+.top-info .info-block {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  width: 150px;
+  height: 166px;
+}
+
+.info-block .bottom-block {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+}
+
+div.info-block .nickname { font-size: 16px; font-weigth: bold; }

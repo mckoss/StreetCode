@@ -32,6 +32,8 @@ namespace.module('streetcode.client', function (exports, requires) {
         // Re-render the contents of the todo item.
         render: function() {
             $(this.el).html(ClientMobileView.template(this.model.toJSON()));
+            // Force page to be "re-enhanced" by jQuery mobile
+            $('#client-page').trigger('create');
             return this;
         },
 

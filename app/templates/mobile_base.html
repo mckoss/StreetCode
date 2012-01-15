@@ -1,11 +1,15 @@
 {% extends "base.html" %}
 {% block head %}
-    <script src="/js/libs/namespace-plus.js"></script>
-    <script src="/js/libs/json2.js"></script>
-    <script src="/js/libs/jquery.js"></script>
-    <script src="/js/libs/underscore.js"></script>
-    <script src="/js/libs/backbone.js"></script>
-    <script src="/js/main.js"></script>
-    <script src="/js/client.js"></script>
-    {% block head_extra %}{% endblock %}
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="/js/libs/jquery-mobile/jquery.mobile-1.0.css" />
+  <script src="/js/libs/namespace-plus.js"></script>
+  <script src="/js/libs/json2.js"></script>
+  <script src="/js/libs/jquery.js"></script>
+  <script src="/js/libs/jquery-mobile/jquery.mobile-1.0.js"></script>
+  <script src="/js/libs/underscore.js"></script>
+  <script src="/js/libs/backbone.js"></script>
+  <script src="/js/main.js"></script>
+  <script src="/js/client.js"></script>
+
+  {% block head_extra %}{% endblock %}
 {% endblock %}

@@ -11,10 +11,12 @@ JSON_MIMETYPE_CS = JSON_MIMETYPE + '; charset=utf-8'
 
 SIMPLE_TYPES = (int, long, float, bool, dict, basestring, list)
 
+DEPTH_MAX = 5
+
 
 class JSONModel(db.Model):
     """ Conversion of model to and from JSON """
-    def get_dict(self):
+    def get_dict(self, depth=1):
         result = {'id': self.key().id_or_name()}
 
         for key in self.properties().iterkeys():
@@ -29,7 +31,10 @@ class JSONModel(db.Model):
             elif isinstance(value, db.GeoPt):
                 result[key] = {'lat': value.lat, 'lon': value.lon}
             elif isinstance(value, db.Model):
-                result[key] = value.key().id_or_name()
+                if depth == DEPTH_MAX:
+                    result[key] = {'status': 'depth/max'}
+                else:
+                    result[key] = value.get_dict(depth+1)
             else:
                 raise ValueError('cannot encode ' + repr(prop))
 

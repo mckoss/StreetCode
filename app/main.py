@@ -104,13 +104,27 @@ class MainHandler(UserHandler):
              }))
 
 
+class ClientHandler(UserHandler):
+    templates = {'card':'client_card.html','story':'client_story.html','sign':'sign.html'}
+    def get(self,template_type,id):
+        client_template = ClientHandler.templates[template_type]
+        self.response.out.write(template.render("templates/%s"%client_template,
+                                                {'id': id,
+                                                 'SITE_NAME': settings.SITE_NAME}
+                                                ))
+
 class ProfileHandler(UserHandler):
     def get(self, id):
         self.response.out.write(template.render("templates/mobile_profile.html",
                                                 {'id': id,
                                                  'SITE_NAME': settings.SITE_NAME}
                                                 ))
-
+class DesktopProfileHandler(UserHandler):
+    def get(self, id):
+        self.response.out.write(template.render("templates/desktop_profile.html",
+                                                {'id': id,
+                                                 'SITE_NAME': settings.SITE_NAME}
+                                                ))
 
 class ListHandler(UserHandler):
     def get_model(self, model_name):
@@ -224,8 +238,9 @@ handle_models = {'client': Client,'donor':Donor,'sponsor':Sponsor,'scan':Scan,'t
 def main():
     application = webapp.WSGIApplication([
         ('/', MainHandler),
-        ('/1(\w+)', ProfileHandler),
 
+        ('/1(\w+)', ProfileHandler),
+        ('/client/(\w+)/(\d+)', ClientHandler),
         # REST API requires two handlers - one with an ID and one without.
         ('/data/(\w+)', ListHandler),
         ('/data/(\w+)/(\d+)', ItemHandler),

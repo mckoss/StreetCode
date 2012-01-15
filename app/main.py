@@ -3,6 +3,8 @@ import simplejson as json
 import logging
 import os
 import test_streetcode
+
+import demo
 import settings
 
 from google.appengine.ext import db
@@ -246,6 +248,9 @@ def main():
         ('/data/(\w+)/(\d+)', ItemHandler),
         #load sample data
         ('/testdata',test_streetcode.TestDataHandler),
+        
+        #load test data
+        ('/demodata',demo.DemoDataHandler),
         #unit test hamdler
         ('/test',test_streetcode.TestHandler),
     ], debug=True)

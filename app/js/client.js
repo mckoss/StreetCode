@@ -9,23 +9,24 @@ namespace.module('streetcode.client', function (exports, requires) {
     function initProfile() {
         ClientMobileView.template =  _.template($('#client-view-template').html());
         exports.app = new ClientMobileView();
+        
     }
-
-    function initCard() {
+    
+    function initCard() {        
         ClientCardView.template =  _.template($('#client-view-template').html());
         exports.app = new ClientCardView();
     }
-
-    function initSign() {
-        ClientCardView.template =  _.template($('#client-view-template').html());
+    
+    function initSign() {        
+        ClientSignView.template =  _.template($('#client-view-template').html());
         exports.app = new ClientSignView();
     }
-
-    function initStory() {
+    
+    function initStory() {        
         ClientStoryView.template =  _.template($('#client-view-template').html());
         exports.app = new ClientStoryView();
-    }
-
+    }  
+    
 
     var ClientList = Backbone.Collection.extend({
         model: Client,
@@ -41,14 +42,13 @@ namespace.module('streetcode.client', function (exports, requires) {
 
         // The DOM events specific to an item.
         events: {
-            'click .buy': 'giftIt'
+            'click .buy': 'buyIt'
         },
 
         // The ClientView listens for changes to its model, re-rendering.
         initialize: function() {
             var shortCode = location.pathname.split('/').pop().slice(1);
             var self = this;
-            // HACK
             $.ajax({
                 url: '/data/client?shortCode=' + shortCode,
                 dataType: 'json',
@@ -66,12 +66,12 @@ namespace.module('streetcode.client', function (exports, requires) {
             return this;
         },
 
-        giftIt: function() {
+        buyIt: function() {
             alert("buying...");
         }
 
     });
-
+    
     var ClientCardView = Backbone.View.extend({
         el:  "#client-card-view",
 
@@ -106,7 +106,7 @@ namespace.module('streetcode.client', function (exports, requires) {
         }
 
     });
-
+    
     var ClientSignView = Backbone.View.extend({
         el:  "#client-sign-view",
 
@@ -130,7 +130,7 @@ namespace.module('streetcode.client', function (exports, requires) {
             var shortCode = encodeURIComponent('http://'+location.hostname+'/1'+dict['shortCode']);
             var qrUrl = "http://chart.apis.google.com/chart?cht=qr&chs=500x500&chld=H|0&chl="+shortCode;
             dict['qrUrl']=qrUrl;
-            $(this.el).html(ClientCardView.template(dict));
+            $(this.el).html(ClientSignView.template(dict));
             // Force page to be "re-enhanced" by jQuery mobile
             $('#client-page').trigger('create');
             return this;
@@ -141,7 +141,7 @@ namespace.module('streetcode.client', function (exports, requires) {
         }
 
     });
-
+    
     var ClientStoryView = Backbone.View.extend({
         el:  "#client-story-view",
 
@@ -165,7 +165,7 @@ namespace.module('streetcode.client', function (exports, requires) {
             var shortCode = encodeURIComponent('http://'+location.hostname+'/1'+dict['shortCode']);
             var qrUrl = "http://chart.apis.google.com/chart?cht=qr&chs=100x100&chld=H|0&chl="+shortCode;
             dict['qrUrl']=qrUrl;
-            $(this.el).html(ClientCardView.template(dict));
+            $(this.el).html(ClientStoryView.template(dict));
             // Force page to be "re-enhanced" by jQuery mobile
             $('#client-page').trigger('create');
             return this;

@@ -11,8 +11,10 @@
 {% block body %}
   <div id='client-view'></div>
   <script type="text/template" id="client-view-template">
-    <div>Name</div>
-    <div>Story</div>
+    <p>Nickname: <%= displayName %></p>
+    <p>Full Name: <%= fullName %></p>
+    <div>Story: <%= story %></div>
+    <p>Short Code: <%= shortCode %></p>
     <div>Buttons</div>
   </script>
 {% endblock %}

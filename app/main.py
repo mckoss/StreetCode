@@ -94,23 +94,37 @@ class ListHandler(UserHandler):
         if model is None:
             return
         
-        query = model.all() 
-        props = model.properties()
-        for argument in self.request.arguments():
-            value = props.get(argument)
-            queryValue = self.request.get(argument)
-            if isinstance(value, db.ReferenceProperty):
-                ref_model = handle_models[argument]
-                ref_entity = ref_model.get_by_id(int(queryValue))
-                query.filter('%s = '%argument,ref_entity)
+        query = model.all()
+        
+        for property_name in self.request.arguments():
+            paramValue = self.request.get(property_name)
+            if '*' == paramValue[-1]:
+                self.filter_query_by_prefix(query,model,property_name)
             else:
-                query.filter('%s = '%argument,queryValue)    
-            
+                self.filter_query_by(query,model,property_name)
+        
         results = query.fetch(1000)
         logging.info("Found [%i] %s's"%(len(results),model_name))
         items = [item.get_dict() for item in results]
         json_response(self.response, items)
+        
+    def filter_query_by_prefix(self,query,model,property_name):
+        prefix = str(self.request.get(property_name)[:-1])#don't include *
+        logging.info("Prefix is %s"%prefix)
+        last_char = chr(ord(prefix[-1])+1)
+        query.filter("%s >= " % property_name, prefix).filter("%s < " % property_name, "%s%s"%(prefix,last_char))
 
+    def filter_query_by(self,query,model,property_name):
+        props = model.properties()
+        value = props.get(property_name)
+        paramValue = self.request.get(property_name)
+        if isinstance(value, db.ReferenceProperty):
+            ref_model = handle_models[property_name]
+            ref_entity = ref_model.get_by_id(int(paramValue))
+            query.filter('%s = '%property_name,ref_entity)
+        else:
+            query.filter('%s = '%property_name,paramValue)
+                
     # create an item
     def post(self, model_name):
         model = self.get_model(model_name)

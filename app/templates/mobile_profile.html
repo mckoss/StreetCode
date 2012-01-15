@@ -30,9 +30,30 @@
             </div>
           </div>
         </div>
-        <a href="#story" data-transition="pop">I'll pop</a>
+        <a href="#story" data-transition="pop">Story</a>
       </div>
     </div>
+
+    <div id="story" data-role="page">
+      <div data-theme='d' data-role="header"><h1>STREET<b>CODE</b></h1></div>
+      <div data-role="content">
+        <div class="top-info">
+          <img class="portrait" src="<%= imageURL %>"/>
+          <div class="info-block">
+            <div class="nickname"><%= displayName %></div>
+            <div class="city">Seattle, WA</div>
+            <div class="bottom-block">
+              <div class="sponsor">Sponsor Organization:</div>
+              <div class="nickname"><%= sponsor.name %></div>
+              <img class="help" onclick="alert('ok');" src="/images/help-button.png"/>
+            </div>
+          </div>
+        </div>
+        <div class="story"><%= story %></div>
+
+      </div>
+    </div>
+
 
   </script>
 {% endblock %}

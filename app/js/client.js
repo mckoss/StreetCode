@@ -6,15 +6,10 @@ namespace.module('streetcode.client', function (exports, requires) {
     function initProfile() {
         ClientMobileView.template =  _.template($('#client-view-template').html());
         exports.app = new ClientMobileView();
-        
+
         ClientCardView.template =  _.template($('#client-view-template').html());
         exports.app = new ClientCardView();
     }
-
-    var ClientList = Backbone.Collection.extend({
-        model: Client,
-        url: '/data/client'
-    });
 
     var Client = Backbone.Model.extend({
         url: function() {return '/data/client/' + this.id}
@@ -25,13 +20,14 @@ namespace.module('streetcode.client', function (exports, requires) {
 
         // The DOM events specific to an item.
         events: {
-            'click .buy': 'buyIt'
+            'click .buy': 'giftIt'
         },
 
         // The ClientView listens for changes to its model, re-rendering.
         initialize: function() {
             var shortCode = location.pathname.split('/').pop().slice(1);
             var self = this;
+            // HACK
             $.ajax({
                 url: '/data/client?shortCode=' + shortCode,
                 dataType: 'json',
@@ -49,12 +45,12 @@ namespace.module('streetcode.client', function (exports, requires) {
             return this;
         },
 
-        buyIt: function() {
+        giftIt: function() {
             alert("buying...");
         }
 
     });
-    
+
     var ClientCardView = Backbone.View.extend({
         el:  "#client-card-view",
 

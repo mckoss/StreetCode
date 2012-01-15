@@ -6,6 +6,7 @@
       namespace.streetcode.client.initCard();
   });
   </script>
+  <link href="/css/clientcard.css" rel="stylesheet" type="text/css"/>
 {% endblock %}
 
 {% block body %}
@@ -16,9 +17,11 @@
   </div>
 
   <script type="text/template" id="client-view-template">
-      <div id="instructions"><b>Instructions:</b>Tail bacon meatball turducken shankle frankfurter.
-      Cow shank ham hock meatball. Filet mignon bresaola flank jowl, pastrami spare ribs pig meatloaf.</div>
-      <img src="<%= qrUrl %>"/>
-      <div><input type="button" value="Help Me"/></div>
+      <div id="clientcard">
+        <div id="instructions"><b>Instructions:</b>Tail bacon meatball turducken shankle frankfurter.
+        Cow shank ham hock meatball. Filet mignon bresaola flank jowl, pastrami spare ribs pig meatloaf.</div>
+        <img src="<%= qrUrl %>"/>
+        <div><input type="button" value="Help Me"/></div>
+      </div>
   </script>
 {% endblock %}

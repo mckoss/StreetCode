@@ -39,12 +39,12 @@ class DemoDataHandler(webapp.RequestHandler):
           kodiac.imageURL = "/images/clients/Kodiac.png"
           kodiac.sponsor = self.sponsors[0]
           
-          kodiac_story="Meet Chris. His friends call him \"Kodiac.\""
-          kodiac_story+="He has a bear of a personality and always hugs instead of shaking hands."
-          kodiac_story+="Moved to Seattle this past fall, but have been unable to find a job or steady housing."
-          kodiac_story+="He is currently living in a men's shelter that doesn't have a kitchen or any refrigeration."
-          kodiac_story+="The food stamps he gets can only be used for dry foods - everything which he has to carry in his backpack."
-          kodiac_story+="He wants a hot meal and a new winter coat. You can help."
+          kodiac_story= "<p>Meet Chris. His friends call him \"Kodiac\".</p>"
+          kodiac_story+="<p>He has a bear of a personality and always hugs instead of shaking hands.  "
+          kodiac_story+="Moved to Seattle this past fall, but have been unable to find a job or steady housing.  "
+          kodiac_story+="He is currently living in a men's shelter that doesn't have a kitchen or any refrigeration. "
+          kodiac_story+="<p>The food stamps he gets can only be used for dry foods - everything which he has to carry in his backpack.  "
+          kodiac_story+="He wants a hot meal and a new winter coat.</p><p> You can help.</p>"
           
           kodiac.story=kodiac_story
           

@@ -25,12 +25,12 @@ class TestDataHandler(webapp.RequestHandler):
           self.response.out.write("<p>Created  Sponsor:[%s] </p>"%(sponsor.key().id_or_name()))   
           for i in range(0,5):
             test_client = main.Client()
-            test_client.displayName = "Bob %i"%i
-            test_client.fullName = "Bob the builder"
+            test_client.displayName = "Bob "+randomDigits()
+            test_client.fullName = "Bob the builder "+randomDigits()
             test_client.story  = "story"*25
             test_client.sponsor  = db.get(sponsor.key())
             test_client.imageURL = "http://www.test.org/img%i.png"%i
-            test_client.shortCode = randomDigits()
+            test_client.shortCode = randomDigits(3)
             test_client.put()
             self.response.out.write("<p>Created Client:[%s]</p>"%(test_client.key().id_or_name()))   
       

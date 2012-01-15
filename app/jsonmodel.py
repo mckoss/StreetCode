@@ -29,8 +29,7 @@ class JSONModel(db.Model):
             elif isinstance(value, db.GeoPt):
                 result[key] = {'lat': value.lat, 'lon': value.lon}
             elif isinstance(value, db.Model):
-                # BUG: Should just be a key - not the external model in place
-                result[key] = value.get_dict()
+                result[key] = value.key().id_or_name()
             else:
                 raise ValueError('cannot encode ' + repr(prop))
 

@@ -15,30 +15,31 @@ def randomDigits(digits=10):
 
 class TestDataHandler(webapp.RequestHandler):
       def get(self):
-          
+
           sponsor = main.Sponsor()
           sponsor.name='Test Sponsor '+randomDigits()
           sponsor.url= 'http://www.redcross.com/'+randomDigits()
           sponsor.address= '123 Streeet Ave. S, Blah WA,USA'
           sponsor.phone= '(555)555-555'
           sponsor.put()
-          self.response.out.write("<p>Created  Sponsor:[%s] </p>"%(sponsor.key().id_or_name()))   
+          self.response.out.write("<p>Created  Sponsor:[%s] </p>"%(sponsor.key().id_or_name()))
           for i in range(0,5):
             test_client = main.Client()
+            test_client.set_defaults()
             test_client.displayName = "Bob "+randomDigits()
             test_client.fullName = "Bob the builder "+randomDigits()
             test_client.story  = "story"*25
             test_client.sponsor  = db.get(sponsor.key())
             test_client.imageURL = "http://www.test.org/img%i.png"%i
-            test_client.shortCode = randomDigits(3)
             test_client.put()
-            self.response.out.write("<p>Created Client:[%s]</p>"%(test_client.key().id_or_name()))   
-      
+            self.response.out.write("<p>Created Client:[%s]</p>"%(test_client.key().id_or_name()))
+
 class TestHandler(webapp.RequestHandler):
       def get(self):
           logging.debug('Loading test data')
+          self.testEntityCD()
 
-      def testEntityCD(self):      
+      def testEntityCD(self):
             logging.debug('Testing entity create & delete...')
             sponsor = main.Sponsor()
             sponsor.name='Test Sponsor'
@@ -49,12 +50,12 @@ class TestHandler(webapp.RequestHandler):
             assert sponsor.key()
 
             test_client = main.Client()
+            test_client.set_defaults()
             test_client.displayName = "Bob"
             test_client.fullName = "Bob the builder"
             test_client.story  = "story"*256
             test_client.sponsor  = db.get(sponsor.key())
             test_client.imageURL = "http://www.test.org/img.png"
-            test_client.shortCode = "12345"
             test_client.put()
             assert test_client.key()
 
@@ -64,14 +65,14 @@ class TestHandler(webapp.RequestHandler):
             test_donor.phone = "(206)555-5555"
             test_donor.put()
             assert test_donor.key()
-      
+
             test_user = main.User()
             test_user.user = users.get_current_user()
             test_user.isAdmin = True
             test_user.sponsor = db.get(sponsor.key())
             test_user.put()
             assert test_user.key()
-            
+
             tx = main.Transaction()
             fromAccount = 'stripe'
             toAccount = '%s/%s'%(sponsor.key(),test_client.key())
@@ -80,12 +81,12 @@ class TestHandler(webapp.RequestHandler):
             note = 'A DONATion From Bob'
             confirm = False
             tx.put()
-            
+
             #clean up
             tx.delete()
             test_user.delete()
             test_client.delete()
             sponsor.delete()
             test_donor.delete()
-            
+
             self.response.out.write("<html><body><p>Test Passed!</p></body></html>")

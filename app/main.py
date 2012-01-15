@@ -20,6 +20,34 @@ class Sponsor(JSONModel):
     address= db.PostalAddressProperty()
     phone= db.PhoneNumberProperty()
 
+class Accumulator(db.Model):
+    counter = db.IntegerProperty(default=0)
+
+    @classmethod
+    def get_unique(cls):
+        def increment_counter(key):
+            obj = db.get(key)
+            obj.counter += 1
+            obj.put()
+            return obj.counter
+
+        acc = db.GqlQuery("SELECT * FROM Accumulator").get()
+        if acc is None:
+            acc = Accumulator()
+            acc.put()
+        return db.run_in_transaction(increment_counter, acc.key())
+
+
+short_chars = "23456789ABCDEFGHJKLMNPQRSTUVWXYZ"
+
+def int_to_sid(i):
+    s = ''
+    while i != 0:
+        b = i % len(short_chars)
+        s = short_chars[b] + s
+        i = i / len(short_chars)
+    return s
+
 class Client(JSONModel):
     displayName = db.StringProperty()
     fullName = db.StringProperty()
@@ -27,6 +55,10 @@ class Client(JSONModel):
     sponsor  = db.ReferenceProperty(Sponsor)
     imageURL = db.LinkProperty()
     shortCode = db.StringProperty()
+
+    def set_defaults(self):
+        self.shortCode =int_to_sid(Accumulator.get_unique())
+
 
 class Donor(JSONModel):
     name= db.StringProperty()
@@ -93,8 +125,8 @@ class ListHandler(UserHandler):
         model = self.get_model(model_name)
         if model is None:
             return
-        
-        query = model.all() 
+
+        query = model.all()
         props = model.properties()
         for argument in self.request.arguments():
             value = props.get(argument)
@@ -104,8 +136,8 @@ class ListHandler(UserHandler):
                 ref_entity = ref_model.get_by_id(int(queryValue))
                 query.filter('%s = '%argument,ref_entity)
             else:
-                query.filter('%s = '%argument,queryValue)    
-            
+                query.filter('%s = '%argument,queryValue)
+
         results = query.fetch(1000)
         logging.info("Found [%i] %s's"%(len(results),model_name))
         items = [item.get_dict() for item in results]
@@ -116,6 +148,11 @@ class ListHandler(UserHandler):
         model = self.get_model(model_name)
         if model is None:
             return
+
+        # HACK
+        if hasattr(model, 'set_defaults'):
+            model.set_defaults()
+
         data = json.loads(self.request.body)
         item = model(user_id=self.user_id)
         item.set_dict(data)
@@ -131,7 +168,7 @@ class ItemHandler(UserHandler):
         if not item:
             return
         json_response(self.response, item.get_dict())
-        
+
     def get_item(self, model_name, id):
         logging.info('args: %s'%self.request.arguments())
         if model_name not in handle_models:
@@ -173,7 +210,7 @@ handle_models = {'client': Client,'donor':Donor,'sponsor':Sponsor,'scan':Scan,'t
 def main():
     application = webapp.WSGIApplication([
         ('/', MainHandler),
-        ('/go/(\w+)', ProfileHandler),
+        ('/1(\w+)', ProfileHandler),
 
         # REST API requires two handlers - one with an ID and one without.
         ('/data/(\w+)', ListHandler),

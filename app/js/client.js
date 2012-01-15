@@ -9,24 +9,24 @@ namespace.module('streetcode.client', function (exports, requires) {
     function initProfile() {
         ClientMobileView.template =  _.template($('#client-view-template').html());
         exports.app = new ClientMobileView();
-        
+
     }
-    
-    function initCard() {        
+
+    function initCard() {
         ClientCardView.template =  _.template($('#client-view-template').html());
         exports.app = new ClientCardView();
     }
-    
-    function initSign() {        
+
+    function initSign() {
         ClientSignView.template =  _.template($('#client-view-template').html());
         exports.app = new ClientSignView();
     }
-    
-    function initStory() {        
+
+    function initStory() {
         ClientStoryView.template =  _.template($('#client-view-template').html());
         exports.app = new ClientStoryView();
-    }  
-    
+    }
+
 
     var ClientList = Backbone.Collection.extend({
         model: Client,
@@ -38,7 +38,7 @@ namespace.module('streetcode.client', function (exports, requires) {
     });
 
     var ClientMobileView = Backbone.View.extend({
-        el:  "#client-view",
+        el:  "#page-container",
 
         // The DOM events specific to an item.
         events: {
@@ -60,9 +60,10 @@ namespace.module('streetcode.client', function (exports, requires) {
 
         // Re-render the contents of the todo item.
         render: function() {
-            $(this.el).html(ClientMobileView.template(this.client));
+            $(this.el).append(ClientMobileView.template(this.client));
             // Force page to be "re-enhanced" by jQuery mobile
-            $('#client-page').trigger('create');
+            //$('#scan-landing').trigger('create');
+            $.mobile.changePage("#scan-landing");
             return this;
         },
 
@@ -71,7 +72,7 @@ namespace.module('streetcode.client', function (exports, requires) {
         }
 
     });
-    
+
     var ClientCardView = Backbone.View.extend({
         el:  "#client-card-view",
 
@@ -106,7 +107,7 @@ namespace.module('streetcode.client', function (exports, requires) {
         }
 
     });
-    
+
     var ClientSignView = Backbone.View.extend({
         el:  "#client-sign-view",
 
@@ -141,7 +142,7 @@ namespace.module('streetcode.client', function (exports, requires) {
         }
 
     });
-    
+
     var ClientStoryView = Backbone.View.extend({
         el:  "#client-story-view",
 

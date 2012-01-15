@@ -43,7 +43,7 @@ namespace.module('streetcode.client', function (exports, requires) {
 
     });
     
-    var ClientMobileView = Backbone.View.extend({
+    var ClientCardView = Backbone.View.extend({
         el:  "#client-card-view",
 
         // The DOM events specific to an item.

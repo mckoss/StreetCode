@@ -1,16 +1,20 @@
 namespace.module('streetcode.client', function (exports, requires) {
     exports.extend({
         'initProfile': initProfile,
+        'initCard': initCard,
     });
 
     function initProfile() {
         ClientMobileView.template =  _.template($('#client-view-template').html());
         exports.app = new ClientMobileView();
         
+    }
+    
+    function initCard() {        
         ClientCardView.template =  _.template($('#client-view-template').html());
         exports.app = new ClientCardView();
     }
-
+    
     var Client = Backbone.Model.extend({
         url: function() {return '/data/client/' + this.id}
     });
@@ -69,7 +73,7 @@ namespace.module('streetcode.client', function (exports, requires) {
             var shortCode = encodeURIComponent('http://'+location.hostname+'/1'+dict['shortCode']);
             var qrUrl = "http://chart.apis.google.com/chart?cht=qr&chs=300x300&chld=H|0&chl="+shortCode;
             dict['qrUrl']=qrUrl;
-            $(this.el).html(ClientMobileView.template(dict));
+            $(this.el).html(ClientCardView.template(dict));
             // Force page to be "re-enhanced" by jQuery mobile
             $('#client-page').trigger('create');
             return this;

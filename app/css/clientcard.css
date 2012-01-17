@@ -1,0 +1,71 @@
+ol, ul {
+  list-style: none;
+}
+
+a img {
+  border: none;
+}
+
+html {
+  background: #1b1a18;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    font-size: 12px;
+    background: #1b1a18;
+    color: black;
+}
+
+#clientcard{
+  position:relative;
+  top:80px;
+  background: white;
+  width:320px;
+  height:198px;
+}
+
+#clientimg{
+  position:absolute;
+  top: 15px;
+  left: 15px;
+}
+#logo{
+  position:absolute;
+  left:205px;
+}
+#qrimage{
+  position:absolute;
+  top: 90px;
+  left: 205px;
+   
+}
+#clientinfo{
+  position:absolute;
+  top: 10px;
+  left: 150px;
+  width: 100px;
+  height: 80px;
+   
+}
+
+h4{
+  font-size: 32px;
+}
+.column{
+  width:100px;
+  padding-right:15px;
+}
+.columnright{
+  width:100px;
+  float:right;
+  padding-right:15px;
+  border:1px solid red;
+}
+span{
+  display:block;
+  margin-top:5px;
+}
+.bigun{
+  font-size:18px;
+}

@@ -7,7 +7,9 @@ instructions.
   [gtug-ae-bootcamp]: https://github.com/mckoss/gtug-ae-bootcamp
   [setup.md]: StreetCode/blob/master/setup.md
 
-<img style="float:right;" src="//cloud.github.com/downloads/mckoss/StreetCode/screen1.png">
+<img src="//cloud.github.com/downloads/mckoss/StreetCode/screen1.png">
+<img src="//cloud.github.com/downloads/mckoss/StreetCode/screen2.png">
+<img src="//cloud.github.com/downloads/mckoss/StreetCode/screen3.png">
 
 # Startup Weekend Award-Winner
 

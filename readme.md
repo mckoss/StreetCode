@@ -10,7 +10,7 @@ instructions.
 # Startup Weekend Award-Winner
 
 Street Code won the [Best Market Validation](http://www.geekwire.com/2012/greg-gottesman-wins-startup-weekend-home-security-product-iron-blanket)
-award (2nd place) and most-likely to have an impact award from StartWeekend participants.
+award (2nd place) and most-likely to have an impact award from Start Weekend participants.
 
 We're enthusastic about the response to our prototype and product design - so our team is committed to pushing this
 project forward to a full scale trial.

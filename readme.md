@@ -7,7 +7,7 @@ instructions.
   [gtug-ae-bootcamp]: https://github.com/mckoss/gtug-ae-bootcamp
   [setup.md]: StreetCode/blob/master/setup.md
 
-# Best Market Validation
+# Startup Weekend Award-Winner
 
 Street Code won the [Best Market Validation](http://www.geekwire.com/2012/greg-gottesman-wins-startup-weekend-home-security-product-iron-blanket)
 award (2nd place) and most-likely to have an impact award from StartWeekend participants.

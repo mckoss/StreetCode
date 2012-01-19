@@ -20,7 +20,7 @@ project forward to a full scale trial.
 We are seeking partners and helpers:
 
 1. We are looking for potential program *Sponsors* to administer a pilot test serving their homeless clients.
-2. We could use more help in developing our software and realizing the full extend of our design work over the
+2. We could use more help in developing our software and realizing the full extent of our design work over the
    weekend.  If you have experience with HTML/CSS, JavaScript, Python, or App Engine, we'd love to have your help.
 
 We meet each Wednesday night (beginning January 25th, 2011) to coordinate activities of our working group.  You can

@@ -41,7 +41,8 @@ class ListHandler(UserHandler):
         if model is None:
             return
 
-        # HACK
+        # HACK - How else to initialize properties ONLY in the case
+        # where a model is being created.
         if hasattr(model, 'set_defaults'):
             model.set_defaults()
 
@@ -101,12 +102,10 @@ def filter_query_by_prefix(query, model, property_name, prefix):
 
 
 def filter_query_by_value(query, model, property_name, value):
-    logging.info('qbv')
     property = model.properties().get(property_name)
     # Get Key() to referenced object for filtering
     if isinstance(property, db.ReferenceProperty):
         kind = property.reference_class.kind()
-        logging.info('%s, %s' % (kind, value))
-        value = db.Key.from_path(kind, value)
+        value = db.Key.from_path(kind, long(value))
 
     query.filter('%s = ' % property_name, value)

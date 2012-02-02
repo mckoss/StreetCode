@@ -1,24 +1,22 @@
 import logging
-import random
 import string
+import random
+import re
 
 from google.appengine.ext import db
 from google.appengine.ext import webapp
 from google.appengine.api import users
 
 import models
-
-
-def randomDigits(digits=10):
-    return ''.join(random.choice(string.ascii_uppercase + string.digits) for x in range(digits))
+import counter
 
 
 class TestDataHandler(webapp.RequestHandler):
     def get(self):
 
         sponsor = models.Sponsor()
-        sponsor.name = 'Test Sponsor ' + randomDigits()
-        sponsor.url = 'http://www.redcross.com/' + randomDigits()
+        sponsor.name = random_sentence(3).title()
+        sponsor.url = 'http://www.redcross.com/'
         sponsor.address = '123 Streeet Ave. S, Blah WA,USA'
         sponsor.phone = '(555)555-555'
         sponsor.put()
@@ -27,9 +25,9 @@ class TestDataHandler(webapp.RequestHandler):
         for i in range(0, 5):
             test_client = models.Client()
             test_client.set_defaults()
-            test_client.displayName = "Bob " + randomDigits()
-            test_client.fullName = "Bob the builder " + randomDigits()
-            test_client.story = "story" * 25
+            test_client.displayName = "Bob"
+            test_client.fullName = "Bob " + random_sentence(1).title()
+            test_client.story = '<p>' + random_sentence(100) + '</p>'
             test_client.sponsor = sponsor
             test_client.imageURL = "http://www.test.org/img%i.png" % i
             test_client.put()
@@ -56,7 +54,7 @@ class TestHandler(webapp.RequestHandler):
         test_client.set_defaults()
         test_client.displayName = "Bob"
         test_client.fullName = "Bob the builder"
-        test_client.story = "story" * 256
+        test_client.story = lorem_ipsum
         test_client.sponsor = sponsor
         test_client.imageURL = "http://www.test.org/img.png"
         test_client.put()
@@ -93,3 +91,13 @@ class TestHandler(webapp.RequestHandler):
         test_donor.delete()
 
         self.response.out.write("<html><body><p>Test Passed!</p></body></html>")
+
+lorem_ipsum = """
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas tellus mi, scelerisque a pharetra sed, consectetur in odio. Sed consectetur imperdiet nisl. Ut et diam arcu. Nunc consequat aliquam orci in elementum. Morbi auctor luctus pharetra. Mauris non lacus lectus. Nullam at velit ipsum. Nunc mattis interdum orci, et tempor nisi fringilla sit amet. Proin at dictum tellus. Mauris et tortor gravida justo tempus posuere quis nec nisi. Nullam lacinia lobortis ante, vel posuere enim gravida sit amet. Etiam placerat, erat eget eleifend consequat, magna augue egestas felis, eget egestas neque orci sit amet neque. Quisque vitae urna lorem. In nec dolor leo, vel fringilla arcu. Mauris porta porta tristique.
+"""
+
+re_words = re.compile(r"\s*(?:\s|\.|,)+\s*")
+lorem_words = re_words.split(lorem_ipsum)
+
+def random_sentence(n=10):
+    return ' '.join([random.choice(lorem_words) for x in range(n)])

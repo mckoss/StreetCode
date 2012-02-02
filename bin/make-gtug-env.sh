@@ -9,7 +9,7 @@ ENV_DIR="$PROJDIR/gtugenv"
 AE_FILES=http://googleappengine.googlecode.com/files
 AE_VERSION="1.6.1"
 PYTHON_CMD=python2.5
-SETUP_TOOLS=setuptools-0.6c11-py2.5.egg
+SETUP_TOOLS=setuptools-0.6c11-py2.7.egg
 
 SUDO=sudo
 
@@ -75,10 +75,10 @@ if ! check_prog $PYTHON_CMD ; then
         echo "Or install http://www.python.org/ftp/python/2.5/python-2.5-macosx.dmg"
         exit 1
     else
-	# Python 2.5 not in Ubuntu distro :-(
-	sudo add-apt-repository ppa:fkrull/deadsnakes
-	sudo apt-get update
-	sudo apt-get install python2.5
+    # Python 2.5 not in Ubuntu distro :-(
+    sudo add-apt-repository ppa:fkrull/deadsnakes
+    sudo apt-get update
+    sudo apt-get install python2.5
     fi
 fi
 
@@ -87,7 +87,7 @@ if ! check_prog curl; then
 fi
 
 if ! check_prog easy_install ; then
-    download http://pypi.python.org/packages/2.5/s/setuptools/$SETUP_TOOLS
+    download http://pypi.python.org/packages/2.7/s/setuptools/$SETUP_TOOLS
     sudo sh "$DOWN_DIR/$SETUP_TOOLS"
 fi
 

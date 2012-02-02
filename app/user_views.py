@@ -1,5 +1,6 @@
 from google.appengine.ext import webapp
 from google.appengine.api import users
+from google.appengine.ext.webapp import template
 
 class UserHandler(webapp.RequestHandler):
     """ This subclass of RequestHandler sets user and user_id

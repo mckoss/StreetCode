@@ -1,5 +1,6 @@
 from google.appengine.ext.webapp import template
 
+import settings
 from user_views import UserHandler
 
 

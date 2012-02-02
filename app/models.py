@@ -5,6 +5,7 @@ from google.appengine.ext import db
 
 import settings
 from jsonmodel import JSONModel
+import counter
 
 class Sponsor(JSONModel):
     name= db.StringProperty()
@@ -22,7 +23,7 @@ class Client(JSONModel):
     shortCode = db.StringProperty()
 
     def set_defaults(self):
-        self.shortCode =int_to_sid(Accumulator.get_unique())
+        self.shortCode = counter.int_to_sid(counter.Accumulator.get_unique())
 
 
 class Donor(JSONModel):

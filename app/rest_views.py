@@ -24,33 +24,16 @@ class ListHandler(UserHandler):
         query = model.all()
 
         for property_name in self.request.arguments():
-            paramValue = self.request.get(property_name)
-            if '*' == paramValue[-1]:
-                self.filter_query_by_prefix(query,model,property_name)
+            value = self.request.get(property_name)
+            if '*' == value[-1]:
+                filter_query_by_prefix(query, model, property_name, value[:-1])
             else:
-                self.filter_query_by(query,model,property_name)
+                filter_query_by_value(query, model, property_name, value)
 
         results = query.fetch(1000)
-        logging.info("Found [%i] %s's"%(len(results),model_name))
+        logging.info("Found [%i] %s's" % (len(results), model_name))
         items = [item.get_dict() for item in results]
         json_response(self.response, items)
-
-    def filter_query_by_prefix(self,query,model,property_name):
-        prefix = str(self.request.get(property_name)[:-1])#don't include *
-        logging.info("Prefix is %s"%prefix)
-        last_char = chr(ord(prefix[-1])+1)
-        query.filter("%s >= " % property_name, prefix).filter("%s < " % property_name, "%s%s"%(prefix,last_char))
-
-    def filter_query_by(self,query,model,property_name):
-        props = model.properties()
-        value = props.get(property_name)
-        paramValue = self.request.get(property_name)
-        if isinstance(value, db.ReferenceProperty):
-            ref_model = rest_models[property_name]
-            ref_entity = ref_model.get_by_id(int(paramValue))
-            query.filter('%s = '%property_name,ref_entity)
-        else:
-            query.filter('%s = '%property_name,paramValue)
 
     # create an item
     def post(self, model_name):
@@ -70,14 +53,14 @@ class ListHandler(UserHandler):
 
 
 class ItemHandler(UserHandler):
-    def get(self,model_name,id):
+    def get(self, model_name, id):
         item = self.get_item(model_name, id)
         if not item:
             return
         json_response(self.response, item.get_dict())
 
     def get_item(self, model_name, id):
-        logging.info('args: %s'%self.request.arguments())
+        logging.info('args: %s' % self.request.arguments())
         if model_name not in rest_models:
             self.error(404)
             return None
@@ -109,3 +92,21 @@ class ItemHandler(UserHandler):
         item = self.get_item(model_name, id)
         if item:
             item.delete()
+
+
+def filter_query_by_prefix(query, model, property_name, prefix):
+    last_char = chr(ord(prefix[-1]) + 1)
+    query.filter('%s >= ' % property_name, prefix)
+    query.filter('%s < ' % property_name, '%s%s' % (prefix, last_char))
+
+
+def filter_query_by_value(query, model, property_name, value):
+    logging.info('qbv')
+    property = model.properties().get(property_name)
+    # Get Key() to referenced object for filtering
+    if isinstance(property, db.ReferenceProperty):
+        kind = property.reference_class.kind()
+        logging.info('%s, %s' % (kind, value))
+        value = db.Key.from_path(kind, value)
+
+    query.filter('%s = ' % property_name, value)

@@ -1,16 +1,17 @@
-#!/usr/bin/env python
 from google.appengine.ext import webapp
+from google.appengine.ext.webapp.util import run_wsgi_app
 
 import settings
+import user_views
+import rest_views
 import models
 import views
-import rest_views
 
 import test_streetcode
 import demo
 
 paths = [
-    ('/', views.MainHandler),
+    ('/', user_views.MainHandler),
 
     ('/1(\w+)', views.ProfileHandler),
     ('/client/(\w+)/(\d+)', views.ClientHandler),
@@ -22,7 +23,7 @@ paths = [
 
 # Testing URL's (should not be in production)
 if settings.DEBUG:
-    paths.append([\
+    paths.extend([\
         ('/test/run', test_streetcode.TestHandler),
         ('/test/test-data', test_streetcode.TestDataHandler),
         ('/test/demo-data', demo.DemoDataHandler),
@@ -30,9 +31,8 @@ if settings.DEBUG:
 
 
 def main():
-    application = webapp.WSGIApplication([
-    ], debug=True)
-    util.run_wsgi_app(application)
+    application = webapp.WSGIApplication(paths, debug=True)
+    run_wsgi_app(application)
 
 
 if __name__ == '__main__':

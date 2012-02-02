@@ -1,13 +1,19 @@
+import logging
+
+from google.appengine.ext import db
+
 from user_views import UserHandler
+from models import rest_models
+from jsonmodel import json_response
 
 
 class ListHandler(UserHandler):
     def get_model(self, model_name):
-        if model_name not in handle_models:
+        if model_name not in rest_models:
             self.error(404)
-            self.response.out.write("Model '%s' not in %r" % (model_name, handle_models))
+            self.response.out.write("Model '%s' not in %r" % (model_name, rest_models))
             return None
-        return handle_models[model_name]
+        return rest_models[model_name]
 
     # get all list of items
     def get(self, model_name):
@@ -40,7 +46,7 @@ class ListHandler(UserHandler):
         value = props.get(property_name)
         paramValue = self.request.get(property_name)
         if isinstance(value, db.ReferenceProperty):
-            ref_model = handle_models[property_name]
+            ref_model = rest_models[property_name]
             ref_entity = ref_model.get_by_id(int(paramValue))
             query.filter('%s = '%property_name,ref_entity)
         else:
@@ -72,10 +78,10 @@ class ItemHandler(UserHandler):
 
     def get_item(self, model_name, id):
         logging.info('args: %s'%self.request.arguments())
-        if model_name not in handle_models:
+        if model_name not in rest_models:
             self.error(404)
             return None
-        model = handle_models[model_name]
+        model = rest_models[model_name]
         item = model.get_by_id(int(id))
         if item is None:
             self.error(404)

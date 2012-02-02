@@ -1,10 +1,10 @@
 """
     StreetCodes - appliction models/REST interface.
 """
-import settings
-
 from google.appengine.ext import db
-from jsonmodel import JSONModel, json_response
+
+import settings
+from jsonmodel import JSONModel
 
 class Sponsor(JSONModel):
     name= db.StringProperty()
@@ -32,9 +32,9 @@ class Donor(JSONModel):
 
 
 class User(JSONModel):
+    user = db.UserProperty()
     isAdmin = db.BooleanProperty()
     sponsor = db.ReferenceProperty(Sponsor)
-    user = db.StringProperty()#(app engine credentials)
 
 
 class Transaction(JSONModel):
@@ -63,9 +63,9 @@ class Scan(JSONModel):
     ledger = db.ReferenceProperty(Transaction)
 
 
-handle_models = {'client': Client,
-                 'donor': Donor,
-                 'sponsor': Sponsor,
-                 'scan':Scan,
-                 'transaction':Transaction
-                 }
+rest_models = {'client': Client,
+               'donor': Donor,
+               'sponsor': Sponsor,
+               'scan': Scan,
+               'transaction': Transaction,
+               }

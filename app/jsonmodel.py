@@ -4,6 +4,7 @@ import logging
 import simplejson as json
 
 from google.appengine.ext import db
+from google.appengine.api.datastore_errors import *
 
 
 JSON_MIMETYPE = 'application/json'
@@ -11,6 +12,7 @@ JSON_MIMETYPE_CS = JSON_MIMETYPE + '; charset=utf-8'
 
 SIMPLE_TYPES = (int, long, float, bool, dict, basestring, list)
 
+# TODO: Sloppy - should traverse, stopping at cycles
 DEPTH_MAX = 5
 
 
@@ -19,33 +21,40 @@ class JSONModel(db.Model):
     def get_dict(self, depth=1):
         result = {'id': self.key().id_or_name()}
 
-        for key in self.properties().iterkeys():
-            value = getattr(self, key)
+        for prop_name, property in self.properties().iteritems():
+            try:
+                value = getattr(self, prop_name)
+            except ReferencePropertyResolveError, e:
+                # Might not be safe to grab this 'decorated' attribute
+                # name in order to read the raw key from a ReferenceProperty.
+                # http://code.google.com/p/googleappengine/issues/detail?id=991
+                key = getattr(self, '_' + prop_name)
+                value = {'status': 'deleted', 'id': key.id_or_name()}
 
             if value is None or isinstance(value, SIMPLE_TYPES):
-                result[key] = value
+                result[prop_name] = value
             elif isinstance(value, datetime):
                 ms = time.mktime(value.utctimetuple()) * 1000
                 ms += getattr(value, 'microseconds', 0) / 1000
-                result[key] = int(ms)
+                result[prop_name] = int(ms)
             elif isinstance(value, db.GeoPt):
-                result[key] = {'lat': value.lat, 'lon': value.lon}
+                result[prop_name] = {'lat': value.lat, 'lon': value.lon}
             elif isinstance(value, db.Model):
                 if depth == DEPTH_MAX:
-                    result[key] = {'status': 'depth/max'}
+                    result[prop_name] = {'status': 'depth/max'}
                 else:
-                    result[key] = value.get_dict(depth+1)
+                    result[prop_name] = value.get_dict(depth + 1)
             else:
                 raise ValueError('cannot encode ' + repr(prop))
 
         return result
 
     def set_dict(self, json_dict):
-        for key, prop in self.properties().iteritems():
-            if key not in json_dict:
+        for prop_name, prop in self.properties().iteritems():
+            if prop_name not in json_dict:
                 continue
 
-            value = json_dict[key]
+            value = json_dict[prop_name]
 
             if value is None or prop.data_type in SIMPLE_TYPES:
                 pass
@@ -59,7 +68,7 @@ class JSONModel(db.Model):
             else:
                 raise ValueError('cannot decode: %r ', value)
 
-            setattr(self, key, value)
+            setattr(self, prop_name, value)
 
     def from_json(self, json_string):
         self.set_dict(json.loads(json_string))

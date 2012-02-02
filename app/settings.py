@@ -1,3 +1,3 @@
-DEBUG=True
+DEBUG = True
 
-SITE_NAME="StreetCodes"
+SITE_NAME = "StreetCodes"

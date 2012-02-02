@@ -7,18 +7,19 @@ import settings
 from jsonmodel import JSONModel
 import counter
 
+
 class Sponsor(JSONModel):
-    name= db.StringProperty()
-    url= db.LinkProperty()
-    address= db.PostalAddressProperty()
-    phone= db.PhoneNumberProperty()
+    name = db.StringProperty()
+    url = db.LinkProperty()
+    address = db.PostalAddressProperty()
+    phone = db.PhoneNumberProperty()
 
 
 class Client(JSONModel):
     displayName = db.StringProperty()
     fullName = db.StringProperty()
-    story  = db.TextProperty()
-    sponsor  = db.ReferenceProperty(Sponsor)
+    story = db.TextProperty()
+    sponsor = db.ReferenceProperty(Sponsor)
     imageURL = db.StringProperty()
     shortCode = db.StringProperty()
 
@@ -27,9 +28,9 @@ class Client(JSONModel):
 
 
 class Donor(JSONModel):
-    name= db.StringProperty()
-    address= db.PostalAddressProperty()
-    phone= db.PhoneNumberProperty()
+    name = db.StringProperty()
+    address = db.PostalAddressProperty()
+    phone = db.PhoneNumberProperty()
 
 
 class User(JSONModel):
@@ -51,7 +52,7 @@ class Transaction(JSONModel):
     type is one of 'donation', 'fullfillment', ...
     """
     fromAccount = db.LinkProperty()
-    toAccount =db.LinkProperty()
+    toAccount = db.LinkProperty()
     amount = db.FloatProperty()
     type = db.StringProperty()
     note = db.TextProperty()

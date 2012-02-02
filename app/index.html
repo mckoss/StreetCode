@@ -7,10 +7,11 @@
     <link rel="stylesheet" href="/css/main.css">
     <link rel="stylesheet" href="/css/orbit.css">
     <script src="js/libs/jquery-min.js"></script>
-    <script src="js/libs/jquery-orbit-min.js"></script>
+    <script src="js/libs/jquery.orbit-1.4.0.js"></script>
     <script>
      $(window).load(function() {
-         $('#slidez').orbit({animationSpeed: 2000});
+         $('#slidez').orbit({animation: 'horizontal-slide',
+                             animationSpeed: 2000});
      });
     </script>
   </head>

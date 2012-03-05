@@ -6,3 +6,6 @@ gtugenv/*
 activate
 activate.bat
 .DS_Store
+.project
+.pydevproject
+datastore/*

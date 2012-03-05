@@ -1,67 +1,175 @@
+* { margin: 0; padding:0; background-color: #FFFFFF; color: #000000; overflow: hidden; }
+
+@font-face {
+  font-family: 'Helvetica Ultra Compressed';
+  src: local('Helvetica Ultra Compressed'), url('HelveticaUltraCompressed.ttf') format('truetype');
+  font-style: normal;
+  font-weight: 400;
+}
+
+div {
+  width: inherit;
+}
+
 div.top-info {
+  width: 280px;
+  height: 174px;
   font-family: Helvetica;
   font-size: 12px;
-  position: relative;
-  background-color: #ccc;
-  margin: 0 auto 10px;
-  padding: 0;
-  width: 280px;
-  height: 206px;
-}
-
-#page-container a {
-  display: block;
-  text-align: center;
-  font-size: 18px;
-  font-weight: normal;
-  color: white;
-  text-decoration: none;
-  padding: 10px 20px;
-  margin-bottom: 5px;
-  background-color: #ff9016;
-}
-
-.story {
-  font-family: Helvetica;
-  font-size: 16px;
-  margin: 10px auto;
-  width: 90%;
-
-}
-
-.top-info .nickname {
-  font-weight: bold;
-  font-size: 16px;
+  margin: 10px auto 0px;
 }
 
 .top-info .city {
   font-size: 12px;
 }
 
-.top-info .portrait {
-  position: absolute;
-  top: 20px;
-  left: 20px;
-  bottom: 186px;
-  width: 110px;
-  height: 166px;
-  background-color: #888;
+.top-info > .portrait{
+  width: 115px;
+  height: 172px;
+  border: 1px solid #656565;
+  float: left;
+background:url(<%= imageURL %>) no-repeat center center;
 }
 
 .top-info .info-block {
-  position: absolute;
-  top: 20px;
-  right: 10px;
-  width: 130px;
-  height: 166px;
-  margin: 0;
-  padding: 0;
+  width: 150px;
+  height: 162px;
+  float: right;
+  margin: 20px 0 0 10px;
 }
 
-.info-block .bottom-block {
-  position: absolute;
+div.info-block .nickname {
+  font-family: 'Helvetica Ultra Compressed', Arial;
+  font-size: 36px;
+}
+
+div.info-block .city {
+  font-weight: bold;
+  font-size: 12px;
+}
+
+div.sponsor-block{
+  margin-top: 30px;
+  font-weight: bold;
+  font-size: 12px;
+}
+
+div.sponsor-block .sponsor{
+  color: #c6c6c6;
+
+}
+
+#page-container {
+  font-family: Helvetica;
+}
+
+/* Needs Links */
+#page-container a {
+  display: block;
+  text-decoration: none;
+  height: 58px;
+  background-color: #1b1a18;
+  color: #ff9216; 
+  padding-top: 16px;
+  padding-left: 16px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  margin-right: 16px;
+  font-family:'Helvetica Ultra Compressed', Arial;
+  font-size: 44pt;
+  /* Shadow */
+  -webkit-box-shadow: 0px 2px 4px #000000;
+  -moz-box-shadow: 0px 2px 4px #000000;
+  box-shadow: 0px 2px 6px #000000;
+
+}
+
+/* Navigation Links */
+#page-container > div > a {
+  height: 58px;
+  background-color: #1b1a18;
+  color: #ff9216; 
+  padding-top: 16px;
+  padding-left: 16px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  margin-right: 16px;
+  font-family:'Helvetica Ultra Compressed', san-serif;
+  font-size: 44pt;
+  /* Shadow */
+  -webkit-box-shadow: 0px 2px 4px #000000;
+  -moz-box-shadow: 0px 2px 4px #000000;
+  box-shadow: 0px 2px 6px #000000;
+}
+
+/* Give button */
+#page-container a.help {
+  height: 38px;
+  width: 100%;
+  background-color: #ff9216;
+  color: white;
+  font-size: 36px;
+  text-align: center;
+  padding-top: 6px;
+  padding-left: 0px;
+  border: solid #d99938 1px;
+}
+
+.page {
+  position:absolute;
   left: 0;
-  bottom: 0;
+  width: 100%;
+  color: #ff9216;
+  -webkit-transition:all 0s;
+	-moz-transition:all 0s;
+	-o-transition:all 0s;
+	-ms-transition:all 0s;	
+	transition:all 0s
 }
 
-div.info-block .nickname { font-size: 16px; font-weigth: bold; }
+.story {
+  font-family: Arial;
+  font-size: 12px;
+  margin: 10px auto;
+  width: 280px;
+  text-align: justify;
+}
+
+.transform {
+  display: block;
+	-webkit-transition:all 500ms;
+	-moz-transition:all 500ms;
+	-o-transition:all 500ms;
+	-ms-transition:all 500ms;	
+	transition:all 500ms
+}
+
+h1 {
+  height: 60px;
+  width: 100%;
+  background:url(/images/Logo_dark.png) no-repeat center center;
+  background-color: #1b1a18;
+  margin-bottom: 5px;
+
+  margin-right: -10px;
+	padding-right: -10px;
+}
+
+h1 > div {
+  background: url(/images/Barcode.png) right top no-repeat;
+
+  margin-right: 10px;
+padding-right: 10px;
+}
+	
+#page-container > h1 {
+  -webkit-box-shadow: 0px 2px 4px #000000;
+  -moz-box-shadow: 0px 2px 4px #000000;
+  box-shadow: 0px 2px 6px #000000;
+}
+
+#motto{
+  font-size:18px;
+  font-weight:normal;
+}
+

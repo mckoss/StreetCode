@@ -10,61 +10,69 @@
 
 {% block body %}
   <div id="page-container">
-    <div data-role="page" id="loading">Loading...</div>
+    <div id="loading">Loading...</div>
   </div>
 
   <script type="text/template" id="client-view-template">
 
-    <div id="scan-landing" data-role="page">
-      <div data-theme='d' data-role="header"><h1>STREET<b>CODE</b></h1></div>
-      <div data-role="content">
-        <div class="top-info">
-          <img class="portrait" src="<%= imageURL %>"/>
-          <div class="info-block">
-            <div class="nickname"><%= displayName %></div>
-            <div class="city">Seattle, WA</div>
-            <div class="bottom-block">
-              <div class="sponsor">Sponsor Organization:</div>
-              <div class="nickname"><%= sponsor.name %></div>
-              <a class="help" href="#needs">Give</a>
-            </div>
-          </div>
-        </div>
-        <a href="#story">Story</a>
-        <a href="#needs">Needs</a>
-        <a href="#about">About</a>
-      </div>
-    </div>
+<div>
+    <h1><div></div></h1>
 
-    <div id="story" data-role="page">
-      <div data-theme='d' data-role="header"><h1>STREET<b>CODE</b></h1></div>
-      <div data-role="content">
+    <div class="page" id="scan-landing">
         <div class="top-info">
           <img class="portrait" src="<%= imageURL %>"/>
+
           <div class="info-block">
+
             <div class="nickname"><%= displayName %></div>
             <div class="city">Seattle, WA</div>
-            <div class="bottom-block">
+
+            <div class="sponsor-block">
               <div class="sponsor">Sponsor Organization:</div>
-              <div class="nickname"><%= sponsor.name %></div>
-              <a class="help" href="#needs">Give</a>
+              <div class="sponsor"><%= sponsor.name %></div>
+              <a class="help" href="#needs">GIVE</a>
             </div>
+
           </div>
         </div>
         <div class="story"><%= story %></div>
-      </div>
+        <a href="#needs">NEEDS</a>
+        <a href="#about">ABOUT</a>
     </div>
 
-    <div id="needs" data-role="page">
-      <div data-theme='d' data-role="header"><h1>STREET<b>CODE</b></h1></div>
-      <div data-role="content">
-        <a href="#story">$1</a>
-        <a href="#story">$5</a>
-        <a href="#story">$10</a>
-        <a href="#story">Bed Tonight</a>
-        <a href="#story">Socks</a>
+    <div class="page" id="needs">
+     <div>
+        <a href="#give">$1</a>
+        <a href="#give">$5</a>
+        <a href="#give">$10</a>
+        <a href="#give">Bed Tonight</a>
+        <a href="#give">Socks</a>
       </div>
+        <a href="#scan-landing">Home</a>
+        <a href="#about">About</a>
     </div>
 
+    <div class="page" id="give">
+        <div class="top-info">Thanks for Giving
+		
+			<div><img src="images/Twitter_icon.png"><img src="images/Facebook_icon.png"> Join the Movement</div>
+		</div>
+        <a href="#scan-landing">Home</a>
+        <a href="#needs">About</a>
+    </div>
+
+    <div class="page" id="about">
+        <div class="top-info"><p id="motto">We believe in using mobile technology to break barriers between each other.<p>
+      Most importantly, we're determined to giving a hand when needed.
+      Our mission is to make it easier to help homeless individuals.
+      We've developed a quick and secure way to  allow people to donate money to homeless individuals by scanning unique QR codes that can be printed on cards and posters.
+      Each QR code is linked to a debit account which the individual can use to pay for necessities. Scan. Share. Love. </p>
+	  </div>
+        <a href="#scan-landing">Home</a>
+        <a href="#needs">Needs</a>
+    </div>
+
+
+	</div>
   </script>
 {% endblock %}

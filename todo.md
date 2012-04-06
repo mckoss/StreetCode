@@ -13,6 +13,7 @@ Admin and Forms
   - Add QR codes to client edit page.
 - Handle missing fields (null) values as empty controls, not "null".
 - Link to parent forms in list form and item form.
+- Add Bootstrap Less directory and build script for admin pages.
 
 REST Data
 

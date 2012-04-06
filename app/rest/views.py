@@ -70,11 +70,12 @@ class ListHandler(UserHandler):
 
         # HACK - How else to initialize properties ONLY in the case
         # where a model is being created.
-        if hasattr(model, 'set_defaults'):
-            model.set_defaults()
-
         data = json.loads(self.request.body)
         item = model(user_id=self.user_id)
+
+        if hasattr(item, 'set_defaults'):
+            item.set_defaults()
+
         item.set_dict(data)
         item.put()
         json_response(self.response, item.get_dict())

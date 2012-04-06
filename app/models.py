@@ -41,7 +41,7 @@ class Client(RESTModel, Timestamped):
     imageURL = db.StringProperty()
 
     form_order = ('name', 'fullName', 'shortCode', 'story', 'sponsor', 'imageURL')
-    computed = ('item.storyHTML = markdown(item.story); alert(1);',)
+    computed = ('item.storyHTML = markdown(item.story);',)
 
 
 class Donor(RESTModel):

@@ -1,5 +1,7 @@
 """
     StreetCodes - appliction models/REST interface.
+
+    Note that all models will inherit a default name (StringProperty).
 """
 from google.appengine.ext import db
 
@@ -20,13 +22,13 @@ def init():
             })
 
 
-class Sponsor(RESTModel):
+class Sponsor(RESTModel, Timestamped):
     url = db.StringProperty()
     address = db.TextProperty()
     phone = db.StringProperty()
 
 
-class User(RESTModel):
+class User(RESTModel, Timestamped):
     user = db.UserProperty()
     isAdmin = db.BooleanProperty()
     sponsor = db.ReferenceProperty(Sponsor)
@@ -44,12 +46,14 @@ class Client(RESTModel, Timestamped):
     computed = ('item.storyHTML = markdown(item.story);',)
 
 
-class Donor(RESTModel):
+class Donor(RESTModel, Timestamped):
     address = db.TextProperty()
     phone = db.StringProperty()
 
+    form_order = ('name', 'address', 'phone')
 
-class Transaction(RESTModel):
+
+class Transaction(RESTModel, Timestamped):
     """
     Simple double-entry accounting.  Account names are in the format:
 
@@ -64,12 +68,15 @@ class Transaction(RESTModel):
     fromAccount = db.StringProperty()
     toAccount = db.StringProperty()
     amount = db.FloatProperty()
-    type = db.StringProperty()
     note = db.TextProperty()
     confirm = db.BooleanProperty()
 
+    form_order = ('name', 'fromAccount', 'toAccount', 'amount', 'confirm')
 
-class Scan(RESTModel):
+
+class Scan(RESTModel, Timestamped):
     client = db.ReferenceProperty(Sponsor)
     donor = db.ReferenceProperty(Donor)
     ledger = db.ReferenceProperty(Transaction)
+
+    form_order = ('name', 'client', 'donor', 'ledger')

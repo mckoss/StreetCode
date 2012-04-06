@@ -36,6 +36,9 @@ class RESTModel(db.Model):
     # Every model has a name property - used to display in lists.
     name = db.StringProperty()
 
+    def set_defaults(self):
+        pass
+
     """ Conversion of model to and from JSON for REST interface. """
     @classmethod
     def get_schema(self):

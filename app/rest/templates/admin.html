@@ -1,0 +1,18 @@
+{% extends "desktop_base.html" %}
+
+{% block head_extra %}
+<title>{{ site_name }} Admin</title>
+<link rel="stylesheet" type="text/css" href="/rest/css/admin.css" />
+<script type="text/javascript" src="/rest/js/admin.js"></script>
+{% endblock %}
+
+{% block body %}
+<h1>{{ site_name }} Mobile Museum Administration</h1>
+
+<p>This site is for the use of {{ site_name }} administrators only.</p>
+
+<ul>
+  <li><a href="/admin/forms">Database Editor</a></li>
+  <li><a href="/">Mobile (end user) Site</a></li>
+</ul>
+{% endblock %}

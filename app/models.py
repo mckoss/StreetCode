@@ -4,19 +4,35 @@
 from google.appengine.ext import db
 
 import settings
-from jsonmodel import JSONModel
-import counter
+import rest.models
+from rest.models import RESTModel, Timestamped
+import rest.counter as counter
 
 
-class Sponsor(JSONModel):
-    name = db.StringProperty()
-    url = db.LinkProperty()
-    address = db.PostalAddressProperty()
-    phone = db.PhoneNumberProperty()
+def init():
+    rest.models.add_models({
+            'user': User,
+            'sponsor': Sponsor,
+            'client': Client,
+            'donor': Donor,
+            'transaction': Transaction,
+            'scan': Scan,
+            })
 
 
-class Client(JSONModel):
-    displayName = db.StringProperty()
+class Sponsor(RESTModel):
+    url = db.StringProperty()
+    address = db.TextProperty()
+    phone = db.StringProperty()
+
+
+class User(RESTModel):
+    user = db.UserProperty()
+    isAdmin = db.BooleanProperty()
+    sponsor = db.ReferenceProperty(Sponsor)
+
+
+class Client(RESTModel):
     fullName = db.StringProperty()
     story = db.TextProperty()
     sponsor = db.ReferenceProperty(Sponsor)
@@ -27,19 +43,12 @@ class Client(JSONModel):
         self.shortCode = counter.int_to_sid(counter.Accumulator.get_unique())
 
 
-class Donor(JSONModel):
-    name = db.StringProperty()
-    address = db.PostalAddressProperty()
-    phone = db.PhoneNumberProperty()
+class Donor(RESTModel):
+    address = db.TextProperty()
+    phone = db.StringProperty()
 
 
-class User(JSONModel):
-    user = db.UserProperty()
-    isAdmin = db.BooleanProperty()
-    sponsor = db.ReferenceProperty(Sponsor)
-
-
-class Transaction(JSONModel):
+class Transaction(RESTModel):
     """
     Simple double-entry accounting.  Account names are in the format:
 
@@ -51,23 +60,15 @@ class Transaction(JSONModel):
 
     type is one of 'donation', 'fullfillment', ...
     """
-    fromAccount = db.LinkProperty()
-    toAccount = db.LinkProperty()
+    fromAccount = db.StringProperty()
+    toAccount = db.StringProperty()
     amount = db.FloatProperty()
     type = db.StringProperty()
     note = db.TextProperty()
     confirm = db.BooleanProperty()
 
 
-class Scan(JSONModel):
+class Scan(RESTModel):
     client = db.ReferenceProperty(Sponsor)
     donor = db.ReferenceProperty(Donor)
     ledger = db.ReferenceProperty(Transaction)
-
-
-rest_models = {'client': Client,
-               'donor': Donor,
-               'sponsor': Sponsor,
-               'scan': Scan,
-               'transaction': Transaction,
-               }

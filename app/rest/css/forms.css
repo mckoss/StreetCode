@@ -1,0 +1,37 @@
+input, select, textarea {
+  margin: 0 0 15px 0;
+}
+
+input[type="text"] { font-size: 24px; width: 640px; }
+input[type="button"] { font-size: 24px; }
+fieldset input[type="button"] { float: right; margin-left: 15px }
+
+label {
+  clear: left;
+  float: left;
+  width: 150px;
+  vertical-align: top;
+}
+
+label span {
+  display: block;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+fieldset {
+  margin: 5px auto 15px;
+  clear: both;
+  padding: 20px;
+  width: 800px;
+}
+fieldset p { font-size: 20px; font-style: italic; }
+fieldset ul { margin: 0; padding: 0; }
+fieldset ul li { list-style: none; padding: 5px; margin: 0 0 5px 0; }
+
+textarea {
+  font-family: Helvetica, sans-serif;
+  font-size: 24px;
+  width: 100%;
+  height: 150px;
+}

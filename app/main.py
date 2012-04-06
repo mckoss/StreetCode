@@ -2,24 +2,25 @@ from google.appengine.ext import webapp
 from google.appengine.ext.webapp.util import run_wsgi_app
 
 import settings
-import user_views
-import rest_views
+import rest
 import models
 import views
+
+from rest.views import get_template_handler
+
+models.init()
 
 import test_streetcode
 import demo
 
 paths = [
-    ('/', user_views.MainHandler),
+    ('/', get_template_handler('index.html')),
 
-    ('/1(\w+)', views.ProfileHandler),
+    ('/1(\w+)', get_template_handler('mobile_profile.html')),
     ('/client/(\w+)/(\d+)', views.ClientHandler),
-
-    # REST API requires two handlers - one with an ID and one without.
-    ('/data/(\w+)', rest_views.ListHandler),
-    ('/data/(\w+)/(\d+)', rest_views.ItemHandler),
     ]
+
+paths.extend(rest.get_paths())
 
 # Testing URL's (should not be in production)
 if settings.DEBUG:

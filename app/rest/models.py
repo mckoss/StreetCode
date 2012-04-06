@@ -47,6 +47,9 @@ class RESTModel(db.Model):
         if hasattr(self, 'form_order'):
             result['formOrder'] = self.form_order
 
+        if hasattr(self, 'computed'):
+            result['computed'] = self.computed
+
         for prop_name, property in self.properties().items():
             result['properties'][prop_name] = py_to_js_type(property.data_type)
         return result
@@ -116,6 +119,8 @@ class Timestamped(db.Model):
     """
     created = db.DateTimeProperty(auto_now_add=True)
     modified = db.DateTimeProperty()
+
+    read_only = ('created', 'modified')
 
     def put(self, *args, **kwargs):
         # Don't rely on auto_now property to set the modification

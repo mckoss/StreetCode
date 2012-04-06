@@ -57,8 +57,7 @@ namespace.module('startpad.json-forms', function(exports, require) {
         }
 
         $('#item-form-legend').text(pageInfo.model + ' item #' + pageInfo.id);
-        // Move to client app logic
-        // markdown = markdown || new Showdown.converter();
+        markdown = markdown || new Showdown.converter().makeHtml;
 
         $('#_save').click(onSave);
         $('#_delete').click(onDelete);
@@ -74,10 +73,7 @@ namespace.module('startpad.json-forms', function(exports, require) {
                 currentItem = result;
                 var modelSchema = schema[pageInfo.model];
                 var modelProperties = modelSchema.properties;
-                var formProperties = modelSchema.formOrder;
-                if (!formProperties) {
-                    formProperties = types.keys(modelProperties);
-                }
+                var formProperties = modelSchema.formOrder || types.keys(modelProperties);
 
                 var formHTML = "";
                 for (var i = 0; i < formProperties.length; i++) {
@@ -104,10 +100,20 @@ namespace.module('startpad.json-forms', function(exports, require) {
         return true;
     }
 
+    function computeWrapper(item, expr) {
+        eval(expr);
+    }
+
     function onSave() {
         data = getFields();
-        // TODO: Move to client app logic
-        // data.bodyHTML = markdown.makeHtml(data.body);
+
+        var computed = schema[pageInfo.model].computed;
+        if (computed) {
+            for (var i = 0; i < computed.length; i++) {
+                computeWrapper(data, computed[i]);
+            }
+        }
+
         $.ajax({
             type: 'PUT',
             url: '/data/' + pageInfo.model + '/' + pageInfo.id,

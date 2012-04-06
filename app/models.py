@@ -32,12 +32,16 @@ class User(RESTModel):
     sponsor = db.ReferenceProperty(Sponsor)
 
 
-class Client(RESTModel):
+class Client(RESTModel, Timestamped):
     fullName = db.StringProperty()
+    shortCode = db.StringProperty()
     story = db.TextProperty()
+    storyHTML = db.TextProperty()
     sponsor = db.ReferenceProperty(Sponsor)
     imageURL = db.StringProperty()
-    shortCode = db.StringProperty()
+
+    form_order = ('name', 'fullName', 'shortCode', 'story', 'sponsor', 'imageURL')
+    computed = ('item.storyHTML = markdown(item.story); alert(1);',)
 
 
 class Donor(RESTModel):

@@ -39,9 +39,6 @@ class Client(RESTModel):
     imageURL = db.StringProperty()
     shortCode = db.StringProperty()
 
-    def set_defaults(self):
-        self.shortCode = counter.int_to_sid(counter.Accumulator.get_unique())
-
 
 class Donor(RESTModel):
     address = db.TextProperty()

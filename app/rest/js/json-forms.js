@@ -64,7 +64,8 @@ namespace.module('startpad.json-forms', function(exports, require) {
 
         var controlTemplates = {
             'text':     _.template($('#string-field-template').html()),
-            'textarea': _.template($('#text-field-template').html())
+            'textarea': _.template($('#text-field-template').html()),
+            'computed': _.template($('#computed-field-template').html())
         };
 
         $.ajax({
@@ -79,11 +80,20 @@ namespace.module('startpad.json-forms', function(exports, require) {
                 for (var i = 0; i < formProperties.length; i++) {
                     var propName = formProperties[i];
                     var property = modelProperties[propName];
-                    var template = controlTemplates[property.control];
+                    var template;
+                    var data;
+                    if (property) {
+                        data = {propName: propName,
+                                controlType: property.control,
+                                value: result[propName]};
+                    } else {
+                        data = {propName: 'computed',
+                                controlType: 'computed',
+                                value: computeWrapper(currentItem, propName)};
+                    }
 
-                    formHTML += template({propName: propName,
-                                          controlType: property.control,
-                                          value: result[propName]})
+                    template = controlTemplates[data.controlType];
+                    formHTML += template(data);
                 }
                 $('#item-form-body').append(formHTML);
             }
@@ -101,7 +111,7 @@ namespace.module('startpad.json-forms', function(exports, require) {
     }
 
     function computeWrapper(item, expr) {
-        eval(expr);
+        return eval(expr);
     }
 
     function onSave() {
@@ -177,6 +187,11 @@ namespace.module('startpad.json-forms', function(exports, require) {
         return {'model': parts[0],
                 'id': parts[1]
                }
+    }
+
+
+    function QRCode(url) {
+        return '<img src="http://chart.googleapis.com/chart?chs=300x300&cht=qr&chl=' + encodeURIComponent(url) + '">'
     }
 
 });

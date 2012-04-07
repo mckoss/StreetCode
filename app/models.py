@@ -42,7 +42,11 @@ class Client(RESTModel, Timestamped):
     sponsor = db.ReferenceProperty(Sponsor)
     imageURL = db.StringProperty()
 
-    form_order = ('name', 'fullName', 'shortCode', 'story', 'sponsor', 'imageURL')
+    form_order = ('name', 'fullName',
+                  'shortCode',
+                  'story', 'sponsor', 'imageURL',
+                  'QRCode("http://sc.go2.me/s/" + item.shortCode)',
+                  )
     computed = ('item.storyHTML = markdown(item.story);',)
 
 

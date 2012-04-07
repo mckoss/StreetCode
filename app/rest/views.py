@@ -126,8 +126,10 @@ class ItemHandler(UserHandler):
 
 def filter_query_by_prefix(query, model, property_name, prefix):
     last_char = chr(ord(prefix[-1]) + 1)
+    logging.info("Prefix filter: '%s' <= %s < '%s'" %
+                 (prefix, property_name, prefix[:-1] + last_char))
     query.filter('%s >= ' % property_name, prefix)
-    query.filter('%s < ' % property_name, '%s%s' % (prefix, last_char))
+    query.filter('%s < ' % property_name, prefix[:-1] + last_char)
 
 
 def filter_query_by_value(query, model, property_name, value):

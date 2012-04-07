@@ -155,7 +155,8 @@ namespace.module('startpad.json-forms', function(exports, require) {
     }
 
     function onDelete() {
-        if (confirm("Are you sure you want to delete " + currentItem.title + "?")) {
+        if (confirm("Are you sure you want to delete " +
+            (currentItem.name || ('#' + currentItem.id)) + "?")) {
             $.ajax({
                 type: 'DELETE',
                 url: '/data/' + pageInfo.model + '/' + pageInfo.id,

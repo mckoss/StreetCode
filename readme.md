@@ -5,7 +5,7 @@ This project was created during Startup Weekend Seattle on January 14, 2012
 instructions.
 
   [gtug-ae-bootcamp]: https://github.com/mckoss/gtug-ae-bootcamp
-  [setup.md]: StreetCode/blob/master/setup.md
+  [setup.md]: https://github.com/mckoss/StreetCode/blob/master/setup.md
 
 
 # Startup Weekend Award-Winner

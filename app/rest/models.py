@@ -171,7 +171,7 @@ def py_to_js_type(py_type):
         result['control'] = 'textarea'
     if py_type in rest_models.values():
         i = rest_models.values().index(py_type)
-        result['control'] = 'select';
+        result['control'] = 'reference';
         result['type'] = rest_models.keys()[i]
     if 'type' not in result:
         result['type'] = '%r' % py_type

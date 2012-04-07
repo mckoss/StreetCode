@@ -13,6 +13,29 @@ namespace.module('startpad.json-forms', function(exports, require) {
     var pageInfo;
     var currentItem;
 
+    var controlTemplates = {
+        'text': _.template(
+            '<label for="<%- name %>"><%- name %>:</label>' +
+            '<input type="<%- property.control %>" name="<%- name %>" id="<%- name %>" ' +
+            '    value="<%- value %>"/>'),
+
+        'textarea': _.template(
+            '<label for="<%- name %>"><%- name %>:</label>' +
+            '<textarea id="<%- name %>" name="<%- name %>"><%- value %></textarea>'),
+
+        'computed': _.template('<div><%= value %></div>'),
+
+        'reference': _.template(
+            '<label for="<%- name %>"><%- name %>:</label>' +
+            '<input type="text" name="<%- name %>" id="<%- name %>" ' +
+            '    value="<%- value.id %> (<%- value.name %>)"/>' +
+            '<div>' +
+            '  Current <a href="/admin/forms/<%- property.type %>"><%- property.type %></a>: ' +
+            '<a href="/admin/forms/<%- property.type %>/<%- value.id %>">' +
+            '<%- value.name %></a>' +
+            '</div>')
+    };
+
     function onFormsPage() {
         if (!ensureInit(onFormsPage)) {
             return;
@@ -65,14 +88,6 @@ namespace.module('startpad.json-forms', function(exports, require) {
         $('#_save').click(onSave);
         $('#_delete').click(onDelete);
 
-        var controlTemplates = {
-            'text':     _.template($('#string-field-template').html()),
-            'textarea': _.template($('#text-field-template').html()),
-            'computed': _.template($('#computed-field-template').html()),
-            'select':   _.template($('#select-field-template').html()),
-            'option':   _.template($('#option-template').html())
-        };
-
         $.ajax({
             url: '/data/' + pageInfo.model + '/' + pageInfo.id,
             success: function (result) {
@@ -88,27 +103,22 @@ namespace.module('startpad.json-forms', function(exports, require) {
                     var template;
                     var data;
                     if (property) {
-                        data = {propName: propName,
-                                controlType: property.control,
-                                value: result[propName]};
-                        if (property.control == 'select') {
-                            // Test with a single option - current value
-                            data.options = controlTemplates['option']({value: data.value,
-                                                                       name: data.value.name,
-                                                                       selected: 'selected'});
-                        }
+                        data = {name: propName,
+                                property: property,
+                                value: result[propName]
+                                };
                     } else {
-                        data = {propName: 'computed',
-                                controlType: 'computed',
-                                value: computeWrapper(currentItem, propName)};
+                        data = {name: 'computed',
+                                property: {control: 'computed'},
+                                value: computeWrapper(currentItem, propName)
+                                };
                     }
 
                     if (data.value === null) {
                         data.value = '';
                     }
 
-
-                    template = controlTemplates[data.controlType];
+                    template = controlTemplates[data.property.control];
                     formHTML += template(data);
                 }
                 $('#item-form-body').append(formHTML);
@@ -206,9 +216,21 @@ namespace.module('startpad.json-forms', function(exports, require) {
                }
     }
 
+    var qrTemplate = _.template(
+        '<img src="http://chart.googleapis.com/chart?cht=qr&chs=<%= size %>x<%= size %>&' +
+            'chl=<%= encURL %>">' +
+        '<div><a href="<%= url %>"><%- url %></a></div>');
 
-    function QRCode(url) {
-        return '<img src="http://chart.googleapis.com/chart?chs=300x300&cht=qr&chl=' + encodeURIComponent(url) + '">'
+    function QRCode(url, size, urlDisplay) {
+        if (!size) {
+            size = 300;
+        }
+        if (!urlDisplay) {
+            urlDisplay = url;
+        }
+        var sep = url.indexOf('?') == -1 ? '?' : '&';
+        var encURL = encodeURIComponent(url + sep + 's=s');
+        return qrTemplate({url: urlDisplay, encURL: encURL, size: size});
     }
 
 });

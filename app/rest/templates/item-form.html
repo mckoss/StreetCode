@@ -22,29 +22,4 @@
   </fieldset>
 
 
-<script type="template" id="string-field-template">
-  <label for="<%- propName %>"><%- propName %>:</label>
-  <input type="<%- controlType %>" name="<%- propName %>" id="<%- propName %>"
-         value="<%- value %>"/>
-</script>
-
-<script type="template" id="text-field-template">
-  <label for="<%- propName %>"><%- propName %>:</label>
-  <textarea id="<%- propName %>" name="<%- propName %>"><%- value %></textarea>
-</script>
-
-<script type="template" id="computed-field-template">
-  <div><%= value %></div>
-</script>
-
-<script type="template" id="select-field-template">
-  <label for="<%- propName %>"><%- propName %>:</label>
-  <select id="<%- propName %>" name="<%- propName %>">
-    <%= options %>
-  </select>
-</script>
-
-<script type="template" id="option-template">
-  <option value="<%- value %>" <%- selected %>><%- name %></option>
-</script>
 {% endblock %}

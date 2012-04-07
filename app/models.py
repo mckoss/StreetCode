@@ -45,7 +45,7 @@ class Client(RESTModel, Timestamped):
     form_order = ('name', 'fullName',
                   'shortCode',
                   'story', 'sponsor', 'imageURL',
-                  'QRCode("http://sc.go2.me/s/" + item.shortCode)',
+                  'QRCode("http://streetcode.me/" + item.shortCode)'
                   )
     computed = ('item.storyHTML = markdown(item.story);',)
 

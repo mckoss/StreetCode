@@ -44,6 +44,9 @@ namespace.module('startpad.json-forms', function(exports, require) {
                 for (var i = 0; i < result.length; i++) {
                     var item = result[i];
                     item.modelName = pageInfo.model;
+                    if (item.name === null) {
+                        item.name = '#' + item.id;
+                    }
                     listHTML += modelRowTemplate(item);
                 }
                 $('#list-table-body').html(listHTML);
@@ -65,7 +68,9 @@ namespace.module('startpad.json-forms', function(exports, require) {
         var controlTemplates = {
             'text':     _.template($('#string-field-template').html()),
             'textarea': _.template($('#text-field-template').html()),
-            'computed': _.template($('#computed-field-template').html())
+            'computed': _.template($('#computed-field-template').html()),
+            'select':   _.template($('#select-field-template').html()),
+            'option':   _.template($('#option-template').html())
         };
 
         $.ajax({
@@ -86,11 +91,22 @@ namespace.module('startpad.json-forms', function(exports, require) {
                         data = {propName: propName,
                                 controlType: property.control,
                                 value: result[propName]};
+                        if (property.control == 'select') {
+                            // Test with a single option - current value
+                            data.options = controlTemplates['option']({value: data.value,
+                                                                       name: data.value.name,
+                                                                       selected: 'selected'});
+                        }
                     } else {
                         data = {propName: 'computed',
                                 controlType: 'computed',
                                 value: computeWrapper(currentItem, propName)};
                     }
+
+                    if (data.value === null) {
+                        data.value = '';
+                    }
+
 
                     template = controlTemplates[data.controlType];
                     formHTML += template(data);

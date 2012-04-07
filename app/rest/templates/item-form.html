@@ -37,4 +37,14 @@
   <div><%= value %></div>
 </script>
 
+<script type="template" id="select-field-template">
+  <label for="<%- propName %>"><%- propName %>:</label>
+  <select id="<%- propName %>" name="<%- propName %>">
+    <%= options %>
+  </select>
+</script>
+
+<script type="template" id="option-template">
+  <option value="<%- value %>" <%- selected %>><%- name %></option>
+</script>
 {% endblock %}

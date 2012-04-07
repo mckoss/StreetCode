@@ -1,4 +1,4 @@
-StreetCode Application Code
+# StreetCode Application Code
 
 X /1AB broken
   X Fix up client fields to use name, not displayName.
@@ -9,7 +9,7 @@ X Change to editable shortcodes?
 - remove /1* hack for short code
 
 
-Admin and Forms
+# Admin and Forms
 
 - Do form hooks for processing special controls like QR-code display and Markdown parsing.
   X Use markdown for story text.
@@ -24,7 +24,7 @@ X Remove Find from item forms.
 - Distinct display mode for item forms?
 - Image uploader with thumbnailing.
 
-REST Data
+# REST Data
 
 - Support reference properties:
   - View to use Select picker
@@ -37,7 +37,7 @@ REST Data
 - Security added - check_permissions callback.
 - Add ETAG's for model data.
 
-Testing
+# Testing
 
 - QUnit based testing for data and forms.
 - Remove demo functions - not needed with Admin interface.

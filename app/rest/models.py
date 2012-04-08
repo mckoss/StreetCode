@@ -8,9 +8,6 @@ from google.appengine.api.datastore_errors import *
 from google.appengine.api.datastore_types import Text
 
 
-JSON_MIMETYPE = 'application/json'
-JSON_MIMETYPE_CS = JSON_MIMETYPE + '; charset=utf-8'
-
 SIMPLE_TYPES = (int, long, float, bool, dict, basestring, list, Text)
 JS_TYPES = ('number', 'number', 'number', 'boolean', 'object', 'string', 'object', 'string')
 
@@ -65,7 +62,7 @@ class RESTModel(db.Model):
                 # name in order to read the raw key from a ReferenceProperty.
                 # http://code.google.com/p/googleappengine/issues/detail?id=991
                 # key = getattr(self, '_' + prop_name)
-                key = self.get_value_for_datastore(self)
+                key = property.get_value_for_datastore(self)
                 value = {'status': 'deleted', 'id': key.id_or_name()}
 
             if value is None or isinstance(value, SIMPLE_TYPES):
@@ -101,7 +98,13 @@ class RESTModel(db.Model):
             elif prop.data_type == db.GeoPt:
                 value = db.GeoPt(value.lat, value.lon)
             elif prop.data_type in rest_models.values():
-                value = db.Key.from_path(prop.data_type.kind(), value)
+                key = db.Key.from_path(prop.data_type.kind(), value)
+                other = db.get(key)
+                if other is None:
+                    raise ValueError("Invalid reference %s[%s]." % (prop.data_type.kind(),
+                                                                    value))
+                else:
+                    value = key
             else:
                 raise ValueError('cannot decode %s: %r (type %s)' % (prop_name,
                                                                      value,
@@ -141,18 +144,6 @@ class ModelEncoder(json.JSONEncoder):
             ms += getattr(value, 'microseconds', 0) / 1000
             return int(ms)
         return json.JSONEncoder.default(self, obj)
-
-
-def pretty_json(json_dict):
-    return json.dumps(json_dict, sort_keys=True, indent=2,
-                      separators=(',', ': '), cls=ModelEncoder)
-
-
-def json_response(response, json_dict, cache=False):
-    response.headers['Content-Type'] = JSON_MIMETYPE_CS
-    if cache:
-        response.headers['Cache-Control'] = 'max-age=3600'
-    response.out.write(pretty_json(json_dict))
 
 
 def py_to_js_type(py_type):

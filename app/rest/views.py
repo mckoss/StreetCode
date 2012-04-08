@@ -24,6 +24,7 @@ class UserHandler(webapp.RequestHandler):
         self.user = users.get_current_user()
         self.user_id = self.user and self.user.user_id() or 'anonymous'
 
+
 class JSONHandler(webapp.RequestHandler):
     def handle_exception(self, exception, debug_mode):
         self.error(500)
@@ -169,8 +170,8 @@ class PageHandler(UserHandler):
     def prepare(self):
         username = self.user and self.user.nickname()
         self.render_data.update({
-                "sign_in": users.create_login_url('/'),
-                "sign_out": users.create_logout_url('/'),
+                "sign_in": users.create_login_url('/admin'),
+                "sign_out": users.create_logout_url('/admin'),
                 "username": username,
                 "site_name": settings.SITE_NAME,
                 })

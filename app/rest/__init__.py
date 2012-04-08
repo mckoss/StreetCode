@@ -16,6 +16,7 @@ def get_paths():
 
         # Admin views
         ('/admin', template_handler('admin.html')),
+        ('/admin/help', template_handler('help.html')),
         ('/admin/forms', template_handler('main-form.html',
                                           {'models': models.rest_models.keys()})),
         ('/admin/forms/(\w+)', template_handler('list-form.html')),

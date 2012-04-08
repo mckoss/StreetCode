@@ -174,6 +174,8 @@ class PageHandler(UserHandler):
                 "sign_out": users.create_logout_url('/admin'),
                 "username": username,
                 "site_name": settings.SITE_NAME,
+                "site_admin": settings.SITE_ADMIN,
+                "admin_email": settings.ADMIN_EMAIL,
                 })
 
     def get(self, *args):

@@ -153,7 +153,7 @@ namespace.module('startpad.json-forms', function(exports, require) {
             url: '/data/' + pageInfo.model + '/' + pageInfo.id,
             data: JSON.stringify(data),
             error: function (result, textStatus) {
-                alert(textStatus);
+                alert(result.responseText);
             },
             success: function (result, textStatus) {
                 console.log("saved");
@@ -169,7 +169,7 @@ namespace.module('startpad.json-forms', function(exports, require) {
                 type: 'DELETE',
                 url: '/data/' + pageInfo.model + '/' + pageInfo.id,
                 error: function (result, textStatus) {
-                    alert(textStatus);
+                    alert(result.responseText);
                 },
                 success: function (result, textStatus) {
                     window.location.href = '/admin/forms/' + pageInfo.model;
@@ -184,7 +184,7 @@ namespace.module('startpad.json-forms', function(exports, require) {
             url: '/data/' + pageInfo.model,
             data: '{"title": "New ' + pageInfo.model + '"}',
             error: function (result, textStatus) {
-                alert(textStatus);
+                alert(result.responseText);
             },
             success: function (result, textStatus) {
                 window.location.href = '/admin/forms/' + pageInfo.model;

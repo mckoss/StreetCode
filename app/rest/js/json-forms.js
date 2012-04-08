@@ -105,6 +105,9 @@ namespace.module('startpad.json-forms', function(exports, require) {
                                    value: data[name],
                                    property: property
                                    };
+                        if (!context.value && property.control == 'reference') {
+                            context.value = {id: '', name: 'Unassigned'};
+                        }
                     } else {
                         context = {name: 'computed',
                                    value: computeWrapper(data, name),

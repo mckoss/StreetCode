@@ -64,7 +64,8 @@ class RESTModel(db.Model):
                 # Might not be safe to grab this 'decorated' attribute
                 # name in order to read the raw key from a ReferenceProperty.
                 # http://code.google.com/p/googleappengine/issues/detail?id=991
-                key = getattr(self, '_' + prop_name)
+                # key = getattr(self, '_' + prop_name)
+                key = self.get_value_for_datastore(self)
                 value = {'status': 'deleted', 'id': key.id_or_name()}
 
             if value is None or isinstance(value, SIMPLE_TYPES):
@@ -100,8 +101,7 @@ class RESTModel(db.Model):
             elif prop.data_type == db.GeoPt:
                 value = db.GeoPt(value.lat, value.lon)
             elif prop.data_type in rest_models.values():
-                logging.error('NYI: reading model keys for %s type' % prop.data_type.kind())
-                continue
+                value = db.Key.from_path(prop.data_type.kind(), value)
             else:
                 raise ValueError('cannot decode %s: %r (type %s)' % (prop_name,
                                                                      value,

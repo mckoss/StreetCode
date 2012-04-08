@@ -28,7 +28,7 @@ namespace.module('startpad.json-forms', function(exports, require) {
         'reference': _.template(
             '<label for="<%- name %>"><%- name %>:</label>' +
             '<input type="text" name="<%- name %>" id="<%- name %>" ' +
-            '    value="<%- value.id %> (<%- value.name %>)"/>' +
+            '    value="<%- value.id %>"/>' +
             '<div>' +
             '  Current <a href="/admin/forms/<%- property.type %>"><%- property.type %></a>: ' +
             '<a href="/admin/forms/<%- property.type %>/<%- value.id %>">' +
@@ -97,30 +97,28 @@ namespace.module('startpad.json-forms', function(exports, require) {
                 var formProperties = modelSchema.formOrder || types.keys(modelProperties);
 
                 var formHTML = "";
-                for (var i = 0; i < formProperties.length; i++) {
-                    var propName = formProperties[i];
-                    var property = modelProperties[propName];
+                processValues(result, formProperties, function(data, name, property) {
                     var template;
-                    var data;
+                    var context;
                     if (property) {
-                        data = {name: propName,
-                                property: property,
-                                value: result[propName]
-                                };
+                        context = {name: name,
+                                   value: data[name],
+                                   property: property
+                                   };
                     } else {
-                        data = {name: 'computed',
-                                property: {control: 'computed'},
-                                value: computeWrapper(currentItem, propName)
-                                };
+                        context = {name: 'computed',
+                                   value: computeWrapper(data, name),
+                                   property: {control: 'computed'}
+                                   };
                     }
 
                     if (data.value === null) {
                         data.value = '';
                     }
 
-                    template = controlTemplates[data.property.control];
-                    formHTML += template(data);
-                }
+                    template = controlTemplates[context.property.control];
+                    formHTML += template(context);
+                });
                 $('#item-form-body').append(formHTML);
             }
         });
@@ -205,6 +203,12 @@ namespace.module('startpad.json-forms', function(exports, require) {
             }
             result[field.id] = $(field).val();
         }
+
+        processValues(result, function(data, name, property) {
+            if (property.control == 'reference') {
+                data[name] = parseInt(data[name]);
+            }
+        });
         return result;
     }
 
@@ -231,6 +235,26 @@ namespace.module('startpad.json-forms', function(exports, require) {
         var sep = url.indexOf('?') == -1 ? '?' : '&';
         var encURL = encodeURIComponent(url + sep + 's=s');
         return qrTemplate({url: urlDisplay, encURL: encURL, size: size});
+    }
+
+    // Looping primative - calls fn(data, name, property, result)
+    function processValues(data, keys, fn) {
+        if (arguments.length < 3) {
+            fn = keys;
+            keys = undefined;
+        }
+        var modelSchema = schema[pageInfo.model];
+        var properties = modelSchema.properties;
+        if (keys === undefined) {
+            keys = types.keys(properties);
+        }
+        var result = {}
+
+        for (var i = 0; i < keys.length; i++) {
+            name = keys[i];
+            fn(data, name, properties[name], result);
+        }
+        return result;
     }
 
 });

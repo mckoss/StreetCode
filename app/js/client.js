@@ -47,7 +47,7 @@ namespace.module('streetcode.client', function (exports, requires) {
 
         // The ClientView listens for changes to its model, re-rendering.
         initialize: function() {
-            var shortCode = location.pathname.split('/').pop().slice(1);
+            var shortCode = location.pathname.split('/').pop();
             var self = this;
             $.ajax({
                 url: '/data/client?shortCode=' + shortCode,

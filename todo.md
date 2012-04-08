@@ -15,25 +15,26 @@ X Do form hooks for processing special controls like QR-code display and Markdow
   X Add QR codes to client edit page.
 X Handle missing fields (null) values as empty controls, not "null".
 - Link to parent forms in list form and item form.
-- Add Bootstrap Less directory and build script for admin pages.
+\ Add Bootstrap Less directory and build script for admin pages.
+  - Reformat forms for bootstrap
 - Display tables for mutli-value (reverse reference) properties.
 X Remove Find from item forms.
 X Default display name as id# if name is '' or null.
-- Ensure strings never null - just ''.
+X Ensure strings never null - just ''.
 - Distinct display mode for item forms?
 - Image uploader with thumbnailing.
-- Add link to current reference for reference field.
+X Add link to current reference for reference field.
 
 # REST Data
 
-- Support reference properties:
-  - View to use Select picker
-  - Update with id
+X Support reference properties:
+  X View to use Select picker
+  X Update with id
   X schema type should be model name, control=select
 * Use Deferred for ajax callbacks in rest library.
 - Include object reference on duplicated traversal - and at end of depth - reconstitute
   in client?  Maybe should have a references section for non-item objects?
-- Ensure all REST calls return JSON formatted error messages - dispayed to user.
+X Ensure all REST calls return JSON formatted error messages - dispayed to user.
 - Security added - check_permissions callback.
 - Add ETAG's for model data.
 
@@ -45,5 +46,6 @@ X Deploy to AppEngine.
 
 # Operations
 
-- sc.go2.me -> directing to site.
-- streetcodes.org -> directing to site (Google Apps for Domains setup)
+X sc.go2.me -> directing to site.
+X streetcodes.org -> directing to site (Google Apps for Domains setup)
+X streetcode.me -> for us in qrcodes and shortcuts.

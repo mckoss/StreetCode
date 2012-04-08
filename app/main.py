@@ -15,20 +15,17 @@ import demo
 
 paths = [
     ('/', get_template_handler('index.html')),
-
-    ('/1(\w+)', get_template_handler('mobile_profile.html')),
-    ('/client/(\w+)/(\d+)', views.ClientHandler),
+    ('/about', get_template_handler('about.html')),
+    ('/contact', get_template_handler('contact.html')),
     ]
 
 paths.extend(rest.get_paths())
 
-# Testing URL's (should not be in production)
-if settings.DEBUG:
-    paths.extend([\
-        ('/test/run', test_streetcode.TestHandler),
-        ('/test/test-data', test_streetcode.TestDataHandler),
-        ('/test/demo-data', demo.DemoDataHandler),
-        ])
+# Lower priority than fixed and admin urls.
+paths.extend([
+    ('/(\w+)', get_template_handler('mobile_profile.html')),
+    ('/client/(\w+)/(\d+)', views.ClientHandler),
+    ])
 
 
 def main():

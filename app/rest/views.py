@@ -89,7 +89,6 @@ class ItemHandler(UserHandler):
         json_response(self.response, item.get_dict())
 
     def get_item(self, model_name, id):
-        logging.info('args: %s' % self.request.arguments())
         if model_name not in models.rest_models:
             self.error(404)
             return None

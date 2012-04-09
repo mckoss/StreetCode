@@ -7,6 +7,7 @@ X Add form ordering to models.
 - Get all client pages working (link from admin).
 X Change to editable shortcodes?
 - remove /1* hack for short code
+- Shortcode links should be case insensitive!
 
 # Admin and Forms
 

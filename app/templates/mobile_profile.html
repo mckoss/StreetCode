@@ -1,0 +1,89 @@
+{% extends "mobile_base.html" %}
+{% block head_extra %}
+  <title>{{SITE_NAME}} - Profile</title>
+  <script>
+  $(document).ready(function () {
+      namespace.streetcode.client.initProfile();
+  });
+  </script>
+{% endblock %}
+
+{% block body %}
+  <div id="page-container">
+    <div id="loading">Loading...</div>
+  </div>
+  <script type="text/template" id="client-view-template">
+<div>
+    <h1><div></div></h1>
+
+    <div class="page" id="home">
+        <div class="top-info">
+          <img class="portrait" src="<%= imageURL %>"/>
+          <div class="info-block">
+            <div class="nickname"><%= name %></div>
+            <div class="city">Seattle, WA</div>
+            <div class="sponsor-block">
+              <div class="sponsor">Sponsor Organization:</div>
+              <div class="sponsor"><%= sponsor.name %></div>
+              <a class="help" href="#needs">GIVE</a>
+            </div>
+          </div>
+        </div>
+        <div class="centered"><%= story %></div>
+        <a href="#needs">NEEDS</a>
+        <a href="#about">ABOUT</a>
+    </div>
+
+    <div class="page" id="needs">
+     <div>
+        <a class="give" href="#give/1">$1</a>
+        <a class="give" href="#give/5">$5</a>
+        <a class="give" href="#give/10">$10</a>
+        <a class="give" href="#give/20">$20</a>
+      </div>
+        <a href="#home">HOME</a>
+        <a href="#about">ABOUT</a>
+    </div>
+
+    <div class="page" id="give">
+        <div class="centered">
+			<form name="_xclick" action="https://www.paypal.com/cgi-bin/webscr" method="post">
+				<input type="hidden" name="cmd" value="_xclick">
+				<input type="hidden" name="business" value="mike@mckoss.com">
+				<input type="hidden" name="item_name" value="Donation for <%= name %> (StreetCodes)">
+				<input type="hidden" name="currency_code" value="USD">
+				<input type="text" name="amount" id="amount" value="">
+				<input type="image" src="http://www.paypal.com/en_US/i/btn/btn_donate_LG.gif" border="0" name="submit" alt="Make a donation with PayPal">
+				<input type="hidden" NAME="return" value="http://localhost:8080/<%= shortCode %>#thanks">
+			</form>
+			<p><br>Make your trusted donation through PayPal</b>
+		</div>
+        <a href="#home">HOME</a>
+        <a href="#needs">NEEDS</a>
+        <a href="#about">ABOUT</a>
+    </div>
+
+    <div class="page" id="thanks">
+        <div class="centered">
+			<img style="margin-bottom:30px;" src="images/ThankYou.png">
+			<div><img style="vertical-align:middle" src="images/Twitter_icon.png"/><img style="padding-left:15px; vertical-align:middle" src="images/Facebook_icon.png"/><span style="font-size:14pt; color: #E1E1E1; padding:0px 0px 30px 15px;">Join the Movement</span></div>
+		</div>
+        <a href="#home">HOME</a>
+        <a href="#needs">ABOUT</a>
+    </div>
+
+    <div class="page" id="about">
+        <div class="centered">
+        	<p class="bold">We believe in using mobile technology to break barriers between each other.</p>
+		<p>Most importantly, we're determined to giving a hand when needed.
+      		Our mission is to make it easier to help homeless individuals.
+      		We've developed a quick and secure way to  allow people to donate money to homeless individuals by scanning unique QR codes that can be printed on cards and posters.
+      		Each QR code is linked to a debit account which the individual can use to pay for necessities. Scan. Share. Love.</p>
+	  </div>
+        <a href="#home">HOME</a>
+        <a href="#needs">NEEDS</a>
+    </div>
+
+	</div>
+  </script>
+{% endblock %}

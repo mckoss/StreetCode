@@ -1,0 +1,29 @@
+{% extends "desktop_base.html" %}
+
+{% block head_extra %}
+<title>{{ site_name }} Database List</title>
+<script type="text/javascript" src="/rest/js/json-rest.js"></script>
+<script type="text/javascript" src="/rest/js/json-forms.js"></script>
+<script>
+  $(document).ready(namespace.startpad.json_forms.onListPage);
+</script>
+{% endblock %}
+
+{% block body %}
+<h1 id="list-heading"></h1>
+<table>
+<thead>
+  <tr><th>ID</th><th>Title</th></tr>
+</thead>
+<tbody id="list-table-body">
+</tbody>
+</table>
+
+<input type=button id="_new" value="New" />
+
+<script type="template" id="model-row-template">
+<tr>
+  <td><%- id %>.</td><td><a href="/admin/forms/<%- modelName %>/<%- id %>"><%- name %></td>
+</tr>
+</script>
+{% endblock %}

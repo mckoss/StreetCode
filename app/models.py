@@ -1,45 +1,63 @@
 """
     StreetCodes - appliction models/REST interface.
+
+    Note that all models will inherit a default name (StringProperty).
 """
 from google.appengine.ext import db
 
 import settings
-from jsonmodel import JSONModel
-import counter
+import rest.models
+from rest.models import RESTModel, Timestamped
+import rest.counter as counter
 
 
-class Sponsor(JSONModel):
-    name = db.StringProperty()
-    url = db.LinkProperty()
-    address = db.PostalAddressProperty()
-    phone = db.PhoneNumberProperty()
+def init():
+    rest.models.add_models({
+            'user': User,
+            'sponsor': Sponsor,
+            'client': Client,
+            'donor': Donor,
+            'transaction': Transaction,
+            'scan': Scan,
+            })
 
 
-class Client(JSONModel):
-    displayName = db.StringProperty()
-    fullName = db.StringProperty()
-    story = db.TextProperty()
-    sponsor = db.ReferenceProperty(Sponsor)
-    imageURL = db.StringProperty()
-    shortCode = db.StringProperty()
-
-    def set_defaults(self):
-        self.shortCode = counter.int_to_sid(counter.Accumulator.get_unique())
+class Sponsor(RESTModel, Timestamped):
+    url = db.StringProperty()
+    address = db.TextProperty()
+    phone = db.StringProperty()
 
 
-class Donor(JSONModel):
-    name = db.StringProperty()
-    address = db.PostalAddressProperty()
-    phone = db.PhoneNumberProperty()
-
-
-class User(JSONModel):
+class User(RESTModel, Timestamped):
     user = db.UserProperty()
     isAdmin = db.BooleanProperty()
     sponsor = db.ReferenceProperty(Sponsor)
 
 
-class Transaction(JSONModel):
+class Client(RESTModel, Timestamped):
+    fullName = db.StringProperty()
+    shortCode = db.StringProperty()
+    story = db.TextProperty()
+    storyHTML = db.TextProperty()
+    sponsor = db.ReferenceProperty(Sponsor)
+    imageURL = db.StringProperty()
+
+    form_order = ('name', 'fullName',
+                  'shortCode',
+                  'story', 'sponsor', 'imageURL',
+                  'QRCode("http://streetcode.me/" + item.shortCode)'
+                  )
+    computed = ('item.storyHTML = markdown(item.story);',)
+
+
+class Donor(RESTModel, Timestamped):
+    address = db.TextProperty()
+    phone = db.StringProperty()
+
+    form_order = ('name', 'address', 'phone')
+
+
+class Transaction(RESTModel, Timestamped):
     """
     Simple double-entry accounting.  Account names are in the format:
 
@@ -51,23 +69,18 @@ class Transaction(JSONModel):
 
     type is one of 'donation', 'fullfillment', ...
     """
-    fromAccount = db.LinkProperty()
-    toAccount = db.LinkProperty()
+    fromAccount = db.StringProperty()
+    toAccount = db.StringProperty()
     amount = db.FloatProperty()
-    type = db.StringProperty()
     note = db.TextProperty()
     confirm = db.BooleanProperty()
 
+    form_order = ('name', 'fromAccount', 'toAccount', 'amount', 'confirm')
 
-class Scan(JSONModel):
+
+class Scan(RESTModel, Timestamped):
     client = db.ReferenceProperty(Sponsor)
     donor = db.ReferenceProperty(Donor)
     ledger = db.ReferenceProperty(Transaction)
 
-
-rest_models = {'client': Client,
-               'donor': Donor,
-               'sponsor': Sponsor,
-               'scan': Scan,
-               'transaction': Transaction,
-               }
+    form_order = ('name', 'client', 'donor', 'ledger')

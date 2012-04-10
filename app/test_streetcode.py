@@ -8,7 +8,7 @@ from google.appengine.ext import webapp
 from google.appengine.api import users
 
 import models
-import counter
+from rest import counter
 
 
 class TestDataHandler(webapp.RequestHandler):

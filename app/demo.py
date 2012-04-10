@@ -25,7 +25,7 @@ class DemoDataHandler(webapp.RequestHandler):
         kodiac = models.Client()
         kodiac.set_defaults()
         kodiac.shortCode = 'AB'
-        kodiac.displayName = "Kodiak"
+        kodiac.name = "Kodiak"
         kodiac.fullName = "Chris"
         kodiac.imageURL = "/images/clients/Kodiac.png"
         kodiac.sponsor = self.sponsors[0]

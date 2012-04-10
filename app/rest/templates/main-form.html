@@ -1,0 +1,20 @@
+{% extends "desktop_base.html" %}
+
+{% block head_extra %}
+<title>{{ site_name }} Database</title>
+<script type="text/javascript" src="/rest/js/json-rest.js"></script>
+<script type="text/javascript" src="/rest/js/json-forms.js"></script>
+<script>
+  $(document).ready(namespace.startpad.json_forms.onFormsPage);
+</script>
+{% endblock %}
+
+{% block body %}
+<h1>{{ site_name }} Database Home</h1>
+<ul id="schema-links-body"></ul>
+
+<script type="template" id="schema-links-template">
+<li><a href="/admin/forms/<%= model %>"><%= model %></a></li>
+</script>
+{% endblock %}
+

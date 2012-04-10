@@ -1,0 +1,16 @@
+{% extends "desktop_base.html" %}
+
+{% block head_extra %}
+<title>{{ site_name }} Admin Help</title>
+<link rel="stylesheet" type="text/css" href="/rest/css/admin.css" />
+<script type="text/javascript" src="/rest/js/admin.js"></script>
+{% endblock %}
+
+{% block body %}
+<h1>{{ site_name }} Administration Help</h1>
+
+<p>This site is for the use of {{ site_name }} administrators only.</p>
+
+<p>If you need assistance, conact {{ site_admin }} at {{ admin_email }}.
+
+{% endblock %}

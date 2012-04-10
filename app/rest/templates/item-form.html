@@ -1,0 +1,22 @@
+{% extends "desktop_base.html" %}
+
+{% block head_extra %}
+<title>{{ site_name }} Database Item</title>
+<script type="text/javascript" src="/rest/js/json-rest.js"></script>
+<script type="text/javascript" src="/rest/js/json-forms.js"></script>
+<script>
+  $(document).ready(namespace.startpad.json_forms.onItemPage);
+</script>
+{% endblock %}
+
+{% block body %}
+  <fieldset>
+    <legend id="item-form-legend"></legend>
+
+    <div id="item-form-body">
+    </div>
+
+    <input type=button id="_save" value="Save" />
+    <input type=button id="_delete" value="Delete" />
+  </fieldset>
+{% endblock %}

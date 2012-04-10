@@ -2,32 +2,30 @@ from google.appengine.ext import webapp
 from google.appengine.ext.webapp.util import run_wsgi_app
 
 import settings
-import user_views
-import rest_views
+import rest
 import models
 import views
+
+from rest.views import get_template_handler
+
+models.init()
 
 import test_streetcode
 import demo
 
 paths = [
-    ('/', user_views.MainHandler),
-
-    ('/1(\w+)', views.ProfileHandler),
-    ('/client/(\w+)/(\d+)', views.ClientHandler),
-
-    # REST API requires two handlers - one with an ID and one without.
-    ('/data/(\w+)', rest_views.ListHandler),
-    ('/data/(\w+)/(\d+)', rest_views.ItemHandler),
+    ('/', get_template_handler('index.html')),
+    ('/about', get_template_handler('about.html')),
+    ('/contact', get_template_handler('contact.html')),
     ]
 
-# Testing URL's (should not be in production)
-if settings.DEBUG:
-    paths.extend([\
-        ('/test/run', test_streetcode.TestHandler),
-        ('/test/test-data', test_streetcode.TestDataHandler),
-        ('/test/demo-data', demo.DemoDataHandler),
-        ])
+paths.extend(rest.get_paths())
+
+# Lower priority than fixed and admin urls.
+paths.extend([
+    ('/(\w+)', get_template_handler('mobile_profile.html')),
+    ('/client/(\w+)/(\d+)', views.ClientHandler),
+    ])
 
 
 def main():

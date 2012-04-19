@@ -2,12 +2,14 @@
 
 X /1AB broken
   X Fix up client fields to use name, not displayName.
-- Merge Michael's mobile code.
+X Merge Michael's mobile code.
 X Add form ordering to models.
 - Get all client pages working (link from admin).
 X Change to editable shortcodes?
-- remove /1* hack for short code
+X remove /1* hack for short code
 - Shortcode links should be case insensitive!
+- get host name from request object - no need in settings - rest/views.py
+
 
 # Admin and Forms
 

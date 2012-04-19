@@ -4,6 +4,7 @@ from google.appengine.ext import webapp
 import re
 import settings
 from django.http import HttpResponse
+from models import Transaction
 
 class pdt_handler(webapp.RequestHandler):
     def get(self, client):
@@ -29,11 +30,32 @@ class pdt_handler(webapp.RequestHandler):
           self.response.out.write("POST Failed")
 
         # Check for SUCCESS at the start of the response
-        if re.search("^SUCCESS", status):
+        lines = status.split(' ')
+        if lines[0] == 'SUCCESS':
+            lines = line[1:]
+            props = {}
+            for line in lines:
+                (key, value) = line.split('=')
+                props[key] = value
             # Check other transaction details here like
             # payment_status etc..
 
             # TODO Update donation transaction in streetcodes
+
+            client = Client.all().filter('shortCode =', props['item_number']).get()
+
+            donor = Donor.all().filter('email =', props['email']).get()
+            if donor is None:
+                donor = Donor()
+                donor.name = "%s %s" % (props['first'], props['last'])
+                donor.email = props['email']
+                donor.put()
+
+            tx = Transaction(method='PayPal',
+                             donor=donor,
+                             client=client,
+                             amount=props['amount'])
+            tx.put()
 
             # redirect user to thank you screen "/client_short_code#thanks"
             self.response.out.write('<script> window.location = "/'+ client + '#thanks"; </script>')

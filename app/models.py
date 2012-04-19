@@ -69,11 +69,12 @@ class Transaction(RESTModel, Timestamped):
 
     type is one of 'donation', 'fullfillment', ...
     """
-    fromAccount = db.StringProperty()
-    toAccount = db.StringProperty()
+    donor = db.ReferenceProperty(Donor)
+    client = db.ReferenceProperty(Client)
+    method = db.TextProperty()
     amount = db.FloatProperty()
     note = db.TextProperty()
-    confirm = db.BooleanProperty()
+    fullfilled = db.BooleanProperty(default=False)
 
     form_order = ('name', 'fromAccount', 'toAccount', 'amount', 'confirm')
 

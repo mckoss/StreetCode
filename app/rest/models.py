@@ -68,9 +68,8 @@ class RESTModel(db.Model):
             if value is None or isinstance(value, SIMPLE_TYPES):
                 result[prop_name] = value
             elif isinstance(value, datetime):
-                ms = time.mktime(value.utctimetuple()) * 1000
-                ms += getattr(value, 'microseconds', 0) / 1000
-                result[prop_name] = int(ms)
+                ms = int(time.mktime(value.utctimetuple()) * 1000)
+                result[prop_name] = ms
             elif isinstance(value, db.GeoPt):
                 result[prop_name] = {'lat': value.lat, 'lon': value.lon}
             elif isinstance(value, db.Model):
@@ -93,8 +92,7 @@ class RESTModel(db.Model):
             if value is None or prop.data_type in SIMPLE_TYPES:
                 pass
             elif prop.data_type == datetime:
-                value = datetime.utcfromtimestamp(value / 1000)
-                value.microseconds = (value % 1000) * 1000
+                value = datetime.utcfromtimestamp(int(value) / 1000)
             elif prop.data_type == db.GeoPt:
                 value = db.GeoPt(value.lat, value.lon)
             elif prop.data_type in rest_models.values():

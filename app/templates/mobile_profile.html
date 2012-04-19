@@ -1,6 +1,6 @@
 {% extends "mobile_base.html" %}
 {% block head_extra %}
-  <title>{{SITE_NAME}} - Profile</title>
+  <title>{{site_name}} - Profile</title>
   <script>
   $(document).ready(function () {
       namespace.streetcode.client.initProfile();
@@ -47,7 +47,7 @@
 
     <div class="page" id="give">
         <div class="centered">
-			<form name="_xclick" action="https://www.sandbox.paypal.com/cgi-bin/webscr" method="post">
+            <form name="_xclick" action="https://www.sandbox.paypal.com/cgi-bin/webscr" method="post">
         <input type="hidden" name="cmd" value="_donations">
         <input type="hidden" name="business" value="7U9B9CQ4PZXQC">
         <input type="hidden" name="item_name" value="Donation for <%= name %> (StreetCodes)">
@@ -56,11 +56,11 @@
         <input type="hidden" name="bn" value="PP-DonationsBF:btn_donateCC_LG.gif:NonHosted">
         <input type="image" src="https://www.sandbox.paypal.com/en_US/i/btn/btn_donateCC_LG.gif" border="0" name="  submit" alt="PayPal - The safer, easier way to pay online!">
         <input type="hidden" name="rm" value="2">
-        <input type="hidden" NAME="return" value="{{SITE_URL}}/donation/<%= shortCode %>">   
+        <input type="hidden" NAME="return" value="{{site_url}}/donation/<%= shortCode %>">
         <img alt="" border="0" src="https://www.sandbox.paypal.com/en_US/i/scr/pixel.gif" width="1" height="1">
-			</form>
-			<p><br>Make your trusted donation through PayPal</b>
-		</div>
+            </form>
+            <p><br>Make your trusted donation through PayPal</b>
+        </div>
         <a href="#home">HOME</a>
         <a href="#needs">NEEDS</a>
         <a href="#about">ABOUT</a>
@@ -68,25 +68,25 @@
 
     <div class="page" id="thanks">
         <div class="centered">
-			<img style="margin-bottom:30px;" src="images/ThankYou.png">
-			<div><img style="vertical-align:middle" src="idmages/Twitter_icon.png"/><img style="padding-left:15px; vertical-align:middle" src="images/Facebook_icon.png"/><span style="font-size:14pt; color: #E1E1E1; padding:0px 0px 30px 15px;">Join the Movement</span></div>
-		</div>
+            <img style="margin-bottom:30px;" src="images/ThankYou.png">
+            <div><img style="vertical-align:middle" src="images/Twitter_icon.png"/><img style="padding-left:15px; vertical-align:middle" src="images/Facebook_icon.png"/><span style="font-size:14pt; color: #E1E1E1; padding:0px 0px 30px 15px;">Join the Movement</span></div>
+        </div>
         <a href="#home">HOME</a>
         <a href="#needs">ABOUT</a>
     </div>
 
     <div class="page" id="about">
         <div class="centered">
-        	<p class="bold">We believe in using mobile technology to break barriers between each other.</p>
-		<p>Most importantly, we're determined to giving a hand when needed.
-      		Our mission is to make it easier to help homeless individuals.
-      		We've developed a quick and secure way to  allow people to donate money to homeless individuals by scanning unique QR codes that can be printed on cards and posters.
-      		Each QR code is linked to a debit account which the individual can use to pay for necessities. Scan. Share. Love.</p>
-	  </div>
+            <p class="bold">We believe in using mobile technology to break barriers between each other.</p>
+        <p>Most importantly, we're determined to giving a hand when needed.
+            Our mission is to make it easier to help homeless individuals.
+            We've developed a quick and secure way to  allow people to donate money to homeless individuals by scanning unique QR codes that can be printed on cards and posters.
+            Each QR code is linked to a debit account which the individual can use to pay for necessities. Scan. Share. Love.</p>
+      </div>
         <a href="#home">HOME</a>
         <a href="#needs">NEEDS</a>
     </div>
 
-	</div>
+    </div>
   </script>
 {% endblock %}

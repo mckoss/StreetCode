@@ -45,9 +45,11 @@ class Client(RESTModel, Timestamped):
     form_order = ('name', 'fullName',
                   'shortCode',
                   'story', 'sponsor', 'imageURL',
-                  'QRCode("http://streetcode.me/" + item.shortCode)'
+                  'QRCode("http://streetcode.me/" + item.shortCode)',
                   )
-    computed = ('item.storyHTML = markdown(item.story);',)
+    computed = ('item.storyHTML = markdown(item.story);',
+                'item.shortCode = item.shortCode.toLowerCase();',
+                )
 
 
 class Donor(RESTModel, Timestamped):

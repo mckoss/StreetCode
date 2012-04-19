@@ -10,7 +10,7 @@ namespace.module('streetcode.client', function (exports, requires) {
     var pageWidth = $(window).width();
     var pageCurr = null;
     var pageNext = null;
-    
+
     function initRouter()
     {
         // Initiate the router
@@ -21,33 +21,33 @@ namespace.module('streetcode.client', function (exports, requires) {
 
     var AppRouter = Backbone.Router.extend({
         routes: {
-        	"give/:amount": "give",
+            "give/:amount": "give",
             "*actions": "linkHandler" // matches http://example.com/#anything-here
         },
         give: function( amount){
-        	$("#amount").val(amount);
-        	this.linkHandler( "give" );
+            $("#amount").val(amount);
+            this.linkHandler( "give" );
         },
         linkHandler: function( actions ){
             // grab a handle the # section of the navigation link clicked
-        	// if no actions, navigate home
-        	// pageNext = actions ? $("#"+actions) : $(".page:eq(0)");
+            // if no actions, navigate home
+            // pageNext = actions ? $("#"+actions) : $(".page:eq(0)");
             var page = (actions) ? actions : "home";
             page = "#" + page;
             pageNext = $(page);
-            
+
             // Send navigation event to Google Analytics
             _gaq.push(['_trackPageview', location.pathname + location.search + page]);
-                        
+
             // slide pages
             $('div .page').each(function(index) {
                 $(this).css("left",-1*pageWidth);
                 $(this).removeClass("transform");
             });
             if(pageCurr) {
-            	//alert(pageCurr.css("left"));
-            	//pageCurr.css("left", -1*pageWidth);
-            	//pageCurr.removeClass("transform");
+                //alert(pageCurr.css("left"));
+                //pageCurr.css("left", -1*pageWidth);
+                //pageCurr.removeClass("transform");
             }
             pageNext.css("left", pageWidth);
             pageNext.addClass("transform");
@@ -56,7 +56,7 @@ namespace.module('streetcode.client', function (exports, requires) {
             // update page pointers
             pageCurr = pageNext;
         }
-    });    
+    });
 
     function debug( p, o) {
       console.log( p + ": " + (o ? (o.attr("id") + " " + o.css("left")): "<>") );
@@ -105,7 +105,7 @@ namespace.module('streetcode.client', function (exports, requires) {
             var shortCode = location.pathname.split('/').pop();
             var self = this;
             $.ajax({
-                url: '/data/client?shortCode=' + shortCode,
+                url: '/data/client?shortCode=' + shortCode.toLowerCase(),
                 dataType: 'json',
                 success: function (data) {
                     self.client = data[0];

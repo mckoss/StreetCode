@@ -32,7 +32,7 @@ class pdt_handler(webapp.RequestHandler):
         # Check for SUCCESS at the start of the response
         lines = status.split(' ')
         if lines[0] == 'SUCCESS':
-            lines = line[1:]
+            lines = lines[1:]
             props = {}
             for line in lines:
                 (key, value) = line.split('=')

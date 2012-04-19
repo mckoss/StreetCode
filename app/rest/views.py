@@ -162,26 +162,41 @@ def filter_query_by_value(query, model, property_name, value):
 
 
 class PageHandler(UserHandler):
+    """ Request handler for generic pages for webapp views.
+    Usage: PageHandler.using("template-name.html"). """
     def __init__(self, template_path, render_data=None):
         super(PageHandler, self).__init__()
         self.template_path = template_path
         self.render_data = render_data or {}
 
+    @classmethod
+    def using(cls, template_name, render_data=None, package=None):
+        """ Factory function to create a PageHandler instance to be used
+        as a Handler callable. """
+        def factory():
+            path = ['templates', template_name]
+            if package is not None:
+                path.insert(0, package)
+            return cls(os.path.join(*path))
+        return factory
+
     def prepare(self):
+        self.render_data.update(settings.template_vars)
         username = self.user and self.user.nickname()
         self.render_data.update({
-                "sign_in": users.create_login_url('/admin'),
-                "sign_out": users.create_logout_url('/admin'),
-                "username": username,
-                "SITE_NAME": settings.SITE_NAME,
-                "site_admin": settings.SITE_ADMIN,
-                "admin_email": settings.ADMIN_EMAIL,
-                "SITE_URL" : settings.SITE_URL, 
-                })
+            'sign_in': users.create_login_url('/admin'),
+            'sign_out': users.create_logout_url('/admin'),
+            'username': username,
+            'site_host': self.request.host,
+            'site_url': self.request.host_url,
+            })
 
     def get(self, *args):
         self.prepare()
-        logging.info("Rendering template: %s" % self.template_path)
+        if settings.DEBUG:
+            import pprint
+            logging.info("Rendering template: %s" % self.template_path)
+            logging.info("render_data:\n%s", pprint.pformat(self.render_data))
         result = template.render(self.template_path, self.render_data)
         self.response.out.write(result)
 
@@ -191,10 +206,3 @@ def pretty_json(json_dict):
                       separators=(',', ': '), cls=models.ModelEncoder)
 
 
-def get_template_handler(template_name, render_data=None, package=None):
-    def get_handler():
-        path = ['templates', template_name]
-        if package is not None:
-            path.insert(0, package)
-        return PageHandler(os.path.join(*path))
-    return get_handler

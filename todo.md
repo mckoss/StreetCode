@@ -4,11 +4,21 @@ X /1AB broken
   X Fix up client fields to use name, not displayName.
 X Merge Michael's mobile code.
 X Add form ordering to models.
+- Jet City donation page
 - Get all client pages working (link from admin).
 X Change to editable shortcodes?
 X remove /1* hack for short code
 - Shortcode links should be case insensitive!
 - get host name from request object - no need in settings - rest/views.py
+- Format created/modified date text.  (parse and display)
+- Move private keys to datastore globals
+
+# Bugs
+
+- Nulls being displayed in textarea and imageURL on new Client items.
+- Sponsor form does not have name field first?
+- Models.py - parsing date fails with text timestamp.
+- Read-only fields should not be displayed in editable fields (e.g. created and modified).
 
 
 # Admin and Forms
@@ -35,16 +45,21 @@ X Support reference properties:
   X Update with id
   X schema type should be model name, control=select
 * Use Deferred for ajax callbacks in rest library.
+- Finish application orm layer in javascript
+  - Use in admin
+  - Use in mobile profile.
 - Include object reference on duplicated traversal - and at end of depth - reconstitute
   in client?  Maybe should have a references section for non-item objects?
 X Ensure all REST calls return JSON formatted error messages - dispayed to user.
 - Security added - check_permissions callback.
-- Add ETAG's for model data.
+- Add caching to rest app
+  - Generate etag hash from data - 304 not modified on GET/HEAD
+  - Add Cacheable mixin to models.
 
 # Testing
 
 - QUnit based testing for data and forms.
-- Remove demo functions - not needed with Admin interface.
+X Remove demo functions - not needed with Admin interface.
 X Deploy to AppEngine.
 
 # Operations

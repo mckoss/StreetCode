@@ -8,5 +8,5 @@ class ClientHandler(UserHandler):
     def get(self, template_type, id):
         self.response.out.write(template.render("templates/client_%s.html" % template_type,
                                                 {'id': id,
-                                                 'SITE_NAME': settings.SITE_NAME}
+                                                 'site_name': settings.SITE_NAME}
                                                 ))

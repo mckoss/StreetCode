@@ -8,8 +8,8 @@ X Add form ordering to models.
 - Get all client pages working (link from admin).
 X Change to editable shortcodes?
 X remove /1* hack for short code
-- Shortcode links should be case insensitive!
-- get host name from request object - no need in settings - rest/views.py
+X Shortcode links should be case insensitive!
+X get host name from request object - no need in settings - rest/views.py
 - Format created/modified date text.  (parse and display)
 - Move private keys to datastore globals
 

@@ -31,11 +31,11 @@ div.top-info {
 	background:url(<%= imageURL %>) no-repeat center center;
 }
 
-.story {
-	font-family: Arial;
+div.story {
 	margin: 10px auto;
 	width: 280px;
 	text-align: justify;
+	text-justify:inter-word;
 }
 
 #motto{

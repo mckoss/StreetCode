@@ -47,10 +47,10 @@
 
     <div class="page" id="give">
         <div class="centered">
-            <form name="_xclick" action="https://www.sandbox.paypal.com/cgi-bin/webscr" method="post">
+            <form name="_xclick" action="{{paypal_url}}" method="post">
         <input type="hidden" name="cmd" value="_donations">
-        <input type="hidden" name="business" value="7U9B9CQ4PZXQC">
-        <input type="hidden" name="item_name" value="Donation for <%= name %> sponsored by  (StreetCodes)">
+        <input type="hidden" name="business" value="<%= sponsor.paypalMerchant.merchantKey %>"> 
+        <input type="hidden" name="item_name" value="Donation for <%= name %> sponsored by <%= sponsor.name %> (StreetCodes)">
         <input type="hidden" name="currency_code" value="USD">
         <input type="text" name="amount" id="amount" value="">
         <input type="hidden" name="bn" value="PP-DonationsBF:btn_donateCC_LG.gif:NonHosted">

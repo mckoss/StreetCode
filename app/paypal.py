@@ -10,15 +10,20 @@ from models import Donor
 
 class pdt_handler(webapp.RequestHandler):
     def get(self, shortCode):
+        client = Client.all().filter('shortCode =', shortCode).get()
+        sponsor = client.sponsor 
+        merchant = sponsor.paypalMerchant 
+
         # Get the transaction id, tx=blahblahblah
         trans_id = self.request.get("tx")
+
 
         # Confgure POST args
         args = {}
         # Specify the paypal command
         args["cmd"] ="_notify-synch"
         args["tx"] = trans_id
-        args["at"] = settings.PAYPAL_PDT_KEY
+        args["at"] = merchant.PDTKey
 
         args = urllib.urlencode(args)
 
@@ -31,10 +36,11 @@ class pdt_handler(webapp.RequestHandler):
         except:
           self.response.out.write("POST Failed")
 
-        # Check for SUCCESS at the start of the response
+        
+
         lines = status.split('\n')
-        if lines[0] == 'SUCCESS': #status.startswith('SUCCESS'):
-         
+        if lines[0] == 'SUCCESS':# Check for SUCCESS at the start of the response
+            # build a dictionary of key value pair provided by PDT
             lines = lines[1:]
             props = {}
             for line in lines:
@@ -44,22 +50,21 @@ class pdt_handler(webapp.RequestHandler):
                     props[key] = value
                 else:
                     props[key] = ''
-            # Check other transaction details here like
-            # payment_status etc.. 
-            client = Client.all().filter('shortCode =', shortCode).get()
-
+            
+            # TODO payment_status= complete etc.. 
+            
             # TODO if client is none 
 
+            # Get donor information (create new if not exist)
             donor = Donor.all().filter('email =', urllib.unquote(props['payer_email'])).get()
-            
             if donor is None:
                 donor = Donor()
-                donor.donorName = "%s %s" % (props['first_name'], props['last_name'])
+                donor.name = "%s %s" % (props['first_name'], props['last_name'])
                 donor.email = urllib.unquote( props['payer_email'] )
                 donor.put()
 
+            # Create a new transaction (use transaction_id to maintain data uniqueness)
             tx = Transaction.all().filter('txID=', trans_id).get()
-
             if tx is None:
                 tx = Transaction( method='PayPal',
                               donor=donor,

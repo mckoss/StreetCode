@@ -53,32 +53,23 @@ class Client(RESTModel, Timestamped):
 
 
 class Donor(RESTModel, Timestamped):
-    address = db.TextProperty()
-    phone = db.StringProperty()
+    donorName = db.TextProperty()
+    email = db.TextProperty()
 
-    form_order = ('name', 'address', 'phone')
+    form_order = ('donorName', 'email')
 
 
 class Transaction(RESTModel, Timestamped):
-    """
-    Simple double-entry accounting.  Account names are in the format:
-
-        'type_id/type_id'
-
-    for example:
-        'stripe'
-        'sponsor_34/client_2'
-
-    type is one of 'donation', 'fullfillment', ...
-    """
     donor = db.ReferenceProperty(Donor)
     client = db.ReferenceProperty(Client)
+    txID = db.TextProperty() 
     method = db.TextProperty()
     amount = db.FloatProperty()
+    fee = db.FloatProperty()
     note = db.TextProperty()
-    fullfilled = db.BooleanProperty(default=False)
+    fulfilled = db.BooleanProperty(default=False)
 
-    form_order = ('name', 'fromAccount', 'toAccount', 'amount', 'confirm')
+    form_order = ('donor', 'client', 'txID', 'method', 'amount', 'fee', 'note', 'fulfilled')
 
 
 class Scan(RESTModel, Timestamped):

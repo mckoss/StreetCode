@@ -21,33 +21,37 @@
           <img class="portrait" src="<%= imageURL %>"/>
           <div class="info-block">
             <div class="nickname"><%= name %></div>
-            <div class="city">Seattle, WA</div>
+            <div class="bold">Seattle, WA</div>
             <div class="sponsor-block">
-              <div class="sponsor">Sponsor Organization:</div>
-              <div class="sponsor"><%= sponsor.name %></div>
-              <a class="help" href="#needs">GIVE</a>
+             <div class="sponsor">Sponsor Organization:</div>
+             <div class="sponsor"><%= sponsor.name %></div>
+             <a class="help" href="#needs">DONATE</a>
             </div>
           </div>
         </div>
         <div class="story"><%= story %></div>
-        <a href="#needs">NEEDS</a>
+        <a href="#needs">DONATE</a>
         <a href="#about">ABOUT</a>
     </div>
 
     <div class="page" id="needs">
-     <div>
+    <div class="story bold" style="text-align: center;white-space:nowrap;vertical-align:middle">
+      Secure donations through <img class="centered" style="display:inline;vertical-align:middle; height:23px; width: 37px" src="https://www.paypal.com/en_US/i/logo/PayPal_mark_37x23.gif" border="0" alt="PayPal Acceptance Mark">
+    </div>
+     <div class="give-block">
         <a class="give" href="#give/1">$1</a>
         <a class="give" href="#give/5">$5</a>
         <a class="give" href="#give/10">$10</a>
         <a class="give" href="#give/20">$20</a>
+        <a class="give" href="#give/">Other Amount</a>
       </div>
         <a href="#home">HOME</a>
         <a href="#about">ABOUT</a>
     </div>
 
     <div class="page" id="give">
-        <div class="centered">
-            <form name="_xclick" action="https://www.sandbox.paypal.com/cgi-bin/webscr" method="post">
+        <div class="story">
+            <form id="_xclick" name="_xclick" action="https://www.sandbox.paypal.com/cgi-bin/webscr" method="post">
         <input type="hidden" name="cmd" value="_donations">
         <input type="hidden" name="business" value="7U9B9CQ4PZXQC">
         <input type="hidden" name="item_name" value="Donation for <%= name %> (StreetCodes)">
@@ -59,7 +63,7 @@
         <input type="hidden" NAME="return" value="{{site_url}}/donation/<%= shortCode %>">
         <img alt="" border="0" src="https://www.sandbox.paypal.com/en_US/i/scr/pixel.gif" width="1" height="1">
             </form>
-            <p><br>Make your trusted donation through PayPal</b>
+            <p><br>Make your trusted donation through PayPal</p>
         </div>
         <a href="#home">HOME</a>
         <a href="#needs">NEEDS</a>
@@ -67,9 +71,9 @@
     </div>
 
     <div class="page" id="thanks">
-        <div class="centered">
+        <div class="story">
             <img style="margin-bottom:30px;" src="images/ThankYou.png">
-            <div><img style="vertical-align:middle" src="images/Twitter_icon.png"/><img style="padding-left:15px; vertical-align:middle" src="images/Facebook_icon.png"/><span style="font-size:14pt; color: #E1E1E1; padding:0px 0px 30px 15px;">Join the Movement</span></div>
+            <div><img style="vertical-align:middle" src="images/Twitter_icon.png"/><img style="padding-left:15px; vertical-align:middle" src="images/Facebook_icon.png"/><span style="font-size:13pt; color: #E1E1E1; padding:0px 0px 30px 15px;">Join the Movement</span></div>
         </div>
         <a href="#home">HOME</a>
         <a href="#needs">ABOUT</a>
@@ -77,11 +81,12 @@
 
     <div class="page" id="about">
         <div class="story">
-            <p class="bold">We believe in using mobile technology to break barriers between each other.</p>
-        <p>Most importantly, we're determined to giving a hand when needed.
+            <p class="motto">We believe in using mobile technology to break barriers between each other.</p>
+            <p>Most importantly, we're determined to giving a hand when needed.
             Our mission is to make it easier to help homeless individuals.
             We've developed a quick and secure way to  allow people to donate money to homeless individuals by scanning unique QR codes that can be printed on cards and posters.
-            Each QR code is linked to a debit account which the individual can use to pay for necessities. Scan. Share. Love.</p>
+            Each QR code is linked to a debit account which the individual can use to pay for necessities.</p>
+            <p>Scan. Share. Love.</p>
       </div>
         <a href="#home">HOME</a>
         <a href="#needs">NEEDS</a>

@@ -26,12 +26,12 @@ namespace.module('streetcode.client', function (exports, requires) {
         },
         give: function( amount){
             $("#amount").val(amount);
-            this.linkHandler( "give" );
+            $("#_xclick").submit();
+            //this.linkHandler( "give" );
         },
         linkHandler: function( actions ){
             // grab a handle the # section of the navigation link clicked
             // if no actions, navigate home
-            // pageNext = actions ? $("#"+actions) : $(".page:eq(0)");
             var page = (actions) ? actions : "home";
             page = "#" + page;
             pageNext = $(page);
@@ -81,7 +81,6 @@ namespace.module('streetcode.client', function (exports, requires) {
         ClientStoryView.template =  _.template($('#client-view-template').html());
         exports.app = new ClientStoryView();
     }
-
 
     var ClientList = Backbone.Collection.extend({
         model: Client,

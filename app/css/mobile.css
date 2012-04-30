@@ -1,11 +1,7 @@
 * { margin: 0; padding:0; background-color: #FFFFFF; color: #000000; overflow: hidden; }
 
-/* Embed App font Helvetia Ultra Compressed */
-@font-face {
-	font-family: 'Helvetica Ultra Compressed';
-	src: local('Helvetica Ultra Compressed'), url('HelveticaUltraCompressed.ttf') format('truetype');
-	font-style: normal;
-	font-weight: 400;
+p {
+	margin: 9px auto;
 }
 
 div {
@@ -14,15 +10,25 @@ div {
 	font-size: 12px;
 }
 
+/* Embed App font Helvetia Ultra Compressed */
+@font-face {
+    font-family: 'Helvetica Ultra Compressed';
+    src: url('font/helveticaultracompressed-webfont.eot');
+    src: url('font/helveticaultracompressed-webfont.eot?#iefix') format('embedded-opentype'),
+         url('font/helveticaultracompressed-webfont.woff') format('woff'),
+         url('font/helveticaultracompressed-webfont.ttf') format('truetype');
+	font-style: normal;
+	font-weight: 400;
+}
+
+/* Client Info */
 div.top-info {
 	width: 280px;
 	height: 174px;
 	margin: 20px auto 0px;
 }
 
-.top-info .city {
-}
-
+/* Client Portrait */
 .top-info > .portrait{
 	width: 115px;
 	height: 172px;
@@ -31,6 +37,33 @@ div.top-info {
 	background:url(<%= imageURL %>) no-repeat center center;
 }
 
+/* Client Info Panel */
+.top-info > .info-block {
+	width: 155px;
+	height: 174px;
+	float: right;
+}
+
+div.info-block > .nickname {
+	font-family: 'Helvetica Ultra Compressed', Arial;
+	font-size: 36px;
+	<!--[if IE]>
+	font-size: 16px;
+	<![endif]-->
+}
+
+/* Client Sponsor Panel */
+div.sponsor-block{
+	margin-top: 0px;
+	font-weight: bold;
+	color: #c6c6c6;
+}
+
+div.sponsor-block .sponsor{
+	color: inherit;
+}
+
+/* Client Story */
 div.story {
 	margin: 10px auto;
 	width: 280px;
@@ -38,71 +71,39 @@ div.story {
 	text-justify:inter-word;
 }
 
-#motto{
-	font-size:18px;
-	font-weight:normal;
-}
-
-.top-info .info-block {
-	width: 150px;
-	height: 162px;
-	float: right;
-	margin: 20px 0 0 10px;
-}
-
-div.info-block .nickname {
-	font-family: 'Helvetica Ultra Compressed', Arial;
-	font-size: 36px;
-}
-
-div.info-block .city {
-	font-weight: bold;
-}
-
-div.sponsor-block{
-	margin-top: 30px;
-	font-weight: bold;
-}
-
-div.sponsor-block .sponsor{
-	color: #c6c6c6;
-}
-
-#page-container {
-}
-
 /* Links */
 #page-container a {
 	display: block;
 	text-decoration: none;
-	height: 58px;
+	height: 50px;
 	background-color: #1b1a18;
 	color: #ff9216; 
-	padding-top: 16px;
+	padding-top: 0px;
 	padding-left: 16px;
-	margin-top: 5px;
+	margin-top: 0px;
 	margin-bottom: 5px;
 	margin-right: 16px;
 	font-family:'Helvetica Ultra Compressed', Arial;
-	font-size: 44pt;
+	font-size: 36pt;
 	/* Shadow */
 	-webkit-box-shadow: 0px 2px 4px #000000;
 	-moz-box-shadow: 0px 2px 4px #000000;
 	box-shadow: 0px 2px 6px #000000
 }
 
-/* Needs Links */
+/* Needs links */
 #page-container a.give {
 	border-left: 6px solid #ff9216;
 	color: #6F6F6F;
 	background-color:#E1E1E1;
+	margin-left: 16px;
 	/* Shadow */
 	-webkit-box-shadow: 0px 2px 4px #E1E1E1;
 	-moz-box-shadow: 0px 2px 4px #E1E1E1;
 	box-shadow: 0px 2px 6px #E1E1E1
 }
 
-/* Give button */
+/* Give Link */
 #page-container a.help {
 	height: 38px;
 	width: 100%;
@@ -110,9 +111,13 @@ div.sponsor-block .sponsor{
 	color: white;
 	font-size: 36px;
 	text-align: center;
-	padding-top: 6px;
 	padding-left: 0px;
 	border: solid #d99938 1px;
+}
+
+/* Give Block */
+div.give-block {
+	margin: auto auto 20px auto;
 }
 
 /* Mobile site pages */
@@ -137,40 +142,51 @@ div.sponsor-block .sponsor{
 	transition:all 250ms
 }
 
+/* Title Bar */
 h1 {
 	height: 60px;
 	width: 100%;
 	background:url(/images/Logo_dark.png) no-repeat center center;
 	background-color: #1b1a18;
 	margin-bottom: 5px;
-
 	margin-right: -10px;
 	padding-right: -10px;
-}
-
-#page-container > h1 {
+	/* Shadow */
 	-webkit-box-shadow: 0px 2px 4px #000000;
 	-moz-box-shadow: 0px 2px 4px #000000;
 	box-shadow: 0px 2px 6px #000000;
 }
 
+/* Title Bar Barcode Image (not in use) */
 h1 > div {
 	background: url(/images/Barcode.png) right top no-repeat;
 	margin-right: 10px;
 	padding-right: 10px;
 }
 
-div.centered {
-	width: 100%;
-	padding: 20px;
-	text-align: center;
-	margin-left: auto;
-	margin-right: auto;
-}
-
-input[type=text]	{
+/* PayPal Donation Amount Input */
+input[type=text] {
 	font-size: 15pt;
 	height: 25px;
 	width: 80px;
 	border: 1px solid #E1E1E1;
+}
+
+/* Text Modifiers */
+.bold {
+	font-weight: 700;
+}
+
+.centered {
+	display: block;
+    margin-left: auto;
+    margin-right: auto;
+	width: 280px;
+	text-align: centered;
+}
+
+/* Application Motto */
+p.motto{
+	font-size:14px;
+	font-weight:bold;
 }

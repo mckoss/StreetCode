@@ -189,6 +189,7 @@ class PageHandler(UserHandler):
             'username': username,
             'site_host': self.request.host,
             'site_url': self.request.host_url,
+            'paypal_url': settings.PAYPAL_URL,
             })
 
     def get(self, *args):

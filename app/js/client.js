@@ -103,11 +103,6 @@ namespace.module('streetcode.client', function (exports, requires) {
     var ClientMobileView = Backbone.View.extend({
         el:  "#page-container",
 
-        // The DOM events specific to an item.
-        events: {
-            'click .buy': 'buyIt'
-        },
-
         // The ClientView listens for changes to its model, re-rendering.
         initialize: function() {
             var shortCode = location.pathname.split('/').pop();
@@ -144,19 +139,10 @@ namespace.module('streetcode.client', function (exports, requires) {
             return this;
         },
 
-        buyIt: function() {
-            alert("buying...");
-        }
-
     });
 
     var ClientCardView = Backbone.View.extend({
         el:  "#client-card-view",
-
-        // The DOM events specific to an item.
-        events: {
-            'click .buy': 'buyIt'
-        },
 
         // The ClientView listens for changes to its model, re-rendering.
         initialize: function() {
@@ -177,19 +163,10 @@ namespace.module('streetcode.client', function (exports, requires) {
             return this;
         },
 
-        buyIt: function() {
-            alert("buying...");
-        }
-
     });
 
     var ClientSignView = Backbone.View.extend({
         el:  "#client-sign-view",
-
-        // The DOM events specific to an item.
-        events: {
-            'click .buy': 'buyIt'
-        },
 
         // The ClientView listens for changes to its model, re-rendering.
         initialize: function() {
@@ -210,19 +187,10 @@ namespace.module('streetcode.client', function (exports, requires) {
             return this;
         },
 
-        buyIt: function() {
-            alert("buying...");
-        }
-
     });
 
     var ClientStoryView = Backbone.View.extend({
         el:  "#client-story-view",
-
-        // The DOM events specific to an item.
-        events: {
-            'click .buy': 'buyIt'
-        },
 
         // The ClientView listens for changes to its model, re-rendering.
         initialize: function() {
@@ -242,10 +210,6 @@ namespace.module('streetcode.client', function (exports, requires) {
             $(this.el).html(ClientStoryView.template(dict));
             return this;
         },
-
-        buyIt: function() {
-            alert("buying...");
-        }
 
     });
 

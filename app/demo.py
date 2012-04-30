@@ -24,10 +24,10 @@ class DemoDataHandler(webapp.RequestHandler):
     def buildKodiac(self):
         kodiac = models.Client()
         kodiac.set_defaults()
-        kodiac.shortCode = 'AB'
+        kodiac.shortCode = 'kodiak'
         kodiac.name = "Kodiak"
         kodiac.fullName = "Chris"
-        kodiac.imageURL = "/images/clients/Kodiac.png"
+        kodiac.imageURL = "/images/clients/Kodiak.png"
         kodiac.sponsor = self.sponsors[0]
 
         kodiac.story = \

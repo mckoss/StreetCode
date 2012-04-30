@@ -5,18 +5,25 @@ import re
 import settings
 from django.http import HttpResponse
 from models import Transaction
+from models import Client
+from models import Donor
 
 class pdt_handler(webapp.RequestHandler):
-    def get(self, client):
+    def get(self, shortCode):
+        client = Client.all().filter('shortCode =', shortCode).get()
+        sponsor = client.sponsor 
+        merchant = sponsor.paypalMerchant 
+
         # Get the transaction id, tx=blahblahblah
         trans_id = self.request.get("tx")
+
 
         # Confgure POST args
         args = {}
         # Specify the paypal command
         args["cmd"] ="_notify-synch"
         args["tx"] = trans_id
-        args["at"] = settings.PAYPAL_PDT_KEY
+        args["at"] = merchant.PDTKey
 
         args = urllib.urlencode(args)
 
@@ -29,42 +36,56 @@ class pdt_handler(webapp.RequestHandler):
         except:
           self.response.out.write("POST Failed")
 
-        # Check for SUCCESS at the start of the response
-        lines = status.split(' ')
-        if lines[0] == 'SUCCESS':
+        
+
+        lines = status.split('\n')
+        if lines[0] == 'SUCCESS':# Check for SUCCESS at the start of the response
+            # build a dictionary of key value pair provided by PDT
             lines = lines[1:]
             props = {}
             for line in lines:
-                (key, value) = line.split('=')
-                props[key] = value
-            # Check other transaction details here like
-            # payment_status etc..
+                items = line.split('=')
+                if len(items) == 2:
+                    key, value = items
+                    props[key] = value
+                else:
+                    props[key] = ''
+            
+            # TODO payment_status= complete etc.. 
+            
+            # TODO if client is none 
 
-            # TODO Update donation transaction in streetcodes
-
-            client = Client.all().filter('shortCode =', props['item_number']).get()
-
-            donor = Donor.all().filter('email =', props['email']).get()
+            # Get donor information (create new if not exist)
+            donor = Donor.all().filter('email =', urllib.unquote(props['payer_email'])).get()
             if donor is None:
                 donor = Donor()
-                donor.name = "%s %s" % (props['first'], props['last'])
-                donor.email = props['email']
+                donor.name = "%s %s" % (props['first_name'], props['last_name'])
+                donor.email = urllib.unquote( props['payer_email'] )
                 donor.put()
 
-            tx = Transaction(method='PayPal',
-                             donor=donor,
-                             client=client,
-                             amount=props['amount'])
-            tx.put()
-
-            # redirect user to thank you screen "/client_short_code#thanks"
-            self.response.out.write('<script> window.location = "/'+ client + '#thanks"; </script>')
-
+            # Create a new transaction (use transaction_id to maintain data uniqueness)
+            tx = Transaction.all().filter('txID=', trans_id).get()
+            if tx is None:
+                tx = Transaction( method='PayPal',
+                              donor=donor,
+                              client=client,
+                              txID = trans_id, 
+                              amount= float(props['payment_gross']), 
+                              fee = float(props['payment_fee']) ,
+                              note = urllib.unquote(props['item_name']),
+                              fulfilled = False  
+                            )
+                tx.put()
+            
             # DEBUG code
-            # self.response.out.write("OK<br>")
-            # self.response.out.write(urllib.unquote(status))
+            #self.response.out.write(urllib.unquote(status))
+            # self.response.out.write(props['txn_id'])
+            
         else:
-            self.response.out.write("Failed")
+            self.response.out.write("Failed<BR>")
+
+        # Regardless of success, user is redirected to thank you screen "/client_short_code#thanks"    
+        self.response.out.write('<script> window.location = "/'+ shortCode + '#thanks"; </script>')
 
 class Endpoint(object):
 

@@ -53,7 +53,7 @@
 
         <div class="story">
         <form id="_xclick" name="_xclick" action="{{paypal_url}}" method="post">
-        <input type="hidden" name="cmd" value="_donations">
+        <input type="hidden" name="cmd" value="_donations"> 
         <input type="hidden" name="business" value="<%= sponsor.paypalMerchant.merchantKey %>"> 
         <input type="hidden" name="item_name" value="Donation for <%= name %> sponsored by <%= sponsor.name %> (StreetCodes)">
         <input type="hidden" name="currency_code" value="USD">

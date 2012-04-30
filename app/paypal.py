@@ -56,7 +56,7 @@ class pdt_handler(webapp.RequestHandler):
             # TODO if client is none 
 
             # Get donor information (create new if not exist)
-            donor = Donor.all().filter('email =', urllib.unquote(props['payer_email'])).get()
+            donor = Donor.all().filter('email', urllib.unquote(props['payer_email'])).get()
             if donor is None:
                 donor = Donor()
                 donor.name = "%s %s" % (props['first_name'], props['last_name'])
@@ -64,7 +64,7 @@ class pdt_handler(webapp.RequestHandler):
                 donor.put()
 
             # Create a new transaction (use transaction_id to maintain data uniqueness)
-            tx = Transaction.all().filter('txID=', trans_id).get()
+            tx = Transaction.all().filter('txID', trans_id).get()
             if tx is None:
                 tx = Transaction( method='PayPal',
                               donor=donor,
@@ -72,21 +72,22 @@ class pdt_handler(webapp.RequestHandler):
                               txID = trans_id, 
                               amount= float(props['payment_gross']), 
                               fee = float(props['payment_fee']) ,
-                              note = urllib.unquote(props['item_name']),
+                              note = urllib.unquote(props['item_name']).replace('+', ' '),
                               fulfilled = False  
                             )
                 tx.put()
-            
+            # Regardless of success, user is redirected to thank you screen "/client_short_code#thanks"    
+            self.response.out.write('<script> window.location = "/'+ shortCode + '#thanks"; </script>')
+    
             # DEBUG code
             #self.response.out.write(urllib.unquote(status))
             # self.response.out.write(props['txn_id'])
             
         else:
             self.response.out.write("Failed<BR>")
+            self.response.out.write(urllib.unquote(status))
 
-        # Regardless of success, user is redirected to thank you screen "/client_short_code#thanks"    
-        self.response.out.write('<script> window.location = "/'+ shortCode + '#thanks"; </script>')
-
+        
 class Endpoint(object):
 
     default_response_text = 'Nothing to see here'

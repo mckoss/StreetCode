@@ -23,21 +23,30 @@ namespace.module('streetcode.client', function (exports, requires) {
         routes: {
             "give/:amount": "give",
             "*actions": "linkHandler" // matches http://example.com/#anything-here
+
         },
-        give: function( amount){
+        pushLocation: function( loc ){
+            _gaq.push(['_trackPageview', loc]);
+        },
+        give: function( amount ){
+            // Send navigation event to Google Analytics
+            this.pushLocation( location.pathname + location.hash);
+
+            // set PayPal donation amount
             $("#amount").val(amount);
+
+            // Submit donation to PayPal
             $("#_xclick").submit();
-            //this.linkHandler( "give" );
         },
         linkHandler: function( actions ){
+            // Send navigation event to Google Analytics
+            this.pushLocation( location.pathname + location.hash);
+
             // grab a handle the # section of the navigation link clicked
             // if no actions, navigate home
             var page = (actions) ? actions : "home";
             page = "#" + page;
             pageNext = $(page);
-
-            // Send navigation event to Google Analytics
-            _gaq.push(['_trackPageview', location.pathname + location.search + page]);
 
             // slide pages
             $('div .page').each(function(index) {

@@ -23,9 +23,9 @@ def init():
             })
 
 class PaypalMerchant(RESTModel, Timestamped):
-    merchantEmail = db.TextProperty()  
-    merchantKey = db.TextProperty()
-    PDTKey = db.TextProperty() 
+    merchantEmail = db.StringProperty()  
+    merchantKey = db.StringProperty()
+    PDTKey = db.StringProperty() 
 
     form_order = ('name', 'merchantEmail', 'merchantKey', 'PDTKey')
 
@@ -64,7 +64,7 @@ class Client(RESTModel, Timestamped):
 
 
 class Donor(RESTModel, Timestamped):
-    email = db.TextProperty()
+    email = db.StringProperty()
 
     form_order = ('name', 'email')
 
@@ -72,8 +72,8 @@ class Donor(RESTModel, Timestamped):
 class Transaction(RESTModel, Timestamped):
     donor = db.ReferenceProperty(Donor)
     client = db.ReferenceProperty(Client)
-    txID = db.TextProperty() 
-    method = db.TextProperty()
+    txID = db.StringProperty() 
+    method = db.StringProperty()
     amount = db.FloatProperty()
     fee = db.FloatProperty()
     note = db.TextProperty()

@@ -23,21 +23,30 @@ namespace.module('streetcode.client', function (exports, requires) {
         routes: {
             "give/:amount": "give",
             "*actions": "linkHandler" // matches http://example.com/#anything-here
+
         },
-        give: function( amount){
+        pushLocation: function( loc ){
+            _gaq.push(['_trackPageview', loc]);
+        },
+        give: function( amount ){
+            // Send navigation event to Google Analytics
+            this.pushLocation( location.pathname + location.hash);
+
+            // set PayPal donation amount
             $("#amount").val(amount);
+
+            // Submit donation to PayPal
             $("#_xclick").submit();
-            //this.linkHandler( "give" );
         },
         linkHandler: function( actions ){
+            // Send navigation event to Google Analytics
+            this.pushLocation( location.pathname + location.hash);
+
             // grab a handle the # section of the navigation link clicked
             // if no actions, navigate home
             var page = (actions) ? actions : "home";
             page = "#" + page;
             pageNext = $(page);
-
-            // Send navigation event to Google Analytics
-            _gaq.push(['_trackPageview', location.pathname + location.search + page]);
 
             // slide pages
             $('div .page').each(function(index) {
@@ -94,11 +103,6 @@ namespace.module('streetcode.client', function (exports, requires) {
     var ClientMobileView = Backbone.View.extend({
         el:  "#page-container",
 
-        // The DOM events specific to an item.
-        events: {
-            'click .buy': 'buyIt'
-        },
-
         // The ClientView listens for changes to its model, re-rendering.
         initialize: function() {
             var shortCode = location.pathname.split('/').pop();
@@ -135,19 +139,10 @@ namespace.module('streetcode.client', function (exports, requires) {
             return this;
         },
 
-        buyIt: function() {
-            alert("buying...");
-        }
-
     });
 
     var ClientCardView = Backbone.View.extend({
         el:  "#client-card-view",
-
-        // The DOM events specific to an item.
-        events: {
-            'click .buy': 'buyIt'
-        },
 
         // The ClientView listens for changes to its model, re-rendering.
         initialize: function() {
@@ -168,19 +163,10 @@ namespace.module('streetcode.client', function (exports, requires) {
             return this;
         },
 
-        buyIt: function() {
-            alert("buying...");
-        }
-
     });
 
     var ClientSignView = Backbone.View.extend({
         el:  "#client-sign-view",
-
-        // The DOM events specific to an item.
-        events: {
-            'click .buy': 'buyIt'
-        },
 
         // The ClientView listens for changes to its model, re-rendering.
         initialize: function() {
@@ -201,19 +187,10 @@ namespace.module('streetcode.client', function (exports, requires) {
             return this;
         },
 
-        buyIt: function() {
-            alert("buying...");
-        }
-
     });
 
     var ClientStoryView = Backbone.View.extend({
         el:  "#client-story-view",
-
-        // The DOM events specific to an item.
-        events: {
-            'click .buy': 'buyIt'
-        },
 
         // The ClientView listens for changes to its model, re-rendering.
         initialize: function() {
@@ -233,10 +210,6 @@ namespace.module('streetcode.client', function (exports, requires) {
             $(this.el).html(ClientStoryView.template(dict));
             return this;
         },
-
-        buyIt: function() {
-            alert("buying...");
-        }
 
     });
 

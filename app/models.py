@@ -81,7 +81,6 @@ class Transaction(RESTModel, Timestamped):
 
     form_order = ('donor', 'client', 'txID', 'method', 'amount', 'fee', 'note', 'fulfilled')
 
-
 class Scan(RESTModel, Timestamped):
     client = db.ReferenceProperty(Sponsor)
     donor = db.ReferenceProperty(Donor)

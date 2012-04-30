@@ -8,7 +8,8 @@ SITE_NAME = "StreetCodes"
 SITE_ADMIN = "Mike Koss"
 ADMIN_EMAIL = "mckoss@startpad.org"
 
-PAYPAL_URL = "https://www.sandbox.paypal.com/cgi-bin/webscr"
+# PAYPAL_URL = "https://www.sandbox.paypal.com/cgi-bin/webscr"
+PAYPAL_URL = "https://www.paypal.com/cgi-bin/webscr"
 
 # Make all the (string) variables in settings available to templates as {{ var_name }}
 # except use lower-case form in templates.

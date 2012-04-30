@@ -36,6 +36,7 @@ namespace.module('startpad.json-forms', function(exports, require) {
             '</div>')
     };
 
+
     function onFormsPage() {
         if (!ensureInit(onFormsPage)) {
             return;

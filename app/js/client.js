@@ -18,26 +18,33 @@ namespace.module('streetcode.client', function (exports, requires) {
 
             var to = e.target.hash;
 
-            // Dipslay target
-            if(to.indexOf("/") < 0) {
-                Accordian(e.target.hash);
-            } else {
-                alert("Load paypal");
-                //$("#_xclick").submit();
-                //Accordian("#give");
-            }
             // send event to Google Analytics
             // don't fire on initial page render
             if(pageCurr) {
                 pushNavigation(to);
+            }
+
+            // Dipslay target
+            // Submit donation on #give/x event
+            if(to.indexOf("/") < 0) {
+                Accordian(e.target.hash);
+                pushNavigation(to);
+            } else {
+                $("amount").val(to.split("/")[1]);
+                $("#ppPayment").submit();
             }
         });
 
         // hide Loading panel
         $("#loading").remove();
 
-        // select initial page
-        $( "a[href='#home']:first").trigger('click');
+        // select hash on initial load
+        // load home if no hash
+        var hash = document.location.hash;
+        if( hash.length < 1 ) {
+            hash = "#home";
+        }
+        $( "a[href='" + hash + "']:first").trigger('click');
     }
 
     // Send navigation event to Google Analytics

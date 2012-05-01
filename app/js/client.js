@@ -6,82 +6,66 @@ namespace.module('streetcode.client', function (exports, requires) {
         'initStory': initStory,
     });
 
-  // Page navigation vars
-    var pageWidth = $(window).width();
+    // Page navigation vars
     var pageCurr = null;
-    var pageNext = null;
 
-    function initRouter()
+    function initPages()
     {
-        // Initiate the router
-        var router = new AppRouter;
-        // Start Backbone history a neccesary step for bookmarkable URL's
-        Backbone.history.start();
-    }
+        // bind links to Accordian 
+        $("a").bind('click', function(e) {
+            // prevent navigation
+            e.preventDefault();
 
-    var AppRouter = Backbone.Router.extend({
-        routes: {
-            // "give/:amount": "give",
-            "*actions": "linkHandler" // matches http://example.com/#anything-here
+            var to = e.target.hash;
 
-        },
-        pushLocation: function( loc ){
-            _gaq.push(['_trackPageview', loc]);
-        },
-        // give: function( amount ){
-        //     // Send navigation event to Google Analytics
-        //     this.pushLocation( location.pathname + location.hash);
-        //     debug (location.pathname + location.hash ); 
-
-        //     // set PayPal donation amount
-        //     $("#amount").val(amount);
-
-        //     // Submit donation to PayPal
-        //     $("#ppPayment").submit();
-        // },
-        linkHandler: function( actions ){
-            // Send navigation event to Google Analytics
-            this.pushLocation( location.pathname + location.hash);
-
-            // grab a handle the # section of the navigation link clicked
-            // if no actions, navigate home
-            var page = (actions) ? actions : "home";
-            page = "#" + page;
-            pageNext = $(page);
-
-            // slide pages
-            $('div .page').each(function(index) {
-                $(this).css("left",-1*pageWidth);
-                $(this).removeClass("transform");
-            });
-            if(pageCurr) {
-                //alert(pageCurr.css("left"));
-                //pageCurr.css("left", -1*pageWidth);
-                //pageCurr.removeClass("transform");
+            // Dipslay target
+            if(to.indexOf("/") < 0) {
+                Accordian(e.target.hash);
+            } else {
+                alert("Load paypal");
+                //$("#_xclick").submit();
+                //Accordian("#give");
             }
-            pageNext.css("left", pageWidth);
-            pageNext.addClass("transform");
-            pageNext.css("left", 0);
+            // send event to Google Analytics
+            // don't fire on initial page render
+            if(pageCurr) {
+                pushNavigation(to);
+            }
+        });
 
-            // update page pointers
-            pageCurr = pageNext;
-        }
-    });
+        // hide Loading panel
+        $("#loading").remove();
 
-    function give(amount) {
-        // Send navigation event to Google Analytics
-        // this.pushLocation( location.pathname + location.hash);
-
-        // set PayPal donation amount
-        $("#amount").val(amount);
-
-        // Submit donation to PayPal
-        $("#ppPayment").submit();
+        // select initial page
+        $( "a[href='#home']:first").trigger('click');
     }
-        
 
-    function debug( p, o) {
-      console.log( p + ": " + (o ? (o.attr("id") + " " + o.css("left")): "<>") );
+    // Send navigation event to Google Analytics
+    function pushNavigation(loc){
+        _gaq.push(['_trackPageview', loc]);
+    }
+
+    // Toggle application pages
+    function Accordian(page)
+    {
+        var p = $(page);
+
+        // collapse currently loaded page
+        if(pageCurr) {
+            // exit if page is same as page loaded
+            if(pageCurr.attr("id") == p.attr("id") ) {
+                return false;
+            }
+            pageCurr.css("max-height",0);
+            pageCurr.css("opacity", 0);
+        }
+
+        // expand target page
+        p.css("max-height",1000);
+        p.css("opacity", 100);
+
+        // store pointer to current page
+        pageCurr = p;
     }
 
     function initProfile() {
@@ -133,21 +117,8 @@ namespace.module('streetcode.client', function (exports, requires) {
         render: function() {
             $(this.el).append(ClientMobileView.template(this.client));
 
-            // resize pages on window resize;
-            // todo: adjust pagePrev offset on resize
-            $(window).resize(function() {
-              pageWidth = $(window).width();
-            });
-
-            // hide Loading panel
-            $("#loading").remove();
-
-            // initialize pages
-            $("div .page").css("left", pageWidth);
-            $("div .page").css("top", 65);
-
-            // initialize backbone router
-            initRouter();
+            // initialize app pages
+            initPages();
 
             return this;
         },

@@ -134,9 +134,9 @@ div.give-block {
  	opacity: 0;
  	//display: none;
   	/* Transition */
-	-webkit-transition: all 0.3s linear;
-	-moz-transition:    all 0.3s linear;
-	-o-transition:      all 0.3s linear;
+	-webkit-transition: all 0.2s linear;
+	-moz-transition:    all 0.2s linear;
+	-o-transition:      all 0.2s linear;
 }
 
 

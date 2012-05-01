@@ -61,6 +61,12 @@ class pdt_handler(webapp.RequestHandler):
                 donor.email = urllib.unquote( props['payer_email'] )
                 donor.put()
 
+            if props['payment_gross'] == '':
+                props['payment_gross'] = 0;
+
+            if props['payment_fee'] =='': 
+                props['payment_fee'] = 0; 
+
             # Create a new transaction (use transaction_id to maintain data uniqueness)
             tx = Transaction.all().filter('txID', trans_id).get()
             if tx is None:

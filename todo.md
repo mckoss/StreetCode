@@ -15,10 +15,12 @@ X get host name from request object - no need in settings - rest/views.py
 
 # Bugs
 
-- Nulls being displayed in textarea and imageURL on new Client items.
+X Nulls being displayed in textarea and imageURL on new Client items.
 - Sponsor form does not have name field first?
 - Models.py - parsing date fails with text timestamp.
 - Read-only fields should not be displayed in editable fields (e.g. created and modified).
+- When trying to switch to Python27 - get PageHandler not callable error from deep in webapp2
+  - We're not even USING webapp2 - why is it being called?
 
 
 # Admin and Forms
@@ -51,7 +53,7 @@ X Support reference properties:
 - Include object reference on duplicated traversal - and at end of depth - reconstitute
   in client?  Maybe should have a references section for non-item objects?
 X Ensure all REST calls return JSON formatted error messages - dispayed to user.
-- Security added - check_permissions callback.
+! Security added - check_permissions callback.
 - Add caching to rest app
   - Generate etag hash from data - 304 not modified on GET/HEAD
   - Add Cacheable mixin to models.

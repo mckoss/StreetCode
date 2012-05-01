@@ -2,6 +2,7 @@ application: streetcode-sw
 version: deployment
 runtime: python
 api_version: 1
+threadsafe: false
 
 handlers:
 - url: /favicon\.ico

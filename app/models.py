@@ -22,15 +22,15 @@ def init():
             'paypal': PaypalMerchant,
             })
 
-class PaypalMerchant(RESTModel, Timestamped):
-    merchantEmail = db.StringProperty()  
+class PaypalMerchant(Timestamped, RESTModel):
+    merchantEmail = db.StringProperty()
     merchantKey = db.StringProperty()
-    PDTKey = db.StringProperty() 
+    PDTKey = db.StringProperty()
 
     form_order = ('name', 'merchantEmail', 'merchantKey', 'PDTKey')
 
 
-class Sponsor(RESTModel, Timestamped):
+class Sponsor(Timestamped, RESTModel):
     url = db.StringProperty()
     address = db.TextProperty()
     phone = db.StringProperty()
@@ -39,13 +39,13 @@ class Sponsor(RESTModel, Timestamped):
     form_order = ('name', 'url', 'address', 'phone', 'paypalMerchant')
 
 
-class User(RESTModel, Timestamped):
-    user = db.UserProperty()
+class User(Timestamped, RESTModel):
+    email = db.StringProperty()
     isAdmin = db.BooleanProperty()
     sponsor = db.ReferenceProperty(Sponsor)
 
 
-class Client(RESTModel, Timestamped):
+class Client(Timestamped, RESTModel):
     fullName = db.StringProperty()
     shortCode = db.StringProperty()
     story = db.TextProperty()
@@ -63,16 +63,16 @@ class Client(RESTModel, Timestamped):
                 )
 
 
-class Donor(RESTModel, Timestamped):
+class Donor(Timestamped, RESTModel):
     email = db.StringProperty()
 
     form_order = ('name', 'email')
 
 
-class Transaction(RESTModel, Timestamped):
+class Transaction(Timestamped, RESTModel):
     donor = db.ReferenceProperty(Donor)
     client = db.ReferenceProperty(Client)
-    txID = db.StringProperty() 
+    txID = db.StringProperty()
     method = db.StringProperty()
     paymentDate = db.StringProperty()
     amount = db.FloatProperty()
@@ -84,7 +84,7 @@ class Transaction(RESTModel, Timestamped):
     form_order = ('donor', 'client', 'txID', 'method', 'paymentDate',
         'amount', 'fee', 'paymentStatus', 'note', 'fulfilled')
 
-class Scan(RESTModel, Timestamped):
+class Scan(Timestamped, RESTModel):
     client = db.ReferenceProperty(Sponsor)
     donor = db.ReferenceProperty(Donor)
     ledger = db.ReferenceProperty(Transaction)

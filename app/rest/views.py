@@ -173,11 +173,11 @@ class PageHandler(UserHandler):
     def using(cls, template_name, render_data=None, package=None):
         """ Factory function to create a PageHandler instance to be used
         as a Handler callable. """
-        def factory():
+        def factory(*args, **kwargs):
             path = ['templates', template_name]
             if package is not None:
                 path.insert(0, package)
-            return cls(os.path.join(*path))
+            return cls(os.path.join(*path), render_data=render_data)
         return factory
 
     def prepare(self):

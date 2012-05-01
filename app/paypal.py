@@ -3,7 +3,6 @@ from google.appengine.api import urlfetch
 from google.appengine.ext import webapp
 import re
 import settings
-from django.http import HttpResponse
 from models import Transaction
 from models import Client
 from models import Donor
@@ -11,8 +10,8 @@ from models import Donor
 class pdt_handler(webapp.RequestHandler):
     def get(self, shortCode):
         client = Client.all().filter('shortCode =', shortCode).get()
-        sponsor = client.sponsor 
-        merchant = sponsor.paypalMerchant 
+        sponsor = client.sponsor
+        merchant = sponsor.paypalMerchant
 
         # Get the transaction id, tx=blahblahblah
         trans_id = self.request.get("tx")
@@ -41,13 +40,13 @@ class pdt_handler(webapp.RequestHandler):
             # build a dictionary of key value pair provided by PDT
             lines = lines[1:]
             props = {
-                'payment_date' : '', 
-                'payment_gross': 0, 
-                'payment_fee': 0, 
-                'payment_status': '', 
+                'payment_date' : '',
+                'payment_gross': 0,
+                'payment_fee': 0,
+                'payment_status': '',
                 'item_name': '',
-                'first_name': '', 
-                'last_name': '', 
+                'first_name': '',
+                'last_name': '',
                 'payer_email': '' }
             for line in lines:
                 items = line.split('=')
@@ -56,10 +55,10 @@ class pdt_handler(webapp.RequestHandler):
                     props[key] = value
                 else:
                     props[key] = ''
-            
-            # TODO payment_status= complete etc.. 
-            
-            # TODO if client is none 
+
+            # TODO payment_status= complete etc..
+
+            # TODO if client is none
 
             # Get donor information (create new if not exist)
             donor = Donor.all().filter('email', urllib.unquote(props['payer_email'])).get()
@@ -75,26 +74,26 @@ class pdt_handler(webapp.RequestHandler):
                 tx = Transaction( method='PayPal',
                               donor=donor,
                               client=client,
-                              txID = trans_id, 
+                              txID = trans_id,
                               paymentDate = urllib.unquote(props['payment_date']).replace('+', ' '),
-                              amount= float(props['payment_gross']), 
+                              amount= float(props['payment_gross']),
                               fee = float(props['payment_fee']) ,
                               paymentStatus = props['payment_status'],
                               note = urllib.unquote(props['item_name']).replace('+', ' '),
-                              fulfilled = False  
+                              fulfilled = False
                             )
                 tx.put()
 
-            # Regardless of success, user is redirected to thank you screen "/client_short_code#thanks"    
+            # Regardless of success, user is redirected to thank you screen "/client_short_code#thanks"
             self.response.out.write('<script> window.location = "/'+ shortCode + '#thanks"; </script>')
-    
+
             # DEBUG code
             # self.response.out.write(urllib.unquote(status))
-            
+
         else:
             self.response.out.write("Failed<BR>")
 
-        
+
 class Endpoint(object):
 
     default_response_text = 'Nothing to see here'

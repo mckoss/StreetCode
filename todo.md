@@ -19,6 +19,8 @@ X get host name from request object - no need in settings - rest/views.py
 - Sponsor form does not have name field first?
 - Models.py - parsing date fails with text timestamp.
 - Read-only fields should not be displayed in editable fields (e.g. created and modified).
+- When trying to switch to Python27 - get PageHandler not callable error from deep in webapp2
+  - We're not even USING webapp2 - why is it being called?
 
 
 # Admin and Forms

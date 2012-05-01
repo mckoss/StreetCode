@@ -1,5 +1,5 @@
 application: streetcode-sw
-version: michael
+version: deployment
 runtime: python
 api_version: 1
 

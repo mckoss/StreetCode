@@ -21,23 +21,24 @@ namespace.module('streetcode.client', function (exports, requires) {
 
     var AppRouter = Backbone.Router.extend({
         routes: {
-            "give/:amount": "give",
+            // "give/:amount": "give",
             "*actions": "linkHandler" // matches http://example.com/#anything-here
 
         },
         pushLocation: function( loc ){
             _gaq.push(['_trackPageview', loc]);
         },
-        give: function( amount ){
-            // Send navigation event to Google Analytics
-            this.pushLocation( location.pathname + location.hash);
+        // give: function( amount ){
+        //     // Send navigation event to Google Analytics
+        //     this.pushLocation( location.pathname + location.hash);
+        //     debug (location.pathname + location.hash ); 
 
-            // set PayPal donation amount
-            $("#amount").val(amount);
+        //     // set PayPal donation amount
+        //     $("#amount").val(amount);
 
-            // Submit donation to PayPal
-            $("#_xclick").submit();
-        },
+        //     // Submit donation to PayPal
+        //     $("#ppPayment").submit();
+        // },
         linkHandler: function( actions ){
             // Send navigation event to Google Analytics
             this.pushLocation( location.pathname + location.hash);
@@ -66,6 +67,18 @@ namespace.module('streetcode.client', function (exports, requires) {
             pageCurr = pageNext;
         }
     });
+
+    function give(amount) {
+        // Send navigation event to Google Analytics
+        // this.pushLocation( location.pathname + location.hash);
+
+        // set PayPal donation amount
+        $("#amount").val(amount);
+
+        // Submit donation to PayPal
+        $("#ppPayment").submit();
+    }
+        
 
     function debug( p, o) {
       console.log( p + ": " + (o ? (o.attr("id") + " " + o.css("left")): "<>") );

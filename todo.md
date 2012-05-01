@@ -54,6 +54,8 @@ X Support reference properties:
   in client?  Maybe should have a references section for non-item objects?
 X Ensure all REST calls return JSON formatted error messages - dispayed to user.
 ! Security added - check_permissions callback.
+  - Need user_emails associated with a Group.
+  - Google App Admins can read/write all (users.is_current_user_admin())
 - Add caching to rest app
   - Generate etag hash from data - 304 not modified on GET/HEAD
   - Add Cacheable mixin to models.

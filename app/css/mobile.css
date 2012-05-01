@@ -29,7 +29,7 @@ div {
 div.top-info {
 	width: 280px;
 	height: 174px;
-	margin: 20px auto 0px;
+	margin: 10px auto 0px;
 }
 
 /* Client Portrait */
@@ -59,12 +59,10 @@ div.info-block > .nickname {
 /* Client Sponsor Panel */
 div.sponsor-block{
 	margin-top: 0px;
-	font-weight: bold;
-	color: #c6c6c6;
 }
 
-div.sponsor-block .sponsor{
-	color: inherit;
+div.sponsor{
+	color: #c6c6c6;
 }
 
 /* Client Story */
@@ -134,19 +132,12 @@ div.give-block {
  	width: 100%;
 	color: #ff9216;
   	background-color: #ffffff;
- 	opacity: 0;
 
   	/* Transitions */
-	-webkit-transition: all 1s linear;
-	-moz-transition:    all 1s linear;
-	-o-transition:      all 1s linear;
-	transition:      	all 1s linear;
-
-	-webkit-transition: opacity 1s ease;
-	-moz-transition:    opacity 1s ease;
-	-o-transition:      opacity 1s ease;
-	transition:      	opacity 1s ease;
-
+	-webkit-transition: all .4s ease;
+	-moz-transition:    all .4s ease;
+	-o-transition:      all .4s ease;
+	transition:      	all .4s ease;
 }
 
 /* Title Bar */

@@ -70,12 +70,12 @@ namespace.module('streetcode.client', function (exports, requires) {
             if(pageCurr.attr("id") == p.attr("id") ) {
                 return false;
             }
-            pageCurr.css("opacity", 0);
+            //pageCurr.css("opacity", 0);
             pageCurr.css("max-height",0);
         }
 
         // expand target page
-        p.css("opacity", 100);
+        //p.css("opacity", 100);
         p.css("max-height",400);
 
         // store pointer to current page

@@ -79,19 +79,20 @@ div.story {
 #page-container a {
 	display: block;
 	text-decoration: none;
-	height: 50px;
+	height: 44px;
 	background-color: #1b1a18;
 	color: #ff9216; 
 	padding-top: 0px;
 	padding-left: 16px;
-	margin-top: 0px;
 	margin-bottom: 5px;
 	font-family:'Helvetica Ultra Compressed', Arial;
-	font-size: 36pt;
+	font-size: 30pt;
+
 	/* Shadow */
 	-webkit-box-shadow: 0px 2px 4px #000000;
 	-moz-box-shadow: 0px 2px 4px #000000;
-	box-shadow: 0px 2px 6px #000000
+	o-shadow: 0px 2px 6px #000000;
+	box-shadow: 0px 2px 6px #000000;
 }
 
 /* Needs links */
@@ -101,9 +102,11 @@ div.story {
 	background-color:#E1E1E1;
 	margin-left: 16px;
 	margin-right: 16px;
+
 	/* Shadow */
 	-webkit-box-shadow: 0px 2px 4px #E1E1E1;
 	-moz-box-shadow: 0px 2px 4px #E1E1E1;
+	o-shadow: 0px 2px 6px #E1E1E1
 	box-shadow: 0px 2px 6px #E1E1E1
 }
 
@@ -132,13 +135,13 @@ div.give-block {
 	color: #ff9216;
   	background-color: #ffffff;
  	opacity: 0;
- 	//display: none;
-  	/* Transition */
-	-webkit-transition: all 0.2s linear;
-	-moz-transition:    all 0.2s linear;
-	-o-transition:      all 0.2s linear;
-}
 
+  	/* Transitions */
+	-webkit-transition: all 1s linear;
+	-moz-transition:    all 1s linear;
+	-o-transition:      all 1s linear;
+	transition:      	all 1s linear;
+}
 
 /* Title Bar */
 h1 {
@@ -160,14 +163,6 @@ h1 > div {
 	background: url(/images/Barcode.png) right top no-repeat;
 	margin-right: 10px;
 	padding-right: 10px;
-}
-
-/* PayPal Donation Amount Input */
-input[type=text] {
-	font-size: 15pt;
-	height: 25px;
-	width: 80px;
-	border: 1px solid #E1E1E1;
 }
 
 /* Text Modifiers */

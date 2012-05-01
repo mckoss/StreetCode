@@ -29,7 +29,7 @@ namespace.module('streetcode.client', function (exports, requires) {
         if( hash.length < 1 ) {
             hash = "#home";
         // load needs if app if navigationg back from paypal
-        } else if(hash.indexOf("give/")) {
+        } else if(hash.indexOf("give/") > -1) {
             hash = "#needs"
         }
         $( "a[href='" + hash + "']:first").trigger('click');
@@ -43,6 +43,8 @@ namespace.module('streetcode.client', function (exports, requires) {
         if(pageCurr) {
             pushNavigation(to);
         }
+
+        alert(to);
 
         // Dipslay target
         if(to.indexOf("/") < 0) {

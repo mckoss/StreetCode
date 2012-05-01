@@ -40,7 +40,15 @@ class pdt_handler(webapp.RequestHandler):
         if lines[0] == 'SUCCESS':# Check for SUCCESS at the start of the response
             # build a dictionary of key value pair provided by PDT
             lines = lines[1:]
-            props = {}
+            props = {
+                'payment_date' : '', 
+                'payment_gross': 0, 
+                'payment_fee': 0, 
+                'payment_status': '', 
+                'item_name': '',
+                'first_name': '', 
+                'last_name': '', 
+                'payer_email': '' }
             for line in lines:
                 items = line.split('=')
                 if len(items) == 2:
@@ -61,12 +69,6 @@ class pdt_handler(webapp.RequestHandler):
                 donor.email = urllib.unquote( props['payer_email'] )
                 donor.put()
 
-            if props['payment_gross'] == '':
-                props['payment_gross'] = 0;
-
-            if props['payment_fee'] =='': 
-                props['payment_fee'] = 0; 
-
             # Create a new transaction (use transaction_id to maintain data uniqueness)
             tx = Transaction.all().filter('txID', trans_id).get()
             if tx is None:
@@ -74,6 +76,7 @@ class pdt_handler(webapp.RequestHandler):
                               donor=donor,
                               client=client,
                               txID = trans_id, 
+                              paymentDate = urllib.unquote(props['payment_date']).replace('+', ' '),
                               amount= float(props['payment_gross']), 
                               fee = float(props['payment_fee']) ,
                               paymentStatus = props['payment_status'],
@@ -81,18 +84,15 @@ class pdt_handler(webapp.RequestHandler):
                               fulfilled = False  
                             )
                 tx.put()
-            # self.response.out.write(urllib.unquote(status))
 
             # Regardless of success, user is redirected to thank you screen "/client_short_code#thanks"    
             self.response.out.write('<script> window.location = "/'+ shortCode + '#thanks"; </script>')
     
             # DEBUG code
-            #self.response.out.write(urllib.unquote(status))
-            # self.response.out.write(props['txn_id'])
+            # self.response.out.write(urllib.unquote(status))
             
         else:
             self.response.out.write("Failed<BR>")
-            self.response.out.write(urllib.unquote(status))
 
         
 class Endpoint(object):

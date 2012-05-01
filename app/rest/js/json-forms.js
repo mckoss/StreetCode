@@ -101,6 +101,9 @@ namespace.module('startpad.json-forms', function(exports, require) {
                 processValues(result, formProperties, function(data, name, property) {
                     var template;
                     var context;
+                    if (data[name] === null) {
+                        data[name] = '';
+                    }
                     if (property) {
                         context = {name: name,
                                    value: data[name],
@@ -114,10 +117,6 @@ namespace.module('startpad.json-forms', function(exports, require) {
                                    value: computeWrapper(data, name),
                                    property: {control: 'computed'}
                                    };
-                    }
-
-                    if (data.value === null) {
-                        data.value = '';
                     }
 
                     template = controlTemplates[context.property.control];

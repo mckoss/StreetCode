@@ -15,7 +15,7 @@ X get host name from request object - no need in settings - rest/views.py
 
 # Bugs
 
-- Nulls being displayed in textarea and imageURL on new Client items.
+X Nulls being displayed in textarea and imageURL on new Client items.
 - Sponsor form does not have name field first?
 - Models.py - parsing date fails with text timestamp.
 - Read-only fields should not be displayed in editable fields (e.g. created and modified).

@@ -32,26 +32,37 @@ def add_models(model_list):
 class RESTModel(db.Model):
     # Every model has a name property - used to display in lists.
     name = db.StringProperty()
+    owner_email = db.StringProperty()
 
     def set_defaults(self):
         pass
 
+    @classmethod
+    def get_read_only(cls):
+        """ Properties that should not be modified by the client. """
+        return ('owner_email',)
+
     """ Conversion of model to and from JSON for REST interface. """
     @classmethod
-    def get_schema(self):
+    def get_schema(cls):
         result = {'properties': {}}
 
-        if hasattr(self, 'form_order'):
-            result['formOrder'] = self.form_order
+        if hasattr(cls, 'form_order'):
+            result['formOrder'] = cls.form_order
 
-        if hasattr(self, 'computed'):
-            result['computed'] = self.computed
+        if hasattr(cls, 'computed'):
+            result['computed'] = cls.computed
 
-        for prop_name, property in self.properties().items():
+        read_only_props = cls.get_read_only()
+        for prop_name, property in cls.properties().items():
             result['properties'][prop_name] = py_to_js_type(property.data_type)
+            if prop_name in read_only_props:
+                result['properties'][prop_name]['readOnly'] = True
         return result
 
     def get_dict(self, depth=1):
+        """ Returns JSON-compatible python dictionary containing all the properties of an
+        instance. """
         result = {'id': self.key().id_or_name()}
 
         for prop_name, property in self.properties().iteritems():
@@ -83,8 +94,10 @@ class RESTModel(db.Model):
         return result
 
     def set_dict(self, json_dict):
+        """ Set's the properties on a model instance from a JSON-compatible dictionary. """
+        read_only_props = self.get_read_only()
         for prop_name, prop in self.properties().iteritems():
-            if prop_name not in json_dict:
+            if prop_name not in json_dict or prop_name in read_only_props:
                 continue
 
             value = json_dict[prop_name]
@@ -113,6 +126,15 @@ class RESTModel(db.Model):
     def from_json(self, json_string):
         self.set_dict(json.loads(json_string))
 
+    def can_write(self, user_email='anonymous'):
+        """ Decide if the item can be modified by a user.
+
+        By default - we only allow the owner of an item to modify it.
+        """
+        if self.owner_email is None or self.owner_email == 'anonymous':
+            return True
+        return self.owner_email == user_email;
+
 
 class Timestamped(db.Model):
     """
@@ -121,7 +143,9 @@ class Timestamped(db.Model):
     created = db.DateTimeProperty(auto_now_add=True)
     modified = db.DateTimeProperty()
 
-    read_only = ('created', 'modified')
+    @classmethod
+    def get_read_only(cls):
+        return ('created', 'modified') + super(Timestamped, cls).get_read_only()
 
     def put(self, *args, **kwargs):
         # Don't rely on auto_now property to set the modification

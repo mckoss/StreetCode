@@ -58,11 +58,17 @@ namespace.module('streetcode.client', function (exports, requires) {
             }
             pageCurr.css("max-height",0);
             pageCurr.css("opacity", 0);
+            pageCurr.css('-webkit-transition', 'opacity 1s ease');
+            pageCurr.css('-moz-transition', 'opacity 1s ease');
+            pageCurr.css('transition', 'opacity 1s ease');
         }
 
         // expand target page
         p.css("max-height",1000);
         p.css("opacity", 100);
+        p.css('-webkit-transition', 'opacity 1s ease');
+        p.css('-moz-transition', 'opacity 1s ease');
+        p.css('transition', 'opacity 1s ease');
 
         // store pointer to current page
         pageCurr = p;

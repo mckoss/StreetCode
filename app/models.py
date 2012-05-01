@@ -76,10 +76,11 @@ class Transaction(RESTModel, Timestamped):
     method = db.StringProperty()
     amount = db.FloatProperty()
     fee = db.FloatProperty()
+    paymentStatus = db.StringProperty()
     note = db.TextProperty()
     fulfilled = db.BooleanProperty(default=False)
 
-    form_order = ('donor', 'client', 'txID', 'method', 'amount', 'fee', 'note', 'fulfilled')
+    form_order = ('donor', 'client', 'txID', 'method', 'amount', 'fee', 'paymentStatus', 'note', 'fulfilled')
 
 class Scan(RESTModel, Timestamped):
     client = db.ReferenceProperty(Sponsor)

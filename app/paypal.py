@@ -36,8 +36,6 @@ class pdt_handler(webapp.RequestHandler):
         except:
           self.response.out.write("POST Failed")
 
-        
-
         lines = status.split('\n')
         if lines[0] == 'SUCCESS':# Check for SUCCESS at the start of the response
             # build a dictionary of key value pair provided by PDT
@@ -72,10 +70,13 @@ class pdt_handler(webapp.RequestHandler):
                               txID = trans_id, 
                               amount= float(props['payment_gross']), 
                               fee = float(props['payment_fee']) ,
+                              paymentStatus = props['payment_status'],
                               note = urllib.unquote(props['item_name']).replace('+', ' '),
                               fulfilled = False  
                             )
                 tx.put()
+            # self.response.out.write(urllib.unquote(status))
+
             # Regardless of success, user is redirected to thank you screen "/client_short_code#thanks"    
             self.response.out.write('<script> window.location = "/'+ shortCode + '#thanks"; </script>')
     

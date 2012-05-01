@@ -23,6 +23,10 @@ namespace.module('startpad.json-forms', function(exports, require) {
             '<label for="<%- name %>"><%- name %>:</label>' +
             '<textarea id="<%- name %>" name="<%- name %>"><%- value %></textarea>'),
 
+        'readonly': _.template(
+            '<label><%- name %>:</label>' +
+            '<div id="<%- name %>"><%- value %></div>'),
+
         'computed': _.template('<div><%= value %></div>'),
 
         'reference': _.template(
@@ -68,7 +72,7 @@ namespace.module('startpad.json-forms', function(exports, require) {
                 for (var i = 0; i < result.length; i++) {
                     var item = result[i];
                     item.modelName = pageInfo.model;
-                    if (item.name === null) {
+                    if (item.name === null || item.name == '') {
                         item.name = '#' + item.id;
                     }
                     listHTML += modelRowTemplate(item);
@@ -105,12 +109,18 @@ namespace.module('startpad.json-forms', function(exports, require) {
                         data[name] = '';
                     }
                     if (property) {
+                        if (property.type == 'Date') {
+                            data[name] = new Date(data[name]).toISOString()
+                        }
                         context = {name: name,
                                    value: data[name],
                                    property: property
                                    };
                         if (!context.value && property.control == 'reference') {
                             context.value = {id: '', name: 'Unassigned'};
+                        }
+                        if (property.readOnly) {
+                            context.control = 'readonly';
                         }
                     } else {
                         context = {name: 'computed',
@@ -119,7 +129,7 @@ namespace.module('startpad.json-forms', function(exports, require) {
                                    };
                     }
 
-                    template = controlTemplates[context.property.control];
+                    template = controlTemplates[context.control || context.property.control];
                     formHTML += template(context);
                 });
                 $('#item-form-body').append(formHTML);
@@ -208,8 +218,13 @@ namespace.module('startpad.json-forms', function(exports, require) {
         }
 
         processValues(result, function(data, name, property) {
+            value = data[name]
             if (property.control == 'reference') {
-                data[name] = parseInt(data[name]);
+                data[name] = parseInt(value);
+            }
+            if (property.type == 'boolean') {
+                value = value.toLowerCase();
+                data[name] = value == 'true' || value == 'yes' || value == '1';
             }
         });
         return result;

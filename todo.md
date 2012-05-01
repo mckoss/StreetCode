@@ -53,7 +53,7 @@ X Support reference properties:
 - Include object reference on duplicated traversal - and at end of depth - reconstitute
   in client?  Maybe should have a references section for non-item objects?
 X Ensure all REST calls return JSON formatted error messages - dispayed to user.
-- Security added - check_permissions callback.
+! Security added - check_permissions callback.
 - Add caching to rest app
   - Generate etag hash from data - 304 not modified on GET/HEAD
   - Add Cacheable mixin to models.

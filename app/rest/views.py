@@ -22,7 +22,7 @@ class UserHandler(webapp.RequestHandler):
     def __init__(self, *args, **kwargs):
         super(UserHandler, self).__init__(*args, **kwargs)
         self.user = users.get_current_user()
-        self.user_id = self.user and self.user.user_id() or 'anonymous'
+        self.user_email = self.user.email() if self.user else 'anonymous'
 
 
 class JSONHandler(webapp.RequestHandler):
@@ -91,7 +91,7 @@ class ListHandler(UserHandler, JSONHandler):
         # HACK - How else to initialize properties ONLY in the case
         # where a model is being created.
         data = json.loads(self.request.body)
-        item = model(user_id=self.user_id)
+        item = model(owner_email=self.user_email)
 
         if hasattr(item, 'set_defaults'):
             item.set_defaults()
@@ -128,7 +128,7 @@ class ItemHandler(UserHandler, JSONHandler):
             return
 
         data = json.loads(self.request.body)
-        if hasattr(item, 'user_id') and item.user_id != self.user_id:
+        if not item.can_write(user_email=self.user_email):
             self.error(403)
             self.response.out.write("Write permission failure.")
             return

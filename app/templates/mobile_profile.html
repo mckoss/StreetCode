@@ -15,7 +15,16 @@
   <script type="text/template" id="client-view-template">
 <div>
     <h1><div></div></h1>
-
+<!-- hidden paypal autoreturn page -->
+    <a href="#thanks" style="display:none"></a>
+    <div class="page" id="thanks">
+        <div class="story">
+          <img style="margin-bottom:30px;" src="images/ThankYou.png">
+          <div><img style="vertical-align:middle" src="images/Twitter_icon.png"/><img style="padding-left:15px; vertical-align:middle" src="images/Facebook_icon.png"/><span style="font-size:12pt; color: #D1D1D1; padding:0px 0px 30px 15px;">Join the Movement</span></div>
+          <div>Thank you for your payment. Your transaction has been completed, and a receipt for your purchase has been emailed to you. You may log into your account at www.sandbox.paypal.com/us to view details of this transaction.</div>
+        </div>
+      </div>
+      
     <a href="#home">HOME</a>
     <div class="page" id="home">
       <div class="top-info">
@@ -59,19 +68,10 @@
     </div>
     </div>
 
-    <!-- hidden paypal autoreturn page -->
-    <div class="page" id="thanks">
-      <a href="#home">HOME</a>
-      <div class="centered">
-        <img style="margin-bottom:30px;" src="images/ThankYou.png">
-        <div><img style="vertical-align:middle" src="images/Twitter_icon.png"/><img style="padding-left:15px; vertical-align:middle" src="images/Facebook_icon.png"/><span style="font-size:14pt; color: #E1E1E1; padding:0px 0px 30px 15px;">Join the Movement</span>
-        </div>
-      </div>
-      <a href="#about">ABOUT</a>
-    </div>
+    
 
 <!-- hidden paypal form -->
-    <form target="_paypalContainer" id="ppPayment" name="ppPayment" action="{{paypal_url}}" method="post">
+    <form id="ppPayment" name="ppPayment" action="{{paypal_url}}" method="post">
         <input type="hidden" name="cmd" value="_xclick"> 
         <input type="hidden" name="business" value="<%= sponsor.paypalMerchant.merchantKey %>"> 
         <input type="hidden" name="item_name" value="Donation for <%= name %> sponsored by <%= sponsor.name %> (StreetCodes)">

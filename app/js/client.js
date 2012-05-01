@@ -16,28 +16,42 @@ namespace.module('streetcode.client', function (exports, requires) {
             // prevent navigation
             e.preventDefault();
 
-            var to = e.target.hash;
-
-            // Dipslay target
-            if(to.indexOf("/") < 0) {
-                Accordian(e.target.hash);
-            } else {
-                alert("Load paypal");
-                //$("#_xclick").submit();
-                //Accordian("#give");
-            }
-            // send event to Google Analytics
-            // don't fire on initial page render
-            if(pageCurr) {
-                pushNavigation(to);
-            }
+            // call link handler
+            handleClick(e);
         });
 
         // hide Loading panel
         $("#loading").remove();
 
-        // select initial page
-        $( "a[href='#home']:first").trigger('click');
+        // select hash on initial load
+        // load home if no hash
+        var hash = document.location.hash;
+        if( hash.length < 1 ) {
+            hash = "#home";
+        // load needs if app if navigationg back from paypal
+        } else if(hash.indexOf("give/") > -1) {
+            hash = "#needs"
+        }
+        $( "a[href='" + hash + "']:first").trigger('click');
+    }
+
+    function handleClick(e) {
+        var to = e.target.hash;
+
+        // send event to Google Analytics
+        // don't fire on initial page render
+        if(pageCurr) {
+            pushNavigation(to);
+        }
+
+        // Dipslay target
+        if(to.indexOf("/") < 0) {
+            Accordian(e.target.hash);
+        // Submit donation on #give/x event
+        } else {
+            $("#amount").val(to.split("/")[1]);
+            $("#ppPayment").submit();
+        }
     }
 
     // Send navigation event to Google Analytics
@@ -56,19 +70,13 @@ namespace.module('streetcode.client', function (exports, requires) {
             if(pageCurr.attr("id") == p.attr("id") ) {
                 return false;
             }
-            pageCurr.css("max-height",0);
             pageCurr.css("opacity", 0);
-            pageCurr.css('-webkit-transition', 'opacity 1s ease');
-            pageCurr.css('-moz-transition', 'opacity 1s ease');
-            pageCurr.css('transition', 'opacity 1s ease');
+            pageCurr.css("max-height",0);
         }
 
         // expand target page
-        p.css("max-height",1000);
         p.css("opacity", 100);
-        p.css('-webkit-transition', 'opacity 1s ease');
-        p.css('-moz-transition', 'opacity 1s ease');
-        p.css('transition', 'opacity 1s ease');
+        p.css("max-height",400);
 
         // store pointer to current page
         pageCurr = p;

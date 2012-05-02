@@ -7,7 +7,7 @@ from models import Transaction
 from models import Client
 from models import Donor
 
-class pdt_handler(webapp.RequestHandler):
+class PDTHandler(webapp.RequestHandler):
     def get(self, shortCode):
         client = Client.all().filter('shortCode =', shortCode).get()
         sponsor = client.sponsor
@@ -132,7 +132,7 @@ class Endpoint(object):
     def process_invalid(self, data):
         pass
 
-class ipn_handler(Endpoint):
+class IPNHandler(Endpoint):
     def process(self, data):
         return HttpResponse("IPN received")
         # Do something with valid data from PayPal - e-mail it to yourself,

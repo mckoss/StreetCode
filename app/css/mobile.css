@@ -1,5 +1,16 @@
 * { margin: 0; padding:0; background-color: #FFFFFF; color: #000000; }
 
+/* Embed App font Helvetia Ultra Compressed */
+@font-face {
+    font-family: 'Helvetica Ultra Compressed';
+    src: url('font/helveticaultracompressed-webfont.eot');
+    src: url('font/helveticaultracompressed-webfont.eot?#iefix') format('embedded-opentype'),
+         url('font/helveticaultracompressed-webfont.woff') format('woff'),
+         url('font/helveticaultracompressed-webfont.ttf') format('truetype');
+	font-style: normal;
+	font-weight: 400;
+}
+
 .page-container { overflow-y:auto }
 
 p {
@@ -16,15 +27,12 @@ div {
 	font-size: 12px;
 }
 
-/* Embed App font Helvetia Ultra Compressed */
-@font-face {
-    font-family: 'Helvetica Ultra Compressed';
-    src: url('font/helveticaultracompressed-webfont.eot');
-    src: url('font/helveticaultracompressed-webfont.eot?#iefix') format('embedded-opentype'),
-         url('font/helveticaultracompressed-webfont.woff') format('woff'),
-         url('font/helveticaultracompressed-webfont.ttf') format('truetype');
-	font-style: normal;
-	font-weight: 400;
+/* Paypal logo */
+img.paypal {
+	height:15px;
+	width: 58px; 	
+	display: inline;
+	vertical-align:middle;
 }
 
 /* Client Info */
@@ -87,6 +95,7 @@ div.story {
 	margin-bottom: 5px;
 	font-family:'Helvetica Ultra Compressed', Arial;
 	font-size: 26pt;
+	width: 100%;
 
 	/* Shadow */
 	-webkit-box-shadow: 0px 2px 4px #000000;
@@ -112,12 +121,12 @@ div.story {
 
 /* Give Link */
 #page-container a.help {
-	width: 100%;
 	background-color: #ff9216;
 	color: white;
 	text-align: center;
 	padding-left: 0px;
 	border: solid #d99938 1px;
+	margin-right: 5px;
 }
 
 /* Give Block */

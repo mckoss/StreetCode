@@ -1,0 +1,36 @@
+{% extends "mobile_base.html" %}
+{% block head_extra %}
+  <title>{{site_name}} - Donations</title>
+  <script>
+  $(document).ready( function() {
+     namespace.streetcode.client.initDonation();
+  } );
+
+  </script>
+{% endblock %}
+
+{% block body %}
+  <div id="page-container">
+    <div id="loading">Loading...</div>
+  </div>
+  <div class="story" id="listThanks"></div>
+
+
+  <script type="text/template" id="client-donation-template">
+  <div>
+    <h1><div></div></h1>
+
+    <a href="#donation" class="help">DONATION for <%= client.name %></a> 
+    
+    <div class="chart story">
+      <div id="bar-label">Total $<%= client.totalDonation %></div>
+      <div class="bar"></div>
+    </div>
+ 
+  </div>
+  </script>
+
+   <script type="text/template" id="item-transaction-template">
+      <div class="itemThanks">Thank you, <%= donorName %>!  (<%= ago %>)</div>
+    </script>
+{% endblock %}

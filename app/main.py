@@ -18,7 +18,6 @@ paths = [
     ('/', PageHandler.using('index.html')),
     ('/about', PageHandler.using('about.html')),
     ('/contact', PageHandler.using('contact.html')),
-    ('/donation/(\w+)', paypal.pdt_handler), # paypal pdt handler
     ]
 
 paths.extend(rest.get_paths())
@@ -27,7 +26,9 @@ paths.extend(rest.get_paths())
 paths.extend([
     ('/(\w+)', PageHandler.using('mobile_profile.html')),
     ('/client/(\w+)/(\d+)', views.ClientHandler),
-    ('/paypal_endpoint/', paypal.ipn_handler), # paypal ipn handler
+    ('/donations/(\w+)', PageHandler.using('mobile_donation.html')),
+    ('/paypal/ipn', paypal.IPNHandler), # paypal ipn handler
+    ('/paypal/pdt/(\w+)', paypal.PDTHandler), # paypal pdt handler
     ])
 
 

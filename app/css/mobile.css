@@ -117,7 +117,7 @@ div.story {
 
 	/* App Navigation Links */
 	#page-container a {
-		background-color: #1b1a18;
+		background-color: #242320;
 		color: #ff9216; 
 		padding-left: 16px;
 	}
@@ -173,9 +173,8 @@ div.give-block {
 /* Title Bar */
 h1 {
 	height: 60px;
-	width: 100%;
 	background:url(/images/Logo_dark.png) no-repeat center center;
-	background-color: #1b1a18;
+	background-color: #242320;
 	margin-right: -10px;
 	padding-right: -10px;
 	/*

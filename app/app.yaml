@@ -36,8 +36,4 @@ skip_files:
 - ^.*\.bak$
 - ^.*\.orig$
 - ^.*/TAGS$
-<<<<<<< HEAD
 - ^js/libs/jquery-mobile/demos
-=======
-- ^js/libs/jquery-mobile/demos
->>>>>>> f8cf7a6d1080737b2db6f027aeadaabd972dda11

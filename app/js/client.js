@@ -1,7 +1,7 @@
 namespace.module('streetcode.client', function (exports, requires) {
     exports.extend({
         'initProfile': initProfile,
-        'trackDonations' : trackDonations,
+        'initDonation' : trackDonation,
         'initCard': initCard,
         'initSign': initSign,
         'initStory': initStory,
@@ -83,53 +83,65 @@ namespace.module('streetcode.client', function (exports, requires) {
         pageCurr = p;
     }
 
-    function initDonationPage() {
-        // hide Loading panel
-        $("#loading").remove();
-    }
-
     function initProfile() {
         ClientMobileView.template =  _.template($('#client-view-template').html());
         exports.app = new ClientMobileView();
     }
 
-    function trackDonations() {
-        initDonationPage(); 
+    function initDonation() { 
+         // hide Loading panel
+        $("#loading").remove();
+
+        
+    }
+
+    function refreshDonation() {
+        console.log(new Date());
+        setTimeout ( "namespace.streetcode.client.trackDonation()", 15000);
+    }
+
+
+    function trackDonation() {
+        initDonation(); 
+
         var shortCode = document.location.pathname.split('/').pop(); 
 
         var clientDonationTemplate = _.template($('#client-donation-template').html()); 
         var itemTransactionTemplate = _.template($('#item-transaction-template').html());
- 
-       
+        
+        var listHtml = ""; 
+        var summaryHtml = ""; 
+
+        var client; 
+
         $.ajax({
             url: '/data/client?shortCode=' + shortCode.toLowerCase(),
             dataType: 'json',
             success: function (data) {
-                var client = data[0]; 
+                client = data[0]; 
 
                 // ... Then get the transactions for this client id 
                 $.ajax({
                     url: '/data/transaction?client=' + client.id + '&no-cache',
                     dataType: 'json', 
                     success: function(data) {
-                        if ( data.length == 0 )
-                            return; 
+                        if ( data.length == 0 ) return; 
 
                         //Sort transactions such that the latest is in the front 
-                        data.sort( function(a, b) {
+                        data.sort(     function (a, b) {
                             if (a.created == b.created ) return 0; 
                             else if (a.created > b.created ) return -1 ; 
                             else return 1; 
-                        });
+                        } );
 
                         client.totalDonation = 0; 
+                        client.numDonors = data.length ; // TODO numDonors is not the num of donations 
                         for ( var i = 0; i < data.length; i++ ) {
                             client.totalDonation += data[i].amount;
                         }
 
                         client.goal = Math.max(client.goal, 0);
-
-                        var listHtml = ""; 
+                        
                         for ( var i = 0; i < Math.min(5, data.length); i++ ) {
                             var transaction = data[i]; 
                             transaction.donorName = data[i].donor.name;
@@ -137,11 +149,11 @@ namespace.module('streetcode.client', function (exports, requires) {
                             listHtml += itemTransactionTemplate(transaction);
                         }
 
-                        var summaryHtml = clientDonationTemplate(client);
-
+                        // Render the gauge, 
+                        summaryHtml = clientDonationTemplate(client);
                         $("#listThanks").html(listHtml); 
                         $("#donationSummary").html(summaryHtml); 
-                        
+                        // drawGauge(client.totalDonation, client.goal, client.numDonors)
                     }, 
                     failure: function(err) {
                         console.log(err);
@@ -150,13 +162,14 @@ namespace.module('streetcode.client', function (exports, requires) {
             
             }
         });
-        updateDonationView(); 
+        
+
+        refreshDonation(); 
     }
 
-    function updateDonationView() {   
-        console.log( new Date() );
-        setTimeout ( "namespace.streetcode.client.trackDonations()", 15000);
-    }
+
+
+
 
     function calcTimeAgo (pastTime ) {
         var d = new Date(); 

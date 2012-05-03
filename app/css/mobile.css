@@ -218,3 +218,15 @@ iframe {
 	width: 100%;
 	height: 100%;
 }
+
+/* Vertical fade on donations page */
+.vertical_fade { 
+	-webkit-mask-image: -webkit-gradient(linear, left top,
+    	left bottom, from(rgba(0,0,0,1)), to(rgba(0,0,0,0)));
+	-moz-mask-image: -moz-gradient(linear, left top,
+    	left bottom, from(rgba(0,0,0,1)), to(rgba(0,0,0,0)));
+	-o-mask-image: -o-gradient(linear, left top,
+    	left bottom, from(rgba(0,0,0,1)), to(rgba(0,0,0,0)));
+	mask-image: gradient(linear, left top,
+    	left bottom, from(rgba(0,0,0,1)), to(rgba(0,0,0,0)));
+}

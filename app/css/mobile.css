@@ -11,7 +11,12 @@
 	font-weight: 400;
 }
 
+/*
 .page-container { width: 100%; height:100%; }
+body {
+overflow-x:hidden;
+}
+*/
 
 p {
 	margin: 6px auto;
@@ -24,7 +29,7 @@ form {
 div {
 	width: inherit;
 	font-family: Helvetica;
-	font-size: 13px;
+	font-size: 14px;
 }
 
 /* Paypal logo */
@@ -38,29 +43,33 @@ img.paypal {
 /* Client Info */
 div.top-info {
 	width: 280px;
+	max-height: 200px;
+	/*
 	height: 174px;
-	margin: 10px auto 0px;
+	*/
+	margin: 10px auto 20px;
 }
 
 /* Client Portrait */
 .top-info > .portrait{
 	width: 115px;
-	height: 172px;
+	/*height: 172px;
 	border: 1px solid #656565;
-	float: left;
+	*/
 	background:url(<%= imageURL %>) no-repeat center center;
 }
 
 /* Client Info Panel */
 .top-info > .info-block {
 	width: 155px;
-	height: 174px;
+	max-height: 200px;
 	float: right;
+	margin-top: -5px;
 }
 
 div.info-block > .nickname {
 	font-family: 'Helvetica Ultra Compressed', Arial;
-	font-size: 36px;
+	font-size: 34px;
 	<!--[if IE]>
 	font-size: 16px;
 	<![endif]-->
@@ -129,6 +138,7 @@ div.story {
 	text-align: center;
 	padding-left: 0px;
 	border: solid #d99938 1px;
+	margin-top: 5px;
 	margin-right: 5px;
 }
 
@@ -196,7 +206,7 @@ h1 > div {
 
 /* Application Motto */
 p.motto{
-	font-size:14px;
+	font-size:16px;
 	font-weight:bold;
 }
 

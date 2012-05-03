@@ -151,7 +151,6 @@ div.give-block {
 .page {
 	overflow: hidden;
 	max-height: 0;
- 	width: 100%;
 	color: #ff9216;
   	background-color: #ffffff;
   	opacity: 0;

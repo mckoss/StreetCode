@@ -93,54 +93,67 @@ div.story {
 }
 
 /* Links */
-#page-container a {
-	display: block;
-	text-decoration: none;
-	height: 38px;
-	padding-top: 0px;
-	margin-bottom: 5px;
-	font-family:'Helvetica Ultra Compressed', Arial;
-	font-size: 26pt;
 
-	/* Shadow */
-	-webkit-box-shadow: 0px 2px 4px #000000;
-	-moz-box-shadow: 0px 2px 4px #000000;
-	o-shadow: 0px 2px 6px #000000;
-	box-shadow: 0px 2px 6px #000000;
-}
+	/* External Links */
+	#page-container a.external {
+		color: #ff9216;
+		background-color: #FFFFFF;
+		text-decoration: none;
+		padding: 0px;
+		margin: 0px;
+		border-bottom: 1px solid #ff9216;
+		text-justify: center;
+	}
 
-/* Navigation Links */
-#page-container a {
-	background-color: #1b1a18;
-	color: #ff9216; 
-	padding-left: 16px;
-}
+	/* Internal links */
+	#page-container a.button {
+		display: block;
+		text-decoration: none;
+		height: 38px;
+		padding-top: 0px;
+		margin-bottom: 5px;
+		font-family:'Helvetica Ultra Compressed', Arial;
+		font-size: 26pt;
 
-/* Donation links */
-#page-container a.give {
-	border-left: 6px solid #ff9216;
-	color: #6F6F6F;
-	background-color:#E1E1E1;
-	margin-left: 16px;
-	margin-right: 16px;
+		/* Shadow */
+		-webkit-box-shadow: 0px 2px 4px #000000;
+		-moz-box-shadow: 0px 2px 4px #000000;
+		o-shadow: 0px 2px 6px #000000;
+		box-shadow: 0px 2px 6px #000000;
+	}
 
-	/* Shadow */
-	-webkit-box-shadow: 0px 2px 4px #E1E1E1;
-	-moz-box-shadow: 0px 2px 4px #E1E1E1;
-	o-shadow: 0px 2px 6px #E1E1E1
-	box-shadow: 0px 2px 6px #E1E1E1
-}
+	/* App Navigation Links */
+	#page-container a {
+		background-color: #1b1a18;
+		color: #ff9216; 
+		padding-left: 16px;
+	}
 
-/* Profile Donation Link */
-#page-container a.help {
-	background-color: #ff9216;
-	color: white;
-	text-align: center;
-	padding-left: 0px;
-	border: solid #d99938 1px;
-	margin-top: 5px;
-	margin-right: 5px;
-}
+	/* Donation links */
+	#page-container a.give {
+		border-left: 6px solid #ff9216;
+		color: #6F6F6F;
+		background-color:#E1E1E1;
+		margin-left: 16px;
+		margin-right: 16px;
+
+		/* Shadow */
+		-webkit-box-shadow: 0px 2px 4px #E1E1E1;
+		-moz-box-shadow: 0px 2px 4px #E1E1E1;
+		o-shadow: 0px 2px 6px #E1E1E1
+		box-shadow: 0px 2px 6px #E1E1E1
+	}
+
+	/* Profile Donation Link */
+	#page-container a.help {
+		background-color: #ff9216;
+		color: white;
+		text-align: center;
+		padding-left: 0px;
+		border: solid #d99938 1px;
+		margin-top: 5px;
+		margin-right: 5px;
+	}
 
 /* Give Block */
 div.give-block {
@@ -200,7 +213,7 @@ h1 > div {
     margin-left: auto;
     margin-right: auto;
 	width: 280px;
-	text-align: centered;
+	text-align: center;
 }
 
 /* Application Motto */

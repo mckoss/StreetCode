@@ -13,7 +13,7 @@ namespace.module('streetcode.client', function (exports, requires) {
     function initPages()
     {
         // bind links to Accordian 
-        $("a").bind('click', function(e) {
+        $("a[class!='external']").bind('click', function(e) {
             // prevent navigation
             e.preventDefault();
 

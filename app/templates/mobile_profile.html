@@ -16,17 +16,17 @@
 <div>
     <h1><div></div></h1>
 <!-- hidden paypal autoreturn page -->
-    <a href="#thanks" style="display:none"></a>
+    <a class="button" href="#thanks" style="display:none"></a>
     <div class="page" id="thanks">
         <div class="story">
-          <img style="margin-bottom:10px;" src="images/ThankYou.png">
+          <img style="margin-bottom:5px;" src="images/ThankYou.png">
           <!-- <div><img style="vertical-align:middle" src="images/Twitter_icon.png"/><img style="padding-left:15px; vertical-align:middle" src="images/Facebook_icon.png"/><span style="font-size:12pt; color: #C1C1C1; padding:0px 0px 30px 15px;">Join the Movement</span></div> -->
           
           <div class="story">Your transaction has been completed, and a receipt for your donation has been emailed to you. You may log into your account at www.paypal.com to view details of this transaction.</div>
         </div>
       </div>
 
-    <a href="#home">HOME</a>
+    <a class="button" href="#home">HOME</a>
     <div class="page" id="home">
       <div class="top-info">
         <img class="portrait" src="<%= imageURL %>"/>
@@ -39,27 +39,27 @@
             <div class="sponsor">Sponsor Organization:</div>
             <div class="sponsor"><%= sponsor.name %></div>
           </div>
-          <a class="help" href="#needs">DONATE</a>
+          <a class="button help" href="#needs">DONATE</a>
         </div>
       </div>
       <div class="story"><%= story %></div>
     </div>
 
-    <a href="#needs">DONATE</a>
+    <a class="button" href="#needs">DONATE</a>
       <div class="page" id="needs">
         <div class="story bold" style="text-align: center;white-space:nowrap;vertical-align:middle">
          Secure donations through <img class="paypal centered" src="images/paypal.png" border="0" alt="PayPal Acceptance Mark">
        </div>
        <div class="give-block">
-          <a class="give" href="#give/1">$1</a>
-          <a class="give" href="#give/5">$5</a>
-          <a class="give" href="#give/10">$10</a>
-          <a class="give" href="#give/20">$20</a>
-          <a class="give" href="#give/">Other Amount</a>
+          <a class="button give" href="#give/1">$1</a>
+          <a class="button give" href="#give/5">$5</a>
+          <a class="button give" href="#give/10">$10</a>
+          <a class="button give" href="#give/20">$20</a>
+          <a class="button give" href="#give/">Other Amount</a>
         </div>
       </div>
 
-    <a href="#about">ABOUT</a>
+    <a class="button" href="#about">ABOUT</a>
     <div class="page" id="about">
         <div class="story">
           <p class="bold">We believe in using mobile technology to break barriers between each other.</p>
@@ -67,10 +67,9 @@
           Our mission is to make it easier to help homeless individuals.
           We've developed a quick and secure way to  allow people to donate money to homeless individuals by scanning unique QR codes that can be printed on cards and posters.
           Each QR code is linked to a debit account which the individual can use to pay for necessities. Scan. Share. Love.</p>
+          <p class="centered"><a target="_new" class="external" href="http://streetcodes.wordpress.com/">Visit StreetCodes</a></p>
+      </div>
     </div>
-    </div>
-
-    
 
 <!-- hidden paypal form -->
     <form id="ppPayment" name="ppPayment" action="{{paypal_url}}" method="post">
@@ -80,7 +79,6 @@
         <input type="hidden" name="currency_code" value="USD">
         <input type="text" name="amount" id="amount" value="">
         <input type="hidden" name="bn" value="PP-DonationsBF:btn_donateCC_LG.gif:NonHosted">
-        <input type="image" src="https://www.paypal.com/en_US/i/btn/btn_donateCC_LG.gif" border="0" name="    submit" alt="PayPal - The safer, easier way to pay online!">
         <input type="hidden" name="image_url" value="{{site_url}}/images/streetcodeS_s.png">
         <input type="hidden" name="cancel_return" value="{{site_url}}/<%=shortCode %>">
         <input type="hidden" name="rm" value="2">

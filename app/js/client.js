@@ -1,7 +1,7 @@
 namespace.module('streetcode.client', function (exports, requires) {
     exports.extend({
         'initProfile': initProfile,
-        'initDonation' : initDonation,
+        'trackDonations' : trackDonations,
         'initCard': initCard,
         'initSign': initSign,
         'initStory': initStory,
@@ -93,10 +93,89 @@ namespace.module('streetcode.client', function (exports, requires) {
         exports.app = new ClientMobileView();
     }
 
-    function initDonation() {
-        ClientDonationView.template = _.template($('#client-donation-template').html()); 
-        exports.app = new ClientDonationView(); 
+    function trackDonations() {
+        initDonationPage(); 
+        var shortCode = document.location.pathname.split('/').pop(); 
+
+        var clientDonationTemplate = _.template($('#client-donation-template').html()); 
+        var itemTransactionTemplate = _.template($('#item-transaction-template').html());
+ 
+       
+        $.ajax({
+            url: '/data/client?shortCode=' + shortCode.toLowerCase(),
+            dataType: 'json',
+            success: function (data) {
+                var client = data[0]; 
+
+                // ... Then get the transactions for this client id 
+                $.ajax({
+                    url: '/data/transaction?client=' + client.id + '&no-cache',
+                    dataType: 'json', 
+                    success: function(data) {
+                        if ( data.length == 0 )
+                            return; 
+
+                        //Sort transactions such that the latest is in the front 
+                        data.sort( function(a, b) {
+                            if (a.created == b.created ) return 0; 
+                            else if (a.created > b.created ) return -1 ; 
+                            else return 1; 
+                        });
+
+                        client.totalDonation = 0; 
+                        for ( var i = 0; i < data.length; i++ ) {
+                            client.totalDonation += data[i].amount;
+                        }
+
+                        client.goal = Math.max(client.goal, 0);
+
+                        var listHtml = ""; 
+                        for ( var i = 0; i < Math.min(5, data.length); i++ ) {
+                            var transaction = data[i]; 
+                            transaction.donorName = data[i].donor.name;
+                            transaction.ago = calcTimeAgo(data[i].created); 
+                            listHtml += itemTransactionTemplate(transaction);
+                        }
+
+                        var summaryHtml = clientDonationTemplate(client);
+
+                        $("#listThanks").html(listHtml); 
+                        $("#donationSummary").html(summaryHtml); 
+                        
+                    }, 
+                    failure: function(err) {
+                        console.log(err);
+                    }
+                });
+            
+            }
+        });
+        updateDonationView(); 
     }
+
+    function updateDonationView() {   
+        console.log( new Date() );
+        setTimeout ( "namespace.streetcode.client.trackDonations()", 15000);
+    }
+
+    function calcTimeAgo (pastTime ) {
+        var d = new Date(); 
+
+        var msDiff = d.getTime()-d.getMilliseconds() - pastTime ;
+        if ( msDiff < 1000 ) 
+            return "0 min ago"; 
+
+        var minDiff = msDiff/1000/60; 
+        if ( minDiff < 60 )
+            return Math.floor( minDiff )+ " min ago"; 
+
+        var hrDiff = minDiff/60; 
+        if (hrDiff < 24) 
+            return  Math.floor( hrDiff )+ " hr(s) ago" ; 
+
+        return  Math.floor(hrDiff / 24 ) + " day(s) ago";
+    }
+
 
     function initCard() {
         ClientCardView.template =  _.template($('#client-view-template').html());
@@ -150,97 +229,7 @@ namespace.module('streetcode.client', function (exports, requires) {
 
     });
 
-    var ClientDonationView = Backbone.View.extend({
-        // el: "#client-donation-view", 
-        el: "#page-container",
-
-        // Get client and transactions 
-        initialize: function() {
-            var shortCode = location.pathname.split('/').pop();
-            var self = this; 
-
-            self.getTransactions(self, shortCode);
-        }, 
-
-        getTransactions: function(self, shortCode) {
-            self.transactions = new Array(5); 
-            self.itemTransactionTemplate = _.template($('#item-transaction-template').html());
-
-            // First query for the client ... 
-            $.ajax({
-                url: '/data/client?shortCode=' + shortCode.toLowerCase(),
-                dataType: 'json',
-                success: function (data) {
-                    self.client = data[0];
-
-                    // ... Then get the transactions for this client id 
-                    $.ajax({
-                        url: '/data/transaction?client=' + self.client.id,
-                        dataType: 'json', 
-                        success: function(data) {
-                            if ( data.length == 0 ) {
-                                self.render();
-                                return; 
-                            }
-
-                            //Sort transactions such that the latest is in the front 
-                            data.sort( function(a, b) {
-                                if (a.created == b.created ) return 0; 
-                                else if (a.created > b.created ) return -1 ; 
-                                else return 1; 
-                            });
-
-                            self.client.totalDonation = 0; 
-                            for ( var i = 0; i < data.length; i++ ) {
-                                self.client.totalDonation += data[i].amount;
-                                
-                            }
-
-                            var listHtml = ""; 
-                            for ( var i = 0; i < Math.min(5, data.length); i++ ) {
-                                var transaction = data[i]; 
-                                transaction.donorName = data[i].donor.name;
-                                transaction.ago = self.calcTimeAgo(data[i].created); 
-                                listHtml += self.itemTransactionTemplate(transaction);
-                            }
-                            $("#listThanks").append(listHtml); 
-
-                            self.render();
-                        }, 
-                        failure: function(err) {
-                            console.log(err);
-                        }
-                    });
-
-                }});
-        },
-
-        calcTimeAgo: function(pastTime ) {
-            var d = new Date(); 
-
-            var msDiff = d.getTime()-d.getMilliseconds() - pastTime ;
-            if ( msDiff < 1000 ) 
-                return "0 min ago"; 
-
-            var minDiff = msDiff/1000/60; 
-            if ( minDiff < 60 )
-                return Math.floor( minDiff )+ " min ago"; 
-
-            var hrDiff = minDiff/60; 
-            if (hrDiff < 24) 
-                return  Math.floor( hrDiff )+ " hrs ago" ; 
-
-            return  Math.floor(hrDiff / 24 ) + " days ago";
-        },
- 
-        // Render the content 
-        render: function() {
-            $(this.el).append(ClientDonationView.template(this)); 
-            initDonationPage(); 
-            return this; 
-        }
-    });
-
+    
     var ClientCardView = Backbone.View.extend({
         el:  "#client-card-view",
 

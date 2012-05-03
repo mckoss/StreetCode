@@ -19,7 +19,6 @@ def init():
             'donor': Donor,
             'transaction': Transaction,
             'scan': Scan,
-            'paypal': PaypalMerchant,
             })
 
 class PaypalMerchant(Timestamped, RESTModel):
@@ -52,10 +51,11 @@ class Client(Timestamped, RESTModel):
     storyHTML = db.TextProperty()
     sponsor = db.ReferenceProperty(Sponsor)
     imageURL = db.StringProperty()
+    goal = db.FloatProperty() 
 
     form_order = ('name', 'fullName',
                   'shortCode',
-                  'story', 'sponsor', 'imageURL',
+                  'story', 'sponsor', 'goal', 'imageURL',
                   'QRCode("http://streetcode.me/" + item.shortCode)',
                   )
     computed = ('item.storyHTML = markdown(item.story);',

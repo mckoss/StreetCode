@@ -1,5 +1,5 @@
 application: streetcode-sw
-version: deployment
+version: maya
 runtime: python
 api_version: 1
 threadsafe: false

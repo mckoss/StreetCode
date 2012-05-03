@@ -1,10 +1,11 @@
 namespace.module('streetcode.client', function (exports, requires) {
     exports.extend({
         'initProfile': initProfile,
-        'initDonation' : trackDonation,
+        'initDonation' : initDonation,
         'initCard': initCard,
         'initSign': initSign,
         'initStory': initStory,
+        'updateDonation': trackDonation,
     });
 
     // Page navigation vars
@@ -91,19 +92,12 @@ namespace.module('streetcode.client', function (exports, requires) {
     function initDonation() { 
          // hide Loading panel
         $("#loading").remove();
-
         
+        trackDonation(); 
     }
-
-    function refreshDonation() {
-        console.log(new Date());
-        setTimeout ( "namespace.streetcode.client.trackDonation()", 15000);
-    }
-
 
     function trackDonation() {
-        initDonation(); 
-
+        console.log( new Date() );
         var shortCode = document.location.pathname.split('/').pop(); 
 
         var clientDonationTemplate = _.template($('#client-donation-template').html()); 
@@ -125,8 +119,6 @@ namespace.module('streetcode.client', function (exports, requires) {
                     url: '/data/transaction?client=' + client.id + '&no-cache',
                     dataType: 'json', 
                     success: function(data) {
-                        if ( data.length == 0 ) return; 
-
                         //Sort transactions such that the latest is in the front 
                         data.sort(     function (a, b) {
                             if (a.created == b.created ) return 0; 
@@ -135,13 +127,23 @@ namespace.module('streetcode.client', function (exports, requires) {
                         } );
 
                         client.totalDonation = 0; 
-                        client.numDonors = data.length ; // TODO numDonors is not the num of donations 
+                        client.donors = {}; 
+                        client.numDonors = 0; 
                         for ( var i = 0; i < data.length; i++ ) {
+                            // accumulate total donation
                             client.totalDonation += data[i].amount;
+
+                            // accumulate independent donor donation
+                            if ( client.donors[data[i].donor.email] == null ) {
+                                client.donors[data[i].donor.email]  = 0; 
+                                client.numDonors += 1
+                            }
+                            client.donors[ data[i].donor.email ] += data[i].amount; 
                         }
 
                         client.goal = Math.max(client.goal, 0);
-                        
+
+                        // Fetch latest 5 transactions
                         for ( var i = 0; i < Math.min(5, data.length); i++ ) {
                             var transaction = data[i]; 
                             transaction.donorName = data[i].donor.name;
@@ -151,9 +153,11 @@ namespace.module('streetcode.client', function (exports, requires) {
 
                         // Render the gauge, 
                         summaryHtml = clientDonationTemplate(client);
-                        $("#listThanks").html(listHtml); 
                         $("#donationSummary").html(summaryHtml); 
-                        // drawGauge(client.totalDonation, client.goal, client.numDonors)
+                        drawGauge(client.totalDonation, client.goal);
+                        $("#listThanks").html(listHtml); 
+                        
+                        
                     }, 
                     failure: function(err) {
                         console.log(err);
@@ -163,12 +167,28 @@ namespace.module('streetcode.client', function (exports, requires) {
             }
         });
         
+        setTimeout ( "namespace.streetcode.client.updateDonation()", 15000);
+      }
 
-        refreshDonation(); 
+    function drawGauge(amount, goal) {
+        // Create and populate the data table.
+        var data = google.visualization.arrayToDataTable([
+            ['Label', 'Value'],
+            ['Donations', amount]
+        ]);
+
+        var gaugeMax = Math.max( goal, amount);
+        var options = {
+            max: gaugeMax,
+            height: 160,
+            redFrom: 0.9 * goal, redTo: gaugeMax,
+            yellowFrom:0.75 * goal, yellowTo: 0.90 * goal,
+            minorTicks: 5
+        };
+
+      // Create and draw the visualization.
+      new google.visualization.Gauge(document.getElementById('gauge')).draw(data, options);
     }
-
-
-
 
 
     function calcTimeAgo (pastTime ) {

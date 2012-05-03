@@ -167,13 +167,14 @@ namespace.module('streetcode.client', function (exports, requires) {
 
         var minDiff = msDiff/1000/60; 
         if ( minDiff < 60 )
-            return Math.floor( minDiff )+ " min ago"; 
+            return Math.floor( minDiff )+ ((Math.floor( minDiff )==1) ? " minute" : " minutes") + " ago"; 
 
         var hrDiff = minDiff/60; 
         if (hrDiff < 24) 
-            return  Math.floor( hrDiff )+ " hr(s) ago" ; 
+            return  Math.floor( hrDiff )+ ((Math.floor( hrDiff ) == 1) ? " hour" : " hours") + " ago" ; 
 
-        return  Math.floor(hrDiff / 24 ) + " day(s) ago";
+        var dayDiff = hrDiff / 24 ;
+        return  Math.floor(dayDiff) + ((Math.floor(dayDiff) == 1) ? " day" : " days" )+ " ago";
     }
 
 

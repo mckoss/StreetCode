@@ -4,9 +4,9 @@ runtime: python
 api_version: 1
 threadsafe: false
 
-- url: /favicon.ico
-  static_files: static/images/favicon.ico
-  upload: static/images/favicon.ico
+- url: /favicon.ico 
+  static_files: favicon.ico 
+  upload: favicon.ico
   mime_type: image/vnd.microsoft.icon
 
 - url: /images
@@ -37,4 +37,3 @@ skip_files:
 - ^.*\.bak$
 - ^.*\.orig$
 - ^.*/TAGS$
-- ^js/libs/jquery-mobile/demos

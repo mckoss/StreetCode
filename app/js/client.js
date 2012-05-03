@@ -14,7 +14,8 @@ namespace.module('streetcode.client', function (exports, requires) {
     // Only Android and Iphone use Touch event
     // Mixed results for Click
     // So we'll use legacy Mousedown - should have universal support
-    var clickEvent = "mousedown";
+    // var clickEvent = "mousedown";
+    var clickEvent = "click"; 
 
     function initPages()
     {
@@ -46,7 +47,7 @@ namespace.module('streetcode.client', function (exports, requires) {
         }
         $( "a[href='" + hash + "']:first").trigger( clickEvent );
 
-        window.scollTo(0,0);
+        // window.scollTo(0,0);
     }
 
     function handleClick(e) {

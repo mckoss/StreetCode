@@ -2,12 +2,11 @@ application: streetcode-sw
 version: deployment
 runtime: python
 api_version: 1
-threadsafe: false
 
 handlers:
 - url: /favicon\.ico
-  static_files: favicon.ico
-  upload: static/favicon.ico
+  static_files: images/favicon.ico
+  upload: images/favicon\.ico
 
 - url: /images
   static_dir: images
@@ -37,4 +36,8 @@ skip_files:
 - ^.*\.bak$
 - ^.*\.orig$
 - ^.*/TAGS$
+<<<<<<< HEAD
 - ^js/libs/jquery-mobile/demos
+=======
+- ^js/libs/jquery-mobile/demos
+>>>>>>> f8cf7a6d1080737b2db6f027aeadaabd972dda11

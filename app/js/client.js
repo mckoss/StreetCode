@@ -10,10 +10,20 @@ namespace.module('streetcode.client', function (exports, requires) {
     // Page navigation vars
     var pageCurr = null;
 
+    // Only Android and Iphone use Touch event
+    // Mixed results for Click
+    // So we'll use legacy Mousedown - should have universal support
+    var clickEvent = "mousedown";
+
     function initPages()
     {
+        // disable moving on touch-capable devices
+        document.ontouchmove = function(event) {
+            event.preventDefault();
+        };
+
         // bind links to Accordian 
-        $("a[class!='external']").bind('click', function(e) {
+        $("a").bind(clickEvent, function(e) {
             // prevent navigation
             e.preventDefault();
 
@@ -33,7 +43,9 @@ namespace.module('streetcode.client', function (exports, requires) {
         } else if(hash.indexOf("give/") > -1) {
             hash = "#needs"
         }
-        $( "a[href='" + hash + "']:first").trigger('click');
+        $( "a[href='" + hash + "']:first").trigger( clickEvent );
+
+        window.scollTo(0,0);
     }
 
     function handleClick(e) {
@@ -57,7 +69,8 @@ namespace.module('streetcode.client', function (exports, requires) {
 
     // Send navigation event to Google Analytics
     function pushNavigation(loc){
-        _gaq.push(['_trackPageview', loc]);
+        //window.location.hash = loc;
+        _gaq.push(["_trackPageview", loc]);
     }
 
     // Toggle application pages
@@ -76,11 +89,16 @@ namespace.module('streetcode.client', function (exports, requires) {
         }
 
         // expand target page
+        p.css("max-height",1000);
         p.css("opacity", 100);
-        p.css("max-height",400);
 
         // store pointer to current page
         pageCurr = p;
+    }
+
+    function initDonationPage() {
+        // hide Loading panel
+        $("#loading").remove();
     }
 
     function initProfile() {

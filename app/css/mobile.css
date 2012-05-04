@@ -59,6 +59,7 @@ div.top-info {
 	max-height: 200px;
 	margin-top: -5px;
 	display:inline-block;
+	vertical-align: top;
 }
 
 div.info-block > .nickname {

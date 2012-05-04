@@ -14,6 +14,7 @@ namespace.module('streetcode.client', function (exports, requires) {
     // Only Android and Iphone use Touch event
     // Mixed results for Click
     // So we'll use legacy Mousedown - should have universal support
+    // Todo: mousedown cancels on mouseup... probably need to figure out how to work around that 
     var clickEvent = "click";
 
     function initPages()

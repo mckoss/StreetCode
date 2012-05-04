@@ -151,7 +151,7 @@ div.give-block {
 
 /* Mobile site pages */
 .page {
-	overflow: hidden;
+	overflow-x: hidden;
 	max-height: 0;
 	color: #ff9216;
   	background-color: #ffffff;
@@ -171,7 +171,7 @@ h1 {
 	height: 60px;
 	background:url(/images/Logo_dark.png) no-repeat center center;
 	background-color: #242320;
-	/*
+chrome	/*
 	border-bottom: 1px solid grey;
 	*/
 

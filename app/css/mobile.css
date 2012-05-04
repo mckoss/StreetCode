@@ -93,8 +93,6 @@ a {
 	#page-container a.external {
 		color: #ff9216;
 		background-color: #FFFFFF;
-		padding: 0px;
-		margin: 0px;
 		border-bottom: 1px solid #ff9216;
 		text-justify: center;
 	}
@@ -171,22 +169,16 @@ h1 {
 	height: 60px;
 	background:url(/images/Logo_dark.png) no-repeat center center;
 	background-color: #242320;
-chrome	/*
+	/*
 	border-bottom: 1px solid grey;
 	*/
 
-	/* Shadow */
+	/* Shadow
 	margin-bottom: 5px;
 	-webkit-box-shadow: 0px 2px 4px #000000;
 	-moz-box-shadow: 0px 2px 4px #000000;
 	box-shadow: 0px 2px 6px #000000;
-}
-
-/* Title Bar Barcode Image (not in use) */
-h1 > div {
-	background: url(/images/Barcode.png) right top no-repeat;
-	margin-right: 10px;
-	padding-right: 10px;
+	 */
 }
 
 /* Text Modifiers */

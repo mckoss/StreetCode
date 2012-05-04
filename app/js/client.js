@@ -53,7 +53,7 @@ namespace.module('streetcode.client', function (exports, requires) {
         }
         $( "a[href='" + hash + "']:first").trigger( clickEvent );
 
-        //window.scollTo(0,0);
+        // window.scollTo(0,0);
     }
 
     function handleClick(e) {

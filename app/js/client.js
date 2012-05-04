@@ -14,22 +14,28 @@ namespace.module('streetcode.client', function (exports, requires) {
     // Only Android and Iphone use Touch event
     // Mixed results for Click
     // So we'll use legacy Mousedown - should have universal support
-    var clickEvent = "mousedown";
+    var clickEvent = "click";
 
     function initPages()
     {
         // disable moving on touch-capable devices
         document.ontouchmove = function(event) {
-            event.preventDefault();
+        //    event.preventDefault();
         };
 
         // bind links to Accordian 
-        $("a").bind(clickEvent, function(e) {
+        $("a[class!='external']").bind(clickEvent, function(e) {
+            var event = e;
+
             // prevent navigation
-            e.preventDefault();
+            event.preventDefault();
+
+            // stop propegation
+            event.cancelBubble = true;
+            if (event.stopPropagation) event.stopPropagation();
 
             // call link handler
-            handleClick(e);
+            handleClick(event);
         });
 
         // hide Loading panel
@@ -46,7 +52,7 @@ namespace.module('streetcode.client', function (exports, requires) {
         }
         $( "a[href='" + hash + "']:first").trigger( clickEvent );
 
-        window.scollTo(0,0);
+        //window.scollTo(0,0);
     }
 
     function handleClick(e) {

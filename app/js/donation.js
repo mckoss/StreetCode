@@ -91,7 +91,7 @@ namespace.module('streetcode.donation', function (exports, requires) {
         // Create and populate the data table.
         var data = google.visualization.arrayToDataTable([
             ['Label', 'Value'],
-            ['Donations', amount]
+            ['$ donated', amount]
         ]);
 
         var gaugeMax = Math.max( goal, amount);

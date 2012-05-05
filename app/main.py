@@ -9,27 +9,23 @@ import paypal
 
 from rest.views import PageHandler
 
-models.init()
-
 import test_streetcode
 import demo
 
+
+models.init()
+
+
 paths = [
-    ('/', PageHandler.using('index.html')),
-    ('/about', PageHandler.using('about.html')),
-    ('/contact', PageHandler.using('contact.html')),
-    ]
-
-paths.extend(rest.get_paths())
-
-# Lower priority than fixed and admin urls.
-paths.extend([
+    ('/', views.RootHandler ),
     ('/(\w+)', PageHandler.using('mobile_profile.html')),
     ('/client/(\w+)/(\d+)', views.ClientHandler),
     ('/donations/(\w+)', PageHandler.using('mobile_donation.html')),
     ('/paypal/ipn', paypal.IPNHandler), # paypal ipn handler
     ('/paypal/pdt/(\w+)', paypal.PDTHandler), # paypal pdt handler
-    ])
+    ]
+
+paths.extend(rest.get_paths())
 
 
 def main():

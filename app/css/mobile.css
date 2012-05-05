@@ -11,6 +11,8 @@
 	font-weight: 400;
 }
 
+body { overflow-x: hidden; }
+
 p {
 	margin: 6px auto;
 }
@@ -55,8 +57,9 @@ div.top-info {
 .top-info > .info-block {
 	width: 155px;
 	max-height: 200px;
-	float: right;
 	margin-top: -5px;
+	display:inline-block;
+	vertical-align: top;
 }
 
 div.info-block > .nickname {
@@ -93,8 +96,6 @@ a {
 	#page-container a.external {
 		color: #ff9216;
 		background-color: #FFFFFF;
-		padding: 0px;
-		margin: 0px;
 		border-bottom: 1px solid #ff9216;
 		text-justify: center;
 	}
@@ -141,7 +142,7 @@ a {
 		padding-left: 0px;
 		border: solid #d99938 1px;
 		margin-top: 5px;
-		margin-right: 5px;
+		/*margin-right: 5px;*/
 	}
 
 /* Give Block */
@@ -151,11 +152,11 @@ div.give-block {
 
 /* Mobile site pages */
 .page {
-	overflow: hidden;
+	overflow-x: hidden;
 	max-height: 0;
 	color: #ff9216;
   	background-color: #ffffff;
-  	opacity: 0;
+  	//opacity: 0;
   	-moz-opacity: 0;
   	filter:alpha(opacity=0);
 
@@ -175,18 +176,12 @@ h1 {
 	border-bottom: 1px solid grey;
 	*/
 
-	/* Shadow */
+	/* Shadow
 	margin-bottom: 5px;
 	-webkit-box-shadow: 0px 2px 4px #000000;
 	-moz-box-shadow: 0px 2px 4px #000000;
 	box-shadow: 0px 2px 6px #000000;
-}
-
-/* Title Bar Barcode Image (not in use) */
-h1 > div {
-	background: url(/images/Barcode.png) right top no-repeat;
-	margin-right: 10px;
-	padding-right: 10px;
+	 */
 }
 
 /* Text Modifiers */
@@ -208,10 +203,12 @@ p.motto{
 	font-weight:bold;
 }
 
+/*
 iframe {
 	width: 100%;
 	height: 100%;
 }
+*/
 
 /* Vertical fade on donations page */
 .vertical_fade { 

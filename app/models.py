@@ -19,7 +19,6 @@ def init():
             'donor': Donor,
             'transaction': Transaction,
             'scan': Scan,
-            # 'paypal': PaypalMerchant
             })
 
 class PaypalMerchant(Timestamped, RESTModel):
@@ -91,4 +90,3 @@ class Scan(Timestamped, RESTModel):
     ledger = db.ReferenceProperty(Transaction)
 
     form_order = ('name', 'client', 'donor', 'ledger')
-

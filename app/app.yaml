@@ -1,5 +1,5 @@
 application: streetcode-sw
-version: maya
+version: deployment
 runtime: python
 api_version: 1
 

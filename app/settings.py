@@ -7,6 +7,7 @@ DEBUG = False
 SITE_NAME = "StreetCodes"
 SITE_ADMIN = "Mike Koss"
 ADMIN_EMAIL = "mckoss@startpad.org"
+SITE_HOME = "http://streetcodes.wordpress.com"
 
 if DEBUG is True:
     PAYPAL_URL = "https://www.sandbox.paypal.com/cgi-bin/webscr"

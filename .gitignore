@@ -1,6 +1,7 @@
 *.pyc
 *~
 *#
+app/app.yaml
 appengine/*
 gtugenv/*
 activate

@@ -12,7 +12,7 @@ namespace.module('streetcode.client', function (exports, requires) {
     // Only Android and Iphone use Touch event
     // Mixed results for Click
     // So we'll use legacy Mousedown - should have universal support
-    // Todo: mousedown cancels on mouseup... probably need to figure out how to work around that 
+    // Todo: mousedown cancels on mouseup... probably need to figure out how to work around that
     var clickEvent = "click";
 
     function initPages()
@@ -22,7 +22,7 @@ namespace.module('streetcode.client', function (exports, requires) {
         //    event.preventDefault();
         };
 
-        // bind links to Accordian 
+        // bind links to Accordian
         $("a[class!='external']").bind(clickEvent, function(e) {
             var event = e;
 
@@ -84,25 +84,17 @@ namespace.module('streetcode.client', function (exports, requires) {
     {
         var p = $(page);
 
-        // collapse currently loaded page
-        if(pageCurr) {
-            // exit if page is same as page loaded
-            if(pageCurr.attr("id") == p.attr("id") ) {
-                return false;
+        if (pageCurr) {
+            if (pageCurr.attr("id") == p.attr("id")) {
+                return;
             }
-
-            //pageCurr.css("opacity", 0);
-            pageCurr.css("max-height", 0);
+            pageCurr.removeClass('open');
         }
 
-        // expand target page
-        p.css("max-height", 1000);
-        //p.css("opacity", 100);
-
-        // store pointer to current page
+        p.addClass('open');
         pageCurr = p;
     }
-   
+
     function initProfile() {
         ClientMobileView.template =  _.template($('#client-view-template').html());
         exports.app = new ClientMobileView();
@@ -148,7 +140,7 @@ namespace.module('streetcode.client', function (exports, requires) {
                 }});
         },
 
-        // Re-render the contents of the mobile view 
+        // Re-render the contents of the mobile view
         render: function() {
             $(this.el).append(ClientMobileView.template(this.client));
 
@@ -160,7 +152,7 @@ namespace.module('streetcode.client', function (exports, requires) {
 
     });
 
-    
+
     var ClientCardView = Backbone.View.extend({
         el:  "#client-card-view",
 

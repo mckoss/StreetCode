@@ -91,13 +91,13 @@ namespace.module('streetcode.client', function (exports, requires) {
                 return false;
             }
 
-            pageCurr.css("opacity", 0);
+            //pageCurr.css("opacity", 0);
             pageCurr.css("max-height", 0);
         }
 
         // expand target page
         p.css("max-height", 1000);
-        p.css("opacity", 100);
+        //p.css("opacity", 100);
 
         // store pointer to current page
         pageCurr = p;

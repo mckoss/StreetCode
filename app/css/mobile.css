@@ -156,7 +156,7 @@ div.give-block {
 	max-height: 0;
 	color: #ff9216;
   	background-color: #ffffff;
-  	//opacity: 0;
+  	/*opacity: 0;*/
   	-moz-opacity: 0;
   	filter:alpha(opacity=0);
 

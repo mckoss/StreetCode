@@ -9,20 +9,19 @@ import paypal
 
 from rest.views import PageHandler
 
-models.init()
-
 import test_streetcode
 import demo
 
+
+models.init()
+
+
 paths = [
-    ('/', PageHandler.using('index.html')),
-    ('/about', PageHandler.using('about.html')),
-    ('/contact', PageHandler.using('contact.html')),
+    ('/', views.RootHandler ),
     ]
 
 paths.extend(rest.get_paths())
 
-# Lower priority than fixed and admin urls.
 paths.extend([
     ('/(\w+)', PageHandler.using('mobile_profile.html')),
     ('/client/(\w+)/(\d+)', views.ClientHandler),
@@ -30,7 +29,6 @@ paths.extend([
     ('/paypal/ipn', paypal.IPNHandler), # paypal ipn handler
     ('/paypal/pdt/(\w+)', paypal.PDTHandler), # paypal pdt handler
     ])
-
 
 def main():
     application = webapp.WSGIApplication(paths, debug=True)

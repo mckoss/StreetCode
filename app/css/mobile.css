@@ -7,190 +7,212 @@
     src: url('font/helveticaultracompressed-webfont.eot?#iefix') format('embedded-opentype'),
          url('font/helveticaultracompressed-webfont.woff') format('woff'),
          url('font/helveticaultracompressed-webfont.ttf') format('truetype');
-	font-style: normal;
-	font-weight: 400;
+    font-style: normal;
+    font-weight: 400;
 }
 
-.page-container { overflow-y:auto }
+body { overflow-x: hidden; }
 
 p {
-	margin: 6px auto;
+    margin: 6px auto;
 }
 
 form {
-	display: none;
+    display: none;
 }
 
 div {
-	width: inherit;
-	font-family: Helvetica;
-	font-size: 12px;
+    font-family: Helvetica;
+    font-size: 14px;
 }
 
 /* Paypal logo */
 img.paypal {
-	height:15px;
-	width: 58px; 	
-	display: inline;
-	vertical-align:middle;
+    height:15px;
+    width: 58px;
+    display: inline;
+    vertical-align:middle;
 }
 
 /* Client Info */
 div.top-info {
-	width: 280px;
-	height: 174px;
-	margin: 10px auto 0px;
+    width: 280px;
+    max-height: 200px;
+    margin: 10px auto 20px;
 }
 
 /* Client Portrait */
 .top-info > .portrait{
-	width: 115px;
-	height: 172px;
-	border: 1px solid #656565;
-	float: left;
-	background:url(<%= imageURL %>) no-repeat center center;
+    width: 115px;
+    background:url(<%= imageURL %>) no-repeat center center;
 }
 
 /* Client Info Panel */
 .top-info > .info-block {
-	width: 155px;
-	height: 174px;
-	float: right;
+    width: 155px;
+    max-height: 200px;
+    margin-top: -5px;
+    display:inline-block;
+    vertical-align: top;
 }
 
 div.info-block > .nickname {
-	font-family: 'Helvetica Ultra Compressed', Arial;
-	font-size: 36px;
-	<!--[if IE]>
-	font-size: 16px;
-	<![endif]-->
+    font-family: 'Helvetica Ultra Compressed', Arial;
+    font-size: 34px;
+    <!--[if IE]>
+    font-size: 16px;
+    <![endif]-->
 }
 
 /* Client Sponsor Panel */
 div.sponsor-block{
-	margin-top: 0px;
+    margin-top: 0px;
 }
 
 div.sponsor{
-	color: #c6c6c6;
+    color: #c6c6c6;
 }
 
 /* Client Story */
 div.story {
-	margin: 10px auto;
-	width: 280px;
-	text-align: justify;
-	text-justify:inter-word;
+    margin: 10px auto;
+    width: 280px;
+    text-align: justify;
+    text-justify:inter-word;
 }
 
 /* Links */
-#page-container a {
-	display: block;
-	text-decoration: none;
-	height: 38px;
-	background-color: #1b1a18;
-	color: #ff9216; 
-	padding-top: 0px;
-	padding-left: 16px;
-	margin-bottom: 5px;
-	font-family:'Helvetica Ultra Compressed', Arial;
-	font-size: 26pt;
-	width: 100%;
-
-	/* Shadow */
-	-webkit-box-shadow: 0px 2px 4px #000000;
-	-moz-box-shadow: 0px 2px 4px #000000;
-	o-shadow: 0px 2px 6px #000000;
-	box-shadow: 0px 2px 6px #000000;
+a {
+    text-decoration: none;
 }
 
-/* Needs links */
-#page-container a.give {
-	border-left: 6px solid #ff9216;
-	color: #6F6F6F;
-	background-color:#E1E1E1;
-	margin-left: 16px;
-	margin-right: 16px;
+    /* External Links */
+    #page-container a.external {
+        color: #ff9216;
+        background-color: #FFFFFF;
+        border-bottom: 1px solid #ff9216;
+        text-justify: center;
+    }
 
-	/* Shadow */
-	-webkit-box-shadow: 0px 2px 4px #E1E1E1;
-	-moz-box-shadow: 0px 2px 4px #E1E1E1;
-	o-shadow: 0px 2px 6px #E1E1E1
-	box-shadow: 0px 2px 6px #E1E1E1
-}
+    /* Internal links */
+    #page-container a.button {
+        height: 38px;
+        display: block;
+        padding-top: 0px;
+        margin-bottom: 5px;
+        font-family:'Helvetica Ultra Compressed', Arial;
+        font-size: 26pt;
+        background-color: #242320;
+        color: #ff9216;
+        padding-left: 16px;
 
-/* Give Link */
-#page-container a.help {
-	background-color: #ff9216;
-	color: white;
-	text-align: center;
-	padding-left: 0px;
-	border: solid #d99938 1px;
-	margin-right: 5px;
-}
+        /* Shadow */
+        -webkit-box-shadow: 0px 2px 4px #000000;
+        -moz-box-shadow: 0px 2px 4px #000000;
+        o-shadow: 0px 2px 6px #000000;
+        box-shadow: 0px 2px 6px #000000;
+    }
+
+    /* Donation links */
+    #page-container a.give {
+        border-left: 6px solid #ff9216;
+        color: #6F6F6F;
+        background-color:#E1E1E1;
+        margin-left: 16px;
+        margin-right: 16px;
+
+        /* Shadow */
+        -webkit-box-shadow: 0px 2px 4px #E1E1E1;
+        -moz-box-shadow: 0px 2px 4px #E1E1E1;
+        o-shadow: 0px 2px 6px #E1E1E1
+        box-shadow: 0px 2px 6px #E1E1E1
+    }
+
+    /* Profile Donation Link */
+    #page-container a.help {
+        background-color: #ff9216;
+        color: white;
+        text-align: center;
+        padding-left: 0px;
+        border: solid #d99938 1px;
+        margin-top: 5px;
+        /*margin-right: 5px;*/
+    }
 
 /* Give Block */
 div.give-block {
-	margin: auto auto 10px auto;
+    margin: auto auto 10px auto;
 }
 
 /* Mobile site pages */
 .page {
-	overflow: hidden;
-	max-height: 0;
- 	width: 100%;
-	color: #ff9216;
-  	background-color: #ffffff;
+    overflow-x: hidden;
+    color: #ff9216;
+    max-height: 0;
+    background-color: #ffffff;
 
-  	/* Transitions */
-	-webkit-transition: all .4s ease;
-	-moz-transition:    all .4s ease;
-	-o-transition:      all .4s ease;
-	transition:      	all .4s ease;
+    -webkit-transition: max-height .4s ease;
+    -moz-transition:    max-height .4s ease;
+    -ms-transition :    max-height .4s ease;
+    -o-transition:      max-height .4s ease;
+    transition:         height .4s ease;
+}
+
+.page.open {
+  max-height: 1000px;
 }
 
 /* Title Bar */
 h1 {
-	height: 60px;
-	width: 100%;
-	background:url(/images/Logo_dark.png) no-repeat center center;
-	background-color: #1b1a18;
-	margin-bottom: 5px;
-	margin-right: -10px;
-	padding-right: -10px;
-	/* Shadow */
-	-webkit-box-shadow: 0px 2px 4px #000000;
-	-moz-box-shadow: 0px 2px 4px #000000;
-	box-shadow: 0px 2px 6px #000000;
-}
+    height: 60px;
+    background:url(/images/Logo_dark.png) no-repeat center center;
+    background-color: #242320;
+    /*
+    border-bottom: 1px solid grey;
+    */
 
-/* Title Bar Barcode Image (not in use) */
-h1 > div {
-	background: url(/images/Barcode.png) right top no-repeat;
-	margin-right: 10px;
-	padding-right: 10px;
+    /* Shadow
+    margin-bottom: 5px;
+    -webkit-box-shadow: 0px 2px 4px #000000;
+    -moz-box-shadow: 0px 2px 4px #000000;
+    box-shadow: 0px 2px 6px #000000;
+     */
 }
 
 /* Text Modifiers */
 .bold {
-	font-weight: 700;
+    font-weight: 700;
 }
 
 .centered {
-	display: block;
+    display: block;
     margin-left: auto;
     margin-right: auto;
-	width: 280px;
-	text-align: centered;
+    width: 280px;
+    text-align: center;
 }
 
 /* Application Motto */
 p.motto{
-	font-size:14px;
-	font-weight:bold;
+    font-size:16px;
+    font-weight:bold;
 }
 
+/*
 iframe {
-	width: 100%;
-	height: 100%;
+    width: 100%;
+    height: 100%;
+}
+*/
+
+/* Vertical fade on donations page */
+.vertical_fade {
+    -webkit-mask-image: -webkit-gradient(linear, left top,
+        left bottom, from(rgba(0,0,0,1)), to(rgba(0,0,0,0)));
+    -moz-mask-image: -moz-gradient(linear, left top,
+        left bottom, from(rgba(0,0,0,1)), to(rgba(0,0,0,0)));
+    -o-mask-image: -o-gradient(linear, left top,
+        left bottom, from(rgba(0,0,0,1)), to(rgba(0,0,0,0)));
+    mask-image: gradient(linear, left top,
+        left bottom, from(rgba(0,0,0,1)), to(rgba(0,0,0,0)));
 }

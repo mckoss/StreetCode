@@ -161,6 +161,7 @@ def filter_query_by_value(query, model, property_name, value):
     query.filter('%s = ' % property_name, value)
 
 
+
 class PageHandler(UserHandler):
     """ Request handler for generic pages for webapp views.
     Usage: PageHandler.using("template-name.html"). """
@@ -179,6 +180,7 @@ class PageHandler(UserHandler):
                 path.insert(0, package)
             return cls(os.path.join(*path), render_data=render_data)
         return factory
+
 
     def prepare(self):
         self.render_data.update(settings.template_vars)

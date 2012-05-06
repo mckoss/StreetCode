@@ -102,7 +102,9 @@ class RESTModel(db.Model):
 
             value = json_dict[prop_name]
 
-            if value is None or prop.data_type in SIMPLE_TYPES:
+            if value is not None and prop.data_type is float:
+                value = float (value)
+            elif value is None or prop.data_type in SIMPLE_TYPES:
                 pass
             elif prop.data_type == datetime:
                 value = datetime.utcfromtimestamp(int(value) / 1000)

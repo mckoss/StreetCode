@@ -169,7 +169,7 @@ namespace.module('startpad.json-forms', function(exports, require) {
                 alert(result.responseText);
             },
             success: function (result, textStatus) {
-                console.log("saved");
+                // console.log("saved");
                 window.location.href = '/admin/forms/' + pageInfo.model;
             }
         });

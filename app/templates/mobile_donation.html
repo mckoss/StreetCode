@@ -3,34 +3,37 @@
   <title>{{site_name}} - Donations</title>
   <script>
   $(document).ready( function() {
-     namespace.streetcode.client.initDonation();
+    namespace.streetcode.donation.initDonation();
+
   } );
 
+
   </script>
+
+  <script> 
+    google.load('visualization', '1.0', {packages: ['gauge']});
+  </script> 
 {% endblock %}
 
 {% block body %}
-  <div id="page-container">
-    <div id="loading">Loading...</div>
+<h1><div></div></h1>
+
+<div id="page-container">
+  <div id="loading">Loading...</div>
+  <div id="donationSummary">    </div>
+
+  <div class="story">
+    <div id="listThanks" class="vertical_fade"></div>
   </div>
-  <div class="story" id="listThanks"></div>
+</div>
 
-
-  <script type="text/template" id="client-donation-template">
-  <div>
-    <h1><div></div></h1>
-
-    <a href="#donation" class="help">DONATION for <%= client.name %></a> 
-    
-    <div class="chart story">
-      <div id="bar-label">Total $<%= client.totalDonation %></div>
-      <div class="bar"></div>
-    </div>
- 
-  </div>
+  <script  type="text/template" id="client-donation-template">
+    <a href="#donations" class="button help">Donations for <%= name %></a> 
+    <div id="gauge" class="centered" style="width: 300px"></div>     
+    <div id="numDonors" class="centered" style="font-size: 20px; color: orange; ">Total <%= numDonors %> donors</a> </div>
   </script>
 
-   <script type="text/template" id="item-transaction-template">
-      <div class="itemThanks">Thank you, <%= donorName %>!  (<%= ago %>)</div>
-    </script>
+  <script type="text/template" id="item-transaction-template">
+     <div class="centered"> Thank you, <%= donorName %>!  (<%= ago %>) </div>
+  </script>
 {% endblock %}

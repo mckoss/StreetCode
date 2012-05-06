@@ -60,7 +60,7 @@ namespace.module('streetcode.client', function (exports, requires) {
     });    
 
     function debug( p, o) {
-      console.log( p + ": " + (o ? (o.attr("id") + " " + o.css("left")): "<>") );
+      // console.log( p + ": " + (o ? (o.attr("id") + " " + o.css("left")): "<>") );
     }
 
     function initProfile() {

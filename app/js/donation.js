@@ -14,7 +14,7 @@ namespace.module('streetcode.donation', function (exports, requires) {
     }
 
     function trackDonation() {
-        console.log( new Date() );
+        // console.log( new Date() );
         var shortCode = document.location.pathname.split('/').pop(); 
 
         var clientDonationTemplate = _.template($('#client-donation-template').html()); 

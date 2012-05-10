@@ -50,7 +50,7 @@ div.top-info {
 /* Client Info Panel */
 .top-info > .info-block {
     width: 155px;
-    max-height: 200px;
+    max-height: 300px;
     margin-top: -5px;
     display:inline-block;
     vertical-align: top;

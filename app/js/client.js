@@ -9,6 +9,9 @@ namespace.module('streetcode.client', function (exports, requires) {
     // Page navigation vars
     var pageCurr = null;
 
+    // Debug flat for Google analytics, default == false
+    var _debug = false; 
+
     // Only Android and Iphone use Touch event
     // Mixed results for Click
     // So we'll use legacy Mousedown - should have universal support
@@ -50,7 +53,7 @@ namespace.module('streetcode.client', function (exports, requires) {
             hash = "#needs"
         }
         $( "a[href='" + hash + "']:first").trigger( clickEvent );
-
+        
         // window.scollTo(0,0);
     }
 
@@ -75,8 +78,8 @@ namespace.module('streetcode.client', function (exports, requires) {
 
     // Send navigation event to Google Analytics
     function pushNavigation(loc){
-        //window.location.hash = loc;
-        _gaq.push(["_trackPageview", loc]);
+        if (!_debug)
+            _gaq.push(["_trackPageview", loc]);
     }
 
     // Toggle application pages
@@ -95,7 +98,9 @@ namespace.module('streetcode.client', function (exports, requires) {
         pageCurr = p;
     }
 
-    function initProfile() {
+    function initProfile(debug) {
+        if ( debug != null ) _debug = debug; 
+
         ClientMobileView.template =  _.template($('#client-view-template').html());
         exports.app = new ClientMobileView();
     }

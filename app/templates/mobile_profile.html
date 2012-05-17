@@ -3,7 +3,7 @@
   <title>{{site_name}} - Profile</title>
   <script>
   $(document).ready(function () {
-      namespace.streetcode.client.initProfile();
+      namespace.streetcode.client.initProfile( "{{debug}}" == "True" );
   });
   </script>
 {% endblock %}
@@ -80,7 +80,8 @@
         <input type="hidden" name="image_url" value="{{site_url}}/images/streetcodeS_s.png">
         <input type="hidden" name="cancel_return" value="{{site_url}}/<%=shortCode %>">
         <input type="hidden" name="rm" value="2">
-        <input type="hidden" NAME="return" value="{{site_url}}/paypal/pdt/<%= shortCode %>">
+        <input type="hidden" NAME="return" value="{{site_url}}/paypal/pdt">
+        <input type="hidden" name="custom" value="<%= shortCode %>" > <!--custom variable --> 
         <input type="hidden" name="cbt" value="{{site_name}}" >
         <input type="hidden" name="no_shipping" value="1">
         <img alt="" border="0" src="https://www.paypal.com/en_US/i/scr/pixel.gif" width="1" height="1">

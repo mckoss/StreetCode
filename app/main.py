@@ -26,8 +26,8 @@ paths.extend([
     ('/(\w+)', PageHandler.using('mobile_profile.html')),
     ('/client/(\w+)/(\d+)', views.ClientHandler),
     ('/donations/(\w+)', PageHandler.using('mobile_donation.html')),
-    # ('/paypal/ipn', paypal.IPNHandler), # paypal ipn handler
-    ('/paypal/pdt/(\w+)', paypal.PDTHandler), # paypal pdt handler
+    ('/paypal/ipn', paypal.IPNHandler), # paypal ipn handler
+    ('/paypal/pdt', paypal.PDTHandler), # paypal pdt handler
     ])
 
 def main():

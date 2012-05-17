@@ -2,7 +2,7 @@
 #
 # WARNING: Do not put private information in this file (the source
 # repository is not secure).
-DEBUG = False
+DEBUG = True
 
 SITE_NAME = "StreetCodes"
 SITE_ADMIN = "Mike Koss"
@@ -12,7 +12,7 @@ SITE_HOME = "http://streetcodes.wordpress.com"
 if DEBUG is True:
     PAYPAL_URL = "https://www.sandbox.paypal.com/cgi-bin/webscr"
 else: 
-    PAYPAL_URL = "https://www.paypal.com/cgi-bin/webscr"
+    PAYPAL_URL = "https://www.paypal.com/cgi-bin/webscr" 
 
 # Make all the (string) variables in settings available to templates as {{ var_name }}
 # except use lower-case form in templates.

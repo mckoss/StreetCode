@@ -47,6 +47,10 @@ namespace.module('streetcode.donation', function (exports, requires) {
                         client.donors = {};
                         client.numDonors = 0;
                         for ( var i = 0; i < data.length; i++ ) {
+                            // Count "Completed" payments only
+                            if ( data[i].paymentStatus !='Completed' )
+                                continue;
+
                             // accumulate total donation
                             client.totalDonation += data[i].amount;
 
@@ -97,9 +101,9 @@ namespace.module('streetcode.donation', function (exports, requires) {
         var options = {
             max: gaugeMax,
             width: 300, height: 500,
-            greenFrom: 0, greenTo: 0.75 * goal,
-            redFrom: 0.9 * goal, redTo: gaugeMax,
-            yellowFrom:0.75 * goal, yellowTo: 0.90 * goal,
+            redFrom: 0, redTo: 0.60 * goal,
+            greenFrom: 0.9 * goal, greenTo: goal,
+            yellowFrom:0.60 * goal, yellowTo: 0.90 * goal,
             minorTicks: 5
         };
 

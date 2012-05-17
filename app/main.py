@@ -17,8 +17,7 @@ models.init()
 
 
 paths = [
-## ('/', views.RootHandler ),
-    ('/', PageHandler.using('index.html') ),
+   ('/', views.RootHandler ),
     ]
 
 paths.extend(rest.get_paths())

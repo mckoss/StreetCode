@@ -44,6 +44,7 @@ namespace.module('streetcode.donation', function (exports, requires) {
                         } );
 
                         client.totalDonation = 0;
+                        client.goalPercentage = 0;
                         client.donors = {};
                         client.numDonors = 0;
                         for ( var i = 0; i < data.length; i++ ) {
@@ -62,7 +63,8 @@ namespace.module('streetcode.donation', function (exports, requires) {
                             client.donors[ data[i].donor.email ] += data[i].amount;
                         }
 
-                        client.goal = Math.max(client.goal, 0);
+                        client.goal = Math.max(client.goal, 0); 
+                        client.goalPercentage = Math.floor( client.totalDonation / client.goal * 100); 
 
                         // Fetch latest 5 transactions
                         for ( var i = 0; i < Math.min(5, data.length); i++ ) {
@@ -98,13 +100,16 @@ namespace.module('streetcode.donation', function (exports, requires) {
         ]);
 
         var gaugeMax = Math.max( goal, amount);
+        var tickMark = {}; 
+        for ( var i = 0; i < gaugeMax ; i += 0.2 * gaugeMax)
+            tickMark[i] = i.toString(); 
         var options = {
             max: gaugeMax,
             width: 300, height: 500,
             redFrom: 0, redTo: 0.60 * goal,
-            greenFrom: 0.9 * goal, greenTo: goal,
             yellowFrom:0.60 * goal, yellowTo: 0.90 * goal,
-            minorTicks: 5
+            greenFrom: 0.9 * goal, greenTo: gaugeMax,
+            minorTicks: 10, majorTicks: tickMark
         };
 
       // Create and draw the visualization.

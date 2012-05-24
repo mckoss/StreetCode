@@ -2,7 +2,7 @@
 #
 # WARNING: Do not put private information in this file (the source
 # repository is not secure).
-DEBUG = True
+DEBUG = False
 
 SITE_NAME = "StreetCodes"
 SITE_ADMIN = "Mike Koss"

@@ -69,55 +69,62 @@ class PDTHandler(webapp.RequestHandler):
                 self.props[key] = ''
 
     def get(self):
+        errorMsg = ""
+
         # Get client by shortCode to get access to corresponding merchant PDT key
         shortCode = self.request.get('cm')
         client = self.db.getClient(shortCode) 
         if client is None: 
-            return
-        
+            errorMsg = "Cannot find client shortCode: " + shortCode
         self.props['client'] = client
+
         merchant = client.sponsor.paypalMerchant
+        if merchant is None: 
+            errorMsg = "No paypal merchant defined for " + shortCode
 
-        # First get the Paypal transaction ID and verify that the transaction is successful        
-        txnId = self.request.get("tx")
-        self.props['txn_id'] = txnId 
+        if errorMsg == "":
+            # First get the Paypal transaction ID and verify that the transaction is successful        
+            txnId = self.request.get("tx")
+            self.props['txn_id'] = txnId 
 
-        # Confgure POST args for Paypal
-        args = {
-            "cmd"   : "_notify-synch",
-            "tx"    : txnId,
-            "at"    : merchant.PDTKey
-        }
-        args = urllib.urlencode(args)
+            # Confgure POST args for Paypal
+            args = {
+                "cmd"   : "_notify-synch",
+                "tx"    : txnId,
+                "at"    : merchant.PDTKey
+            }
+            args = urllib.urlencode(args)
 
-        try:
-            # Do a post back to validate the transaction data
-            status = urlfetch.fetch(url     = settings.PAYPAL_URL,
-                                    method  = urlfetch.POST,
-                                    payload = args).content
-            # If the transaction is successful, save the transaction data in the datastore
-            if re.search("^SUCCESS", status):
-                self.parsePDTMsg( status )
+            try:
+                # Do a post back to validate the transaction data
+                status = urlfetch.fetch(url     = settings.PAYPAL_URL,
+                                        method  = urlfetch.POST,
+                                        payload = args).content
+                # If the transaction is successful, save the transaction data in the datastore
+                if re.search("^SUCCESS", status):
+                    self.parsePDTMsg( status )
 
-                # Get donor information (create new if object does not exist)
-                donor = self.db.getDonor( urllib.unquote(self.props['payer_email']) )
-                if donor is None: 
-                    self.createDonor( self.props )
-                self.props['donor'] = donor
+                    # Get donor information (create new if object does not exist)
+                    donor = self.db.getDonor( urllib.unquote(self.props['payer_email']) )
+                    if donor is None: 
+                        donor = self.db.createDonor( self.props )
+                    self.props['donor'] = donor
 
-                # Create a new transaction (use transaction_id to maintain data uniqueness)
-                tx = self.db.getTransaction( txnId )
-                if tx is None: 
-                    self.db.createTransaction( self.props )
+                    # Create a new transaction (use transaction_id to maintain data uniqueness)
+                    tx = self.db.getTransaction( txnId )
+                    if tx is None: 
+                        self.db.createTransaction( self.props )
+                else:
+                    errorMsg = "Paypal transaction did not go through successfully for txn id: " + txnId
+            except:
+                errorMsg = "URL request for Paypal transaction data failed for txn id: " + txnId
+                errorMsg += traceback.format_exc()
+        
+        # TODO  report error message to admin via email or log file
+        self.response.out.write(errorMsg)
 
-                # Regardless of success of saving transaction, the user is redirected to thank you screen 
-                self.redirect("/" + shortCode + "#thanks");
-            else:
-                self.response.out.write("Sorry, your Paypal transaction did not go through successfully.<br>")
-                self.response.out.write("Please contact Paypal to resolve any problems.")
-        except:
-            self.response.out.write("Request for Paypal transaction data failed.")
-            return 
+        # Redirect user to thank you screen regardless of result of PDT message 
+        self.redirect("/" + shortCode + "#thanks");
 
 class IPNHandler(webapp.RequestHandler):
     def __init__ (self):
@@ -135,7 +142,7 @@ class IPNHandler(webapp.RequestHandler):
                 'payer_email'   : '' }
 
     def verifyMerchant(self, merchant):
-        return self.props['receiver_email'] != merchant.merchantEmail or self.props['receiver_id'] != merchant.merchantKey 
+        return self.props['receiver_email'] == merchant.merchantEmail or self.props['receiver_id'] == merchant.merchantKey 
 
     def get (self) :
         if settings.DEBUG:
@@ -155,7 +162,6 @@ class IPNHandler(webapp.RequestHandler):
         txnId = self.props["txn_id"]
         shortCode = self.props["custom"]
 
-
         # Handles payments only 
         if txnType == "web_accept" or txnType == "express_checkout" :
             try: 
@@ -170,26 +176,23 @@ class IPNHandler(webapp.RequestHandler):
                         return
                     self.props['client'] = client 
 
-                    # if not verifyMerchant(client.sponsor.paypalMerchant): 
-                    #   return 
+                    if self.verifyMerchant(client.sponsor.paypalMerchant) != True: 
+                        self.response.out.write( "merchant not validated <br>")
+                        return 
 
-                    # See if the transaction already exists
                     tx = self.db.getTransaction( txnId ) 
-                    if tx is None: 
-                        # If no transaction, create the donor and transaction in the datastore
+                    if tx is None: # Create new donor and txn if no existing transaction
                         donor = self.db.getDonor( urllib.unquote(self.props['payer_email']) )
                         if donor is None: 
                             donor = self.db.createDonor( self.props )
                         self.props['donor'] = donor
                         
                         tx = self.db.createTransaction(self.props)
-                    else: 
-                        # Update payment status for existing transaction 
+                    else: # Update payment status for existing transaction 
                         tx.paymentStatus = self.props['payment_status']
                         tx.put()
             except:
-                self.response.out.write("IPN message verification failed with the following error <br>") 
+                # TODO notify app admin of error 
                 self.response.out.write(traceback.format_exc())
                 return
                     
-                # TODO notify app admin of error 

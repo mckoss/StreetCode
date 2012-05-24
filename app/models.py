@@ -19,7 +19,7 @@ def init():
             'donor': Donor,
             'transaction': Transaction,
             'scan': Scan,
-            'paypal': PaypalMerchant,
+            # 'paypal': PaypalMerchant,
             })
 
 class PaypalMerchant(Timestamped, RESTModel):

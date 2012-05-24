@@ -30,7 +30,10 @@
   <script  type="text/template" id="client-donation-template">
     <a href="#donations" class="button help">Donations for <%= name %></a> 
     <div id="gauge" class="centered" style="width: 300px"></div>     
-    <div id="numDonors" class="centered" style="font-size: 20px; color: orange; ">Total <%= numDonors %> donors</a> </div>
+    <div id="numDonors" class="centered" style="font-size: 20px; color: orange; ">
+      <%= goalPercentage %>% of goal reached <br>
+      Total <%= numDonors %> donors <br>
+       </div>
   </script>
 
   <script type="text/template" id="item-transaction-template">

@@ -52,15 +52,17 @@ namespace.module('streetcode.donation', function (exports, requires) {
                             if ( data[i].paymentStatus !='Completed' )
                                 continue;
 
+                            var donorName = ( data[i].donor == null ) ? "" : data[i].donor.name;
+
                             // accumulate total donation
                             client.totalDonation += data[i].amount;
 
                             // accumulate independent donor donation
-                            if ( client.donors[data[i].donor.email] == null ) {
-                                client.donors[data[i].donor.email]  = 0;
-                                client.numDonors += 1
-                            }
-                            client.donors[ data[i].donor.email ] += data[i].amount;
+                            if( client.donors[donorName] == null  ) {
+                                client.donors[donorName]  = 0;
+                                client.numDonors += 1;
+                            } else
+                                client.donors[ donorName ] += data[i].amount;
                         }
 
                         client.goal = Math.max(client.goal, 0); 
@@ -69,7 +71,7 @@ namespace.module('streetcode.donation', function (exports, requires) {
                         // Fetch latest 5 transactions
                         for ( var i = 0; i < Math.min(5, data.length); i++ ) {
                             var transaction = data[i];
-                            transaction.donorName = data[i].donor.name;
+                            transaction.donorName = donorName;
                             transaction.ago = calcTimeAgo(data[i].created);
                             listHtml += itemTransactionTemplate(transaction);
                         }
@@ -100,16 +102,13 @@ namespace.module('streetcode.donation', function (exports, requires) {
         ]);
 
         var gaugeMax = Math.max( goal, amount);
-        var tickMark = {}; 
-        for ( var i = 0; i < gaugeMax ; i += 0.2 * gaugeMax)
-            tickMark[i] = i.toString(); 
         var options = {
             max: gaugeMax,
             width: 300, height: 500,
-            redFrom: 0, redTo: 0.60 * goal,
-            yellowFrom:0.60 * goal, yellowTo: 0.90 * goal,
-            greenFrom: 0.9 * goal, greenTo: gaugeMax,
-            minorTicks: 10, majorTicks: tickMark
+            redFrom: 0, redTo: 0.5 * goal,
+            yellowFrom:0.50 * goal, yellowTo: 0.85 * goal,
+            greenFrom: 0.85 * goal, greenTo: goal,
+            minorTicks: 10 
         };
 
       // Create and draw the visualization.

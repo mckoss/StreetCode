@@ -17,7 +17,7 @@ models.init()
 
 
 paths = [
-    ('/', views.RootHandler ),
+   ('/', views.RootHandler ),
     ]
 
 paths.extend(rest.get_paths())
